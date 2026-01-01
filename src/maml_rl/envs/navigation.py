@@ -34,7 +34,9 @@ class Navigation2DEnv(gym.Env):
         )
 
         # Actions correspond to velocity commands clipped to be in range [-0.1, 0.1]
-        self.action_space = spaces.Box(low=-0.1, high=0.1, shape=(2,), dtype=np.float64)
+        # We define the action space as [-1, 1] to match TanhNormal policy output,
+        # and scale it inside step().
+        self.action_space = spaces.Box(low=-1.0, high=1.0, shape=(2,), dtype=np.float64)
 
         self._task = {"goal": np.array([0.5, 0.5], dtype=np.float64)}
         self._goal = self._task["goal"]
@@ -58,7 +60,8 @@ class Navigation2DEnv(gym.Env):
         return self._state.copy(), {}
 
     def step(self, action: np.ndarray) -> Tuple[np.ndarray, float, bool, bool, Mapping]:
-        action = np.clip(action, -0.1, 0.1).astype(np.float64)
+        # Action is in [-1, 1], scale to [-0.1, 0.1]
+        action = np.clip(action, -1.0, 1.0).astype(np.float64) * 0.1
 
         self._state = self._state + action
 

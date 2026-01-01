@@ -33,7 +33,8 @@ class TestNavigationEnv:
         assert np.allclose(env._state, np.zeros(2))
 
         # 1. Test step with action within limits
-        action = np.array([0.05, 0.05], dtype=np.float64)
+        # Input 0.5 becomes 0.05 after scaling
+        action = np.array([0.5, 0.5], dtype=np.float64)
         state, reward, terminated, truncated, info = env.step(action)
 
         # New state should be [0.05, 0.05]
@@ -48,9 +49,10 @@ class TestNavigationEnv:
         assert not terminated
 
         # 2. Test step with action exceeding limits (clipping)
-        # Reset to known state (or just continue, but reset is cleaner for logic check)
+        # Reset to known state
         env.reset()
-        action_large = np.array([0.2, -0.5], dtype=np.float64)
+        # Input [2.0, -5.0] should be clipped to [1.0, -1.0], then scaled to [0.1, -0.1]
+        action_large = np.array([2.0, -5.0], dtype=np.float64)
         state, _, _, _, _ = env.step(action_large)
 
         # Should be clipped to [0.1, -0.1]
