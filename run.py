@@ -17,6 +17,7 @@ from maml_rl.maml import (
     inner_update_vpg,
     inner_update_value,
     outer_loss_ppo,
+    outer_step_trpo,
 )
 from maml_rl.policies import build_actor_critic, params_and_buffers
 from maml_rl.utils.returns import add_gae, normalize_advantages
@@ -73,7 +74,7 @@ def _get_device(device_str: str) -> torch.device:
 
 def main():
     """
-    Run MAML on Ant Goal Velocity with VPG inner loop and PPO outer loop.
+    Run MAML on Ant Goal Velocity with VPG inner loop and PPO or TRPO outer loop.
 
     Example:
         python run.py --cfg configs/config.yaml
@@ -96,6 +97,7 @@ def main():
 
     device = _get_device(cfg.env.device)
     print(f"Device: {device}")
+    print(f"Algorithm: {cfg.algorithm.upper()}")
 
     # Create environment once and reuse it
     tasks, env = make_vec_env(
@@ -111,9 +113,6 @@ def main():
 
     if cfg.env.norm_obs:
         print("Initializing observation normalization statistics...")
-        # env is TransformedEnv, its transform is ObservationNorm (or Compose containing it)
-        # Use a few rollouts to get initial stats.
-        # Since it's a ParallelEnv, each rollout gives num_tasks * rollout_steps samples.
         env.transform.init_stats(num_iter=5, reduce_dim=[0, 1], cat_dim=0)
         print(f"Obs norm loc mean: {env.transform.loc.mean():.4f}")
 
@@ -129,17 +128,19 @@ def main():
     actor, policy_model, value_module = build_actor_critic(
         obs_dim, act_dim, hidden_sizes=cfg.model.hidden_sizes
     )
-    actor.to(device)  # Shares parameters with policy_model and value_module backbone
+    actor.to(device)
     value_module.to(device)
 
-    # if wandb.run is not None:
-    #     wandb.watch(policy_model, log="all", log_freq=10)
-    #     wandb.watch(value_module, log="all", log_freq=10)
-
-    optimizer = Adam(
-        list(policy_model.parameters()) + list(value_module.parameters()),
-        lr=cfg.outer.lr,
-    )
+    # Optimizer setup based on algorithm
+    if cfg.algorithm == "trpo":
+        # TRPO handles policy update manually; optimizer only for value function
+        optimizer = Adam(value_module.parameters(), lr=cfg.outer.lr)
+    else:
+        # PPO updates both policy and value
+        optimizer = Adam(
+            list(policy_model.parameters()) + list(value_module.parameters()),
+            lr=cfg.outer.lr,
+        )
 
     for iteration in range(1, cfg.num_iterations + 1):
         # Update tasks in existing env for better performance
@@ -182,7 +183,6 @@ def main():
             support_td.set("advantage", normalize_advantages(support_td["advantage"]))
 
         # 2. Inner Loop Adaptation (Vectorized over tasks)
-        # Validate batch dimensions
         num_tasks = support_td.shape[0]
         if num_tasks != cfg.env.num_tasks:
             raise ValueError(
@@ -190,9 +190,6 @@ def main():
                 f"num_tasks {cfg.env.num_tasks}"
             )
 
-        # Vectorized inner update: vmap over tasks (dimension 0)
-        # policy_model is shared (None), params/buffers are shared (None),
-        # support_td is batched (0), alpha is constant (None)
         def inner_update_single(params, buffers, support_td_single):
             current_params = params
             for _ in range(cfg.inner.num_steps):
@@ -205,20 +202,14 @@ def main():
                 )
             return current_params
 
-        # vmap returns a dict where each value is batched [num_tasks, ...]
-        # We need to extract each parameter and stack them
-        # Pass params and buffers explicitly to vmap so they are traced correctly
         adapted_params_list = vmap(inner_update_single, in_dims=(None, None, 0))(
             policy_params, policy_buffers, support_td
         )
 
-        # vmap on OrderedDict returns a dict, convert back to OrderedDict
-        # with batched tensors
         adapted_params = OrderedDict(
             (name, adapted_params_list[name]) for name in policy_params.keys()
         )
 
-        # Adapt value function for each task
         def inner_update_value_single(params, buffers, support_td_single):
             current_params = params
             for _ in range(cfg.inner.num_steps):
@@ -239,7 +230,6 @@ def main():
         )
 
         # 3. Collect Query Data (using Adapted Parameters)
-        # FunctionalPolicy now handles the batched adapted_params automatically via vmap
         query_policy = FunctionalPolicy(policy_model, adapted_params, policy_buffers)
 
         with torch.no_grad():
@@ -250,14 +240,9 @@ def main():
                 auto_reset=True,
             )
             query_td = query_td.to(torch.float32)
-        # query_td shape: [num_tasks, rollout_steps]
 
-        # Compute GAE for query data using adapted value functions
-        # We need to use functional calls with adapted value params
         def compute_adapted_values(params, buffers, td):
-            # Compute for current step
             functional_call(value_module, (params, buffers), (td,))
-            # Compute for next step
             functional_call(value_module, (params, buffers), (td.get("next"),))
             return td
 
@@ -268,154 +253,230 @@ def main():
 
         query_td = add_gae(
             query_td,
-            value_module=None,  # Use pre-computed values in td
+            value_module=None,
             gamma=cfg.gamma,
             lam=cfg.lam,
             compute_grads=False,
         )
 
-        # Normalize advantages if requested
         if cfg.outer.advantage_norm:
             query_td.set("advantage", normalize_advantages(query_td["advantage"]))
 
-        # Validate query batch dimensions
-        query_num_tasks = query_td.shape[0]
-        if query_num_tasks != num_tasks:
-            raise ValueError(
-                f"Query data batch size {query_num_tasks} doesn't match "
-                f"support batch size {num_tasks}"
+        # 4. Outer Loop Update
+        
+        if cfg.algorithm == "trpo":
+            # TRPO Update (Policy Only)
+            new_params, trpo_info = outer_step_trpo(
+                policy_model=policy_model,
+                policy_params=policy_params,
+                policy_buffers=policy_buffers,
+                support_td=support_td,
+                query_td=query_td,
+                inner_lr=cfg.inner.lr,
+                inner_steps=cfg.inner.num_steps,
+                max_kl=cfg.trpo.max_kl,
+                damping=cfg.trpo.damping,
+                cg_iters=cfg.trpo.cg_iters,
+                line_search_max_steps=cfg.trpo.line_search_max_steps,
+                line_search_backtrack_ratio=cfg.trpo.line_search_backtrack_ratio,
             )
-
-        # 4. Outer Loop Loss (Vectorized PPO)
-        # We iterate multiple times over the same batch of data (PPO epochs)
-        # For each epoch, we must re-adapt the parameters starting from the *current* meta-parameters
-        # to properly compute gradients through the inner loop.
-
-        for ppo_epoch in range(cfg.outer.ppo_epochs):
-            # Re-extract current meta-parameters
-            curr_policy_params, curr_policy_buffers = params_and_buffers(policy_model)
+            
+            # Apply new params to model
+            for name, param in new_params.items():
+                # We need to update the model parameters in-place
+                # Since policy_model is TensorDictSequential, we access via get_parameter or modify via named_parameters
+                # But functional parameters are disconnected. We need to copy back.
+                # The safest way for standard nn.Module is:
+                model_param = policy_model.get_parameter(name)
+                model_param.data.copy_(param.data)
+            
+            # Value Function Update (Standard Adam)
+            # We iterate a few times for value function to keep up
             curr_value_params, curr_value_buffers = params_and_buffers(value_module)
-
-            # A. Re-Adapt Policy (vmap over tasks)
-            adapted_params_list = vmap(inner_update_single, in_dims=(None, None, 0))(
-                curr_policy_params, curr_policy_buffers, support_td
-            )
-
-            adapted_params = OrderedDict(
-                (name, adapted_params_list[name]) for name in curr_policy_params.keys()
-            )
-
-            # B. Re-Adapt Value Function (vmap over tasks)
-            adapted_value_params_list = vmap(
-                inner_update_value_single, in_dims=(None, None, 0)
-            )(curr_value_params, curr_value_buffers, support_td)
-
-            adapted_value_params = OrderedDict(
-                (name, adapted_value_params_list[name])
-                for name in curr_value_params.keys()
-            )
-
-            # C. Compute Policy Loss
-            # vmap outer_loss_ppo over adapted_params (0) and query_td (0)
-            losses, infos = vmap(outer_loss_ppo, (None, 0, None, 0, None, None))(
-                policy_model,
-                adapted_params,
-                curr_policy_buffers,
-                query_td,
-                cfg.outer.clip_eps,
-                cfg.outer.entropy_coef,
-            )
-            policy_loss = losses.mean()
-
-            # D. Compute Value Loss
-            # We need to predict values using the *current* adapted value params on the *query* data
+            
             def compute_value_loss_single(params, buffers, td):
                 td_out = functional_call(value_module, (params, buffers), (td,))
                 pred = td_out.get("state_value")
                 target = td.get("value_target")
+                return F.mse_loss(pred, target)
 
-                if cfg.outer.clip_value_loss:
-                    # We need old_value from the original collection for clipping
-                    # Assuming 'state_value' in query_td is the "old" value from collection
-                    old_pred = td.get("state_value").detach()
-                    pred_clipped = old_pred + torch.clamp(
-                        pred - old_pred,
-                        -cfg.outer.clip_eps,
-                        cfg.outer.clip_eps,
-                    )
-                    loss1 = (pred - target).pow(2)
-                    loss2 = (pred_clipped - target).pow(2)
-                    return torch.max(loss1, loss2).mean()
-                else:
-                    return F.mse_loss(pred, target)
-
-            value_losses = vmap(compute_value_loss_single, (0, None, 0))(
-                adapted_value_params, curr_value_buffers, query_td
-            )
-            value_loss = value_losses.mean()
-
-            total_loss = policy_loss + cfg.outer.value_coef * value_loss
-
-            optimizer.zero_grad()
-            total_loss.backward()
-
-            params_to_clip = list(policy_model.parameters()) + list(
-                value_module.parameters()
-            )
-            if cfg.outer.max_grad_norm is not None:
-                grad_norm = torch.nn.utils.clip_grad_norm_(
-                    params_to_clip,
-                    cfg.outer.max_grad_norm,
+            # Re-adapt value params for the loss computation
+            # We do this for a few epochs (same as PPO epochs usually or fixed 5)
+            value_epochs = cfg.outer.ppo_epochs 
+            
+            for _ in range(value_epochs):
+                # Re-adapt value params
+                adapted_val_list = vmap(
+                    inner_update_value_single, in_dims=(None, None, 0)
+                )(curr_value_params, curr_value_buffers, support_td)
+                
+                adapted_val = OrderedDict(
+                    (n, adapted_val_list[n]) for n in curr_value_params.keys()
                 )
-            else:
-                total_norm = 0.0
-                for p in params_to_clip:
-                    if p.grad is not None:
-                        param_norm = p.grad.detach().data.norm(2)
-                        total_norm += param_norm.item() ** 2
-                grad_norm = total_norm**0.5
+                
+                # Compute loss
+                losses = vmap(compute_value_loss_single, (0, None, 0))(
+                    adapted_val, curr_value_buffers, query_td
+                )
+                value_loss = losses.mean()
+                
+                optimizer.zero_grad()
+                value_loss.backward()
+                optimizer.step()
+                
+            total_loss = trpo_info["trpo_surr"] # Just for logging
+            policy_loss = trpo_info["trpo_surr"]
+            avg_ratio = 1.0 # Placeholder
+            avg_entropy = 0.0 # Placeholder
+            grad_norm = 0.0 # Placeholder
+            
+            # Update log dict
+            trpo_logs = trpo_info
 
-            optimizer.step()
+        else:
+            # PPO Update (Policy + Value)
+            for ppo_epoch in range(cfg.outer.ppo_epochs):
+                curr_policy_params, curr_policy_buffers = params_and_buffers(policy_model)
+                curr_value_params, curr_value_buffers = params_and_buffers(value_module)
 
-        # Metrics from the LAST epoch
+                adapted_params_list = vmap(inner_update_single, in_dims=(None, None, 0))(
+                    curr_policy_params, curr_policy_buffers, support_td
+                )
+
+                adapted_params = OrderedDict(
+                    (name, adapted_params_list[name]) for name in curr_policy_params.keys()
+                )
+
+                adapted_value_params_list = vmap(
+                    inner_update_value_single, in_dims=(None, None, 0)
+                )(curr_value_params, curr_value_buffers, support_td)
+
+                adapted_value_params = OrderedDict(
+                    (name, adapted_value_params_list[name])
+                    for name in curr_value_params.keys()
+                )
+
+                losses, infos = vmap(outer_loss_ppo, (None, 0, None, 0, None, None))(
+                    policy_model,
+                    adapted_params,
+                    curr_policy_buffers,
+                    query_td,
+                    cfg.outer.clip_eps,
+                    cfg.outer.entropy_coef,
+                )
+                policy_loss = losses.mean()
+
+                def compute_value_loss_single(params, buffers, td):
+                    td_out = functional_call(value_module, (params, buffers), (td,))
+                    pred = td_out.get("state_value")
+                    target = td.get("value_target")
+
+                    if cfg.outer.clip_value_loss:
+                        old_pred = td.get("state_value").detach()
+                        pred_clipped = old_pred + torch.clamp(
+                            pred - old_pred,
+                            -cfg.outer.clip_eps,
+                            cfg.outer.clip_eps,
+                        )
+                        loss1 = (pred - target).pow(2)
+                        loss2 = (pred_clipped - target).pow(2)
+                        return torch.max(loss1, loss2).mean()
+                    else:
+                        return F.mse_loss(pred, target)
+
+                value_losses = vmap(compute_value_loss_single, (0, None, 0))(
+                    adapted_value_params, curr_value_buffers, query_td
+                )
+                value_loss = value_losses.mean()
+
+                total_loss = policy_loss + cfg.outer.value_coef * value_loss
+
+                optimizer.zero_grad()
+                total_loss.backward()
+
+                params_to_clip = list(policy_model.parameters()) + list(
+                    value_module.parameters()
+                )
+                if cfg.outer.max_grad_norm is not None:
+                    grad_norm = torch.nn.utils.clip_grad_norm_(
+                        params_to_clip,
+                        cfg.outer.max_grad_norm,
+                    )
+                else:
+                    total_norm = 0.0
+                    for p in params_to_clip:
+                        if p.grad is not None:
+                            param_norm = p.grad.detach().data.norm(2)
+                            total_norm += param_norm.item() ** 2
+                    grad_norm = total_norm**0.5
+
+                optimizer.step()
+
+            avg_ratio = infos["ratio_mean"].mean().item()
+            avg_entropy = infos["entropy"].mean().item()
+            mean_task_policy_loss = infos["policy_loss"].mean().item()
+            if isinstance(grad_norm, torch.Tensor):
+                grad_norm = grad_norm.item()
+            trpo_logs = {}
+
+        # Common Metrics
         avg_support_reward = support_td.get(("next", "reward")).mean().item()
-        std_support_reward = support_td.get(("next", "reward")).std().item()
-
         avg_query_reward = query_td.get(("next", "reward")).mean().item()
-        std_query_reward = query_td.get(("next", "reward")).std().item()
 
-        avg_ratio = infos["ratio_mean"].mean().item()
-        avg_entropy = infos["entropy"].mean().item()
-        mean_task_policy_loss = infos["policy_loss"].mean().item()
-
-        # Ensure grad_norm is a float
-        if isinstance(grad_norm, torch.Tensor):
-            grad_norm = grad_norm.item()
-
-        print(
+        # Print
+        log_str = (
             f"[iter {iteration}] "
-            f"loss={total_loss.item():.3f} "
-            f"grad_norm={grad_norm:.3f} "
+            f"loss={total_loss if isinstance(total_loss, float) else total_loss.item():.3f} "
             f"rew_support={avg_support_reward:.3f} "
             f"rew_query={avg_query_reward:.3f}"
         )
+        if cfg.algorithm == "trpo":
+            log_str += f" kl={trpo_logs.get('trpo_kl', 0):.4f}"
+        
+        print(log_str)
+
         if wandb.run is not None:
             log_data = {
                 "iteration": iteration,
-                "loss/total": total_loss.item(),
-                "loss/policy": policy_loss.item(),
-                "loss/value": value_loss.item(),
-                "ppo/ratio_mean": avg_ratio,
-                "ppo/entropy_mean": avg_entropy,
-                "ppo/policy_loss_mean": mean_task_policy_loss,
                 "reward/support_avg": avg_support_reward,
-                "reward/support_std": std_support_reward,
                 "reward/query_avg": avg_query_reward,
-                "reward/query_std": std_query_reward,
                 "optimizer/outer_lr": optimizer.param_groups[0]["lr"],
-                "optimizer/grad_norm": grad_norm,
             }
+            if cfg.algorithm == "ppo":
+                log_data.update({
+                    "loss/total": total_loss.item(),
+                    "loss/policy": policy_loss.item(),
+                    "loss/value": value_loss.item(),
+                    "ppo/ratio_mean": avg_ratio,
+                    "ppo/entropy_mean": avg_entropy,
+                    "optimizer/grad_norm": grad_norm,
+                })
+            elif cfg.algorithm == "trpo":
+                 log_data.update({
+                    "loss/trpo_surr": trpo_logs.get("trpo_surr", 0),
+                    "loss/value": value_loss.item(),
+                    "trpo/kl": trpo_logs.get("trpo_kl", 0),
+                    "trpo/improvement": trpo_logs.get("trpo_improvement", 0),
+                })
+            
             wandb.log(log_data, step=iteration)
+
+    # Save Model
+    import os
+    from datetime import datetime
+    
+    run_name = cfg.wandb.name if cfg.wandb.name else f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    save_dir = os.path.join("checkpoints", run_name)
+    os.makedirs(save_dir, exist_ok=True)
+    
+    save_path = os.path.join(save_dir, "model.pt")
+    torch.save({
+        "policy_state_dict": policy_model.state_dict(),
+        "value_state_dict": value_module.state_dict(),
+        "config": asdict(cfg),
+        "optimizer_state_dict": optimizer.state_dict(),
+    }, save_path)
+    print(f"Model saved to {save_path}")
 
     if wandb.run is not None:
         wandb.finish()

@@ -38,6 +38,15 @@ class OuterConfig:
 
 
 @dataclass
+class TRPOConfig:
+    max_kl: float = 0.01
+    damping: float = 0.1
+    cg_iters: int = 10
+    line_search_max_steps: int = 10
+    line_search_backtrack_ratio: float = 0.5
+
+
+@dataclass
 class WandbConfig:
     enable: bool = True
     project: str = "maml_rl"
@@ -49,6 +58,7 @@ class WandbConfig:
 
 @dataclass
 class TrainConfig:
+    algorithm: str = "trpo"  # "ppo" or "trpo"
     rollout_steps: int = 200
     num_iterations: int = 3
     gamma: float = 0.99
@@ -58,6 +68,7 @@ class TrainConfig:
     model: ModelConfig = field(default_factory=ModelConfig)
     inner: InnerConfig = field(default_factory=InnerConfig)
     outer: OuterConfig = field(default_factory=OuterConfig)
+    trpo: TRPOConfig = field(default_factory=TRPOConfig)
     wandb: WandbConfig = field(default_factory=WandbConfig)
 
 
@@ -66,6 +77,7 @@ __all__ = [
     "ModelConfig",
     "InnerConfig",
     "OuterConfig",
+    "TRPOConfig",
     "WandbConfig",
     "TrainConfig",
 ]
