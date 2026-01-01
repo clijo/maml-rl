@@ -20,8 +20,8 @@ class MetaAntGoalVelEnv(AntEnv):
     Reward: -|v_actual - v_goal| + ctrl_cost (ctrl_cost is negative in Gym)
     """
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    def __init__(self, terminate_when_unhealthy: bool = False, **kwargs):
+        super().__init__(terminate_when_unhealthy=terminate_when_unhealthy, **kwargs)
         self._goal_vel = 0.0
 
     def set_task(self, task: Mapping[str, float]) -> None:
@@ -43,7 +43,9 @@ class MetaAntGoalVelEnv(AntEnv):
         x_velocity = info["x_velocity"]
         forward_reward = -1.0 * np.abs(x_velocity - self._goal_vel)
         ctrl_cost = info["reward_ctrl"]
-        reward = forward_reward + ctrl_cost
+        # Include healthy reward to encourage survival
+        healthy_reward = info.get("reward_survive", 1.0)
+        reward = forward_reward + ctrl_cost + healthy_reward
         return observation, reward, terminated, truncated, info
 
 

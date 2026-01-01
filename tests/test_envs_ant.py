@@ -51,8 +51,8 @@ class TestAntEnv:
 
             obs, reward, terminated, truncated, info = env.step(np.zeros(8))
 
-            # Expected reward: -|1.5 - 1.0| + (-0.1) = -0.5 - 0.1 = -0.6
-            assert np.isclose(reward, -0.6)
+            # Expected reward: -|1.5 - 1.0| + (-0.1) + 1.0 = -0.5 - 0.1 + 1.0 = 0.4
+            assert np.isclose(reward, 0.4)
             assert info["x_velocity"] == 1.5
 
     def test_meta_ant_goal_vel_env_reset_with_options(self):

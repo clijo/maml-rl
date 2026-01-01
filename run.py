@@ -86,6 +86,7 @@ def main():
     args = parser.parse_args()
     cfg: TrainConfig = parser.instantiate_classes(args).config
 
+    enable_tf32()
     wandb_setup(cfg)
 
     torch.set_default_dtype(torch.float32)
@@ -285,62 +286,98 @@ def main():
                 f"support batch size {num_tasks}"
             )
 
-        # 4. Outer Loop Loss (Vectorized)
-        # vmap outer_loss_ppo over adapted_params (0) and query_td (0)
-        losses, infos = vmap(outer_loss_ppo, (None, 0, None, 0, None, None))(
-            policy_model,
-            adapted_params,
-            policy_buffers,
-            query_td,
-            cfg.outer.clip_eps,
-            cfg.outer.entropy_coef,
-        )
+        # 4. Outer Loop Loss (Vectorized PPO)
+        # We iterate multiple times over the same batch of data (PPO epochs)
+        # For each epoch, we must re-adapt the parameters starting from the *current* meta-parameters
+        # to properly compute gradients through the inner loop.
 
-        # Aggregate losses
-        policy_loss = losses.mean()
+        for ppo_epoch in range(cfg.outer.ppo_epochs):
+            # Re-extract current meta-parameters
+            curr_policy_params, curr_policy_buffers = params_and_buffers(policy_model)
+            curr_value_params, curr_value_buffers = params_and_buffers(value_module)
 
-        # Value loss (standard supervised)
-        value_pred = query_td["state_value"]
-        value_target = query_td["value_target"]
+            # A. Re-Adapt Policy (vmap over tasks)
+            adapted_params_list = vmap(
+                inner_update_single, in_dims=(None, None, 0)
+            )(curr_policy_params, curr_policy_buffers, support_td)
 
-        if cfg.outer.clip_value_loss:
-            # Clipped value loss (PPO-style)
-            value_pred_clipped = value_pred + torch.clamp(
-                value_pred - value_pred.detach(),
-                -cfg.outer.clip_eps,
+            adapted_params = OrderedDict(
+                (name, adapted_params_list[name]) for name in curr_policy_params.keys()
+            )
+
+            # B. Re-Adapt Value Function (vmap over tasks)
+            adapted_value_params_list = vmap(
+                inner_update_value_single, in_dims=(None, None, 0)
+            )(curr_value_params, curr_value_buffers, support_td)
+
+            adapted_value_params = OrderedDict(
+                (name, adapted_value_params_list[name])
+                for name in curr_value_params.keys()
+            )
+
+            # C. Compute Policy Loss
+            # vmap outer_loss_ppo over adapted_params (0) and query_td (0)
+            losses, infos = vmap(outer_loss_ppo, (None, 0, None, 0, None, None))(
+                policy_model,
+                adapted_params,
+                curr_policy_buffers,
+                query_td,
                 cfg.outer.clip_eps,
+                cfg.outer.entropy_coef,
             )
-            value_loss1 = (value_pred - value_target).pow(2)
-            value_loss2 = (value_pred_clipped - value_target).pow(2)
-            value_loss = torch.max(value_loss1, value_loss2).mean()
-        else:
-            # Standard MSE loss
-            value_loss = F.mse_loss(value_pred, value_target)
+            policy_loss = losses.mean()
 
-        total_loss = policy_loss + cfg.outer.value_coef * value_loss
+            # D. Compute Value Loss
+            # We need to predict values using the *current* adapted value params on the *query* data
+            def compute_value_loss_single(params, buffers, td):
+                td_out = functional_call(value_module, (params, buffers), (td,))
+                pred = td_out.get("state_value")
+                target = td.get("value_target")
+                
+                if cfg.outer.clip_value_loss:
+                    # We need old_value from the original collection for clipping
+                    # Assuming 'state_value' in query_td is the "old" value from collection
+                    old_pred = td.get("state_value").detach() 
+                    pred_clipped = old_pred + torch.clamp(
+                        pred - old_pred,
+                        -cfg.outer.clip_eps,
+                        cfg.outer.clip_eps,
+                    )
+                    loss1 = (pred - target).pow(2)
+                    loss2 = (pred_clipped - target).pow(2)
+                    return torch.max(loss1, loss2).mean()
+                else:
+                    return F.mse_loss(pred, target)
 
-        optimizer.zero_grad()
-        total_loss.backward()
-
-        params_to_clip = list(policy_model.parameters()) + list(
-            value_module.parameters()
-        )
-        if cfg.outer.max_grad_norm is not None:
-            grad_norm = torch.nn.utils.clip_grad_norm_(
-                params_to_clip,
-                cfg.outer.max_grad_norm,
+            value_losses = vmap(compute_value_loss_single, (0, None, 0))(
+                adapted_value_params, curr_value_buffers, query_td
             )
-        else:
-            # Compute norm manually if not clipping
-            total_norm = 0.0
-            for p in params_to_clip:
-                if p.grad is not None:
-                    param_norm = p.grad.detach().data.norm(2)
-                    total_norm += param_norm.item() ** 2
-            grad_norm = total_norm**0.5
+            value_loss = value_losses.mean()
 
-        optimizer.step()
+            total_loss = policy_loss + cfg.outer.value_coef * value_loss
 
+            optimizer.zero_grad()
+            total_loss.backward()
+
+            params_to_clip = list(policy_model.parameters()) + list(
+                value_module.parameters()
+            )
+            if cfg.outer.max_grad_norm is not None:
+                grad_norm = torch.nn.utils.clip_grad_norm_(
+                    params_to_clip,
+                    cfg.outer.max_grad_norm,
+                )
+            else:
+                total_norm = 0.0
+                for p in params_to_clip:
+                    if p.grad is not None:
+                        param_norm = p.grad.detach().data.norm(2)
+                        total_norm += param_norm.item() ** 2
+                grad_norm = total_norm**0.5
+
+            optimizer.step()
+
+        # Metrics from the LAST epoch
         avg_support_reward = support_td.get(("next", "reward")).mean().item()
         std_support_reward = support_td.get(("next", "reward")).std().item()
 

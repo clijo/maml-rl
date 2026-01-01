@@ -37,6 +37,16 @@ def build_actor_critic(
         value_module: ValueOperator producing state_value.
     """
     policy_backbone = _mlp(obs_dim, hidden_sizes, 2 * act_dim)
+
+    # Initialize policy weights
+    for layer in policy_backbone[:-1]:
+        if isinstance(layer, nn.Linear):
+            nn.init.orthogonal_(layer.weight, gain=2**0.5)
+            nn.init.constant_(layer.bias, 0.0)
+    # Policy output layer (small gain for near-zero initial mean/action)
+    nn.init.orthogonal_(policy_backbone[-1].weight, gain=0.01)
+    nn.init.constant_(policy_backbone[-1].bias, 0.0)
+
     policy_model = TensorDictSequential(
         TensorDictModule(policy_backbone, in_keys=["observation"], out_keys=["param"]),
         TensorDictModule(
@@ -53,6 +63,16 @@ def build_actor_critic(
     )
 
     value_net = _mlp(obs_dim, hidden_sizes, 1)
+
+    # Initialize value weights
+    for layer in value_net[:-1]:
+        if isinstance(layer, nn.Linear):
+            nn.init.orthogonal_(layer.weight, gain=2**0.5)
+            nn.init.constant_(layer.bias, 0.0)
+    # Value output layer
+    nn.init.orthogonal_(value_net[-1].weight, gain=1.0)
+    nn.init.constant_(value_net[-1].bias, 0.0)
+
     value_module = ValueOperator(
         value_net, in_keys=["observation"], out_keys=["state_value"]
     )

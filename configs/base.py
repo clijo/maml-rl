@@ -28,6 +28,7 @@ class InnerConfig:
 @dataclass
 class OuterConfig:
     lr: float = 3e-4
+    ppo_epochs: int = 5
     clip_eps: float = 0.2
     entropy_coef: float = 0.0
     value_coef: float = 0.5
