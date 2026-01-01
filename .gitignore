@@ -1,0 +1,23 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Testing and Coverage
+.coverage
+.pytest_cache/
+
+# Linting and Formatting
+.ruff_cache/
+
+# Virtual environments and package management
+.venv/
+.uv_cache/
+
+# Experiment Tracking
+wandb/
+
+.DS_Store

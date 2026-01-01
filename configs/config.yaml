@@ -1,0 +1,26 @@
+config:
+  rollout_steps: 200
+  num_iterations: 3
+  gamma: 0.99
+  lam: 0.95
+  seed: 0
+  env:
+    num_tasks: 8
+    max_steps: 200
+    task_low: 0.0
+    task_high: 3.0
+    device: cpu
+  model:
+    hidden_sizes: [100, 100]
+  inner:
+    lr: 0.05
+    advantage_norm: true
+  outer:
+    lr: 0.0003
+    clip_eps: 0.2
+    entropy_coef: 0.0
+    value_coef: 0.5
+    clip_value_loss: false
+    max_grad_norm: 0.5
+    advantage_norm: true
+
