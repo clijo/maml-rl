@@ -297,9 +297,9 @@ def main():
             curr_value_params, curr_value_buffers = params_and_buffers(value_module)
 
             # A. Re-Adapt Policy (vmap over tasks)
-            adapted_params_list = vmap(
-                inner_update_single, in_dims=(None, None, 0)
-            )(curr_policy_params, curr_policy_buffers, support_td)
+            adapted_params_list = vmap(inner_update_single, in_dims=(None, None, 0))(
+                curr_policy_params, curr_policy_buffers, support_td
+            )
 
             adapted_params = OrderedDict(
                 (name, adapted_params_list[name]) for name in curr_policy_params.keys()
@@ -333,11 +333,11 @@ def main():
                 td_out = functional_call(value_module, (params, buffers), (td,))
                 pred = td_out.get("state_value")
                 target = td.get("value_target")
-                
+
                 if cfg.outer.clip_value_loss:
                     # We need old_value from the original collection for clipping
                     # Assuming 'state_value' in query_td is the "old" value from collection
-                    old_pred = td.get("state_value").detach() 
+                    old_pred = td.get("state_value").detach()
                     pred_clipped = old_pred + torch.clamp(
                         pred - old_pred,
                         -cfg.outer.clip_eps,
