@@ -4,11 +4,13 @@ from typing import Optional, Tuple
 
 @dataclass
 class EnvConfig:
+    name: str = "ant"
     num_tasks: int = 8
     max_steps: int = 200
     task_low: float = 0.0
     task_high: float = 3.0
     device: str = "auto"
+    norm_obs: bool = True
 
 
 @dataclass

@@ -3,7 +3,13 @@ from typing import List, Mapping, Optional, Tuple
 
 import numpy as np
 from torchrl.envs import GymWrapper, ParallelEnv, TransformedEnv
-from torchrl.envs.transforms import Compose, InitTracker, StepCounter, DoubleToFloat
+from torchrl.envs.transforms import (
+    Compose,
+    InitTracker,
+    StepCounter,
+    DoubleToFloat,
+    ObservationNorm,
+)
 from gymnasium.envs.mujoco.ant_v4 import AntEnv  # gymnasium >=0.28
 
 
@@ -74,10 +80,15 @@ def make_ant_vec_env(
     tasks: Sequence[Mapping[str, float]],
     device: str = "cpu",
     max_steps: int = 200,
+    norm_obs: bool = True,
 ):
     """Create a parallel Ant GoalVel vector environment with fixed tasks."""
     env_fn_list = [
         lambda t=task: make_ant_env(t, device=device, max_steps=max_steps)
         for task in tasks
     ]
-    return ParallelEnv(num_workers=len(tasks), create_env_fn=env_fn_list)
+    env = ParallelEnv(num_workers=len(tasks), create_env_fn=env_fn_list)
+    if norm_obs:
+        obs_norm = ObservationNorm(in_keys=["observation"], standard_normal=True)
+        env = TransformedEnv(env, obs_norm)
+    return env

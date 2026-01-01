@@ -11,7 +11,7 @@ from torch.func import vmap, functional_call
 from torch.optim import Adam
 
 from configs.base import TrainConfig
-from maml_rl.envs.ant import make_ant_vec_env, sample_ant_tasks
+from maml_rl.envs.factory import make_vec_env, sample_tasks
 from maml_rl.maml import (
     FunctionalPolicy,
     inner_update_vpg,
@@ -97,11 +97,24 @@ def main():
     print(f"Device: {device}")
 
     # Create environment once and reuse it
-    tasks = sample_ant_tasks(
-        cfg.env.num_tasks, low=cfg.env.task_low, high=cfg.env.task_high
+    tasks, env = make_vec_env(
+        env_name=cfg.env.name,
+        num_tasks=cfg.env.num_tasks,
+        task_low=cfg.env.task_low,
+        task_high=cfg.env.task_high,
+        max_steps=cfg.env.max_steps,
+        device=device,
+        norm_obs=cfg.env.norm_obs,
+        seed=cfg.seed,
     )
-    env = make_ant_vec_env(tasks, device=device, max_steps=cfg.env.max_steps)
-    env.set_seed(cfg.seed)
+
+    if cfg.env.norm_obs:
+        print("Initializing observation normalization statistics...")
+        # env is TransformedEnv, its transform is ObservationNorm (or Compose containing it)
+        # Use a few rollouts to get initial stats.
+        # Since it's a ParallelEnv, each rollout gives num_tasks * rollout_steps samples.
+        env.transform.init_stats(num_iter=5, reduce_dim=[0, 1], cat_dim=0)
+        print(f"Obs norm loc mean: {env.transform.loc.mean():.4f}")
 
     # Determine dimensions from spec
     obs_spec = env.observation_spec["observation"]
@@ -130,8 +143,11 @@ def main():
     for iteration in range(1, cfg.num_iterations + 1):
         # Update tasks in existing env for better performance
         if iteration > 1:
-            tasks = sample_ant_tasks(
-                cfg.env.num_tasks, low=cfg.env.task_low, high=cfg.env.task_high
+            tasks = sample_tasks(
+                env_name=cfg.env.name,
+                num_tasks=cfg.env.num_tasks,
+                task_low=cfg.env.task_low,
+                task_high=cfg.env.task_high,
             )
             # Update tasks via reset options
             env.reset(options=[{"task": t} for t in tasks])

@@ -71,10 +71,12 @@ class TestAntEnv:
 
     def test_make_ant_vec_env(self):
         tasks = sample_ant_tasks(2)
-        # Mocking to avoid heavy physics initialization if possible,
-        # but integration test is good too.
-        # We'll rely on skipping if full mujoco fails.
+        # By default norm_obs=True, so we must initialize it
         env = make_ant_vec_env(tasks, device="cpu", max_steps=10)
+
+        # Access the transform to initialize it
+        env.transform.init_stats(num_iter=1, reduce_dim=[0, 1], cat_dim=0)
+
         td = env.reset()
         assert td.shape[0] == 2
         assert "observation" in td.keys()
