@@ -263,7 +263,7 @@ def main():
             query_td.set("advantage", normalize_advantages(query_td["advantage"]))
 
         # 4. Outer Loop Update
-        
+
         if cfg.algorithm == "trpo":
             # TRPO Update (Policy Only)
             new_params, trpo_info = outer_step_trpo(
@@ -280,7 +280,7 @@ def main():
                 line_search_max_steps=cfg.trpo.line_search_max_steps,
                 line_search_backtrack_ratio=cfg.trpo.line_search_backtrack_ratio,
             )
-            
+
             # Apply new params to model
             for name, param in new_params.items():
                 # We need to update the model parameters in-place
@@ -289,11 +289,11 @@ def main():
                 # The safest way for standard nn.Module is:
                 model_param = policy_model.get_parameter(name)
                 model_param.data.copy_(param.data)
-            
+
             # Value Function Update (Standard Adam)
             # We iterate a few times for value function to keep up
             curr_value_params, curr_value_buffers = params_and_buffers(value_module)
-            
+
             def compute_value_loss_single(params, buffers, td):
                 td_out = functional_call(value_module, (params, buffers), (td,))
                 pred = td_out.get("state_value")
@@ -302,49 +302,52 @@ def main():
 
             # Re-adapt value params for the loss computation
             # We do this for a few epochs (same as PPO epochs usually or fixed 5)
-            value_epochs = cfg.outer.ppo_epochs 
-            
+            value_epochs = cfg.outer.ppo_epochs
+
             for _ in range(value_epochs):
                 # Re-adapt value params
                 adapted_val_list = vmap(
                     inner_update_value_single, in_dims=(None, None, 0)
                 )(curr_value_params, curr_value_buffers, support_td)
-                
+
                 adapted_val = OrderedDict(
                     (n, adapted_val_list[n]) for n in curr_value_params.keys()
                 )
-                
+
                 # Compute loss
                 losses = vmap(compute_value_loss_single, (0, None, 0))(
                     adapted_val, curr_value_buffers, query_td
                 )
                 value_loss = losses.mean()
-                
+
                 optimizer.zero_grad()
                 value_loss.backward()
                 optimizer.step()
-                
-            total_loss = trpo_info["trpo_surr"] # Just for logging
+
+            total_loss = trpo_info["trpo_surr"]  # Just for logging
             policy_loss = trpo_info["trpo_surr"]
-            avg_ratio = 1.0 # Placeholder
-            avg_entropy = 0.0 # Placeholder
-            grad_norm = 0.0 # Placeholder
-            
+            avg_ratio = 1.0  # Placeholder
+            avg_entropy = 0.0  # Placeholder
+            grad_norm = 0.0  # Placeholder
+
             # Update log dict
             trpo_logs = trpo_info
 
         else:
             # PPO Update (Policy + Value)
             for ppo_epoch in range(cfg.outer.ppo_epochs):
-                curr_policy_params, curr_policy_buffers = params_and_buffers(policy_model)
+                curr_policy_params, curr_policy_buffers = params_and_buffers(
+                    policy_model
+                )
                 curr_value_params, curr_value_buffers = params_and_buffers(value_module)
 
-                adapted_params_list = vmap(inner_update_single, in_dims=(None, None, 0))(
-                    curr_policy_params, curr_policy_buffers, support_td
-                )
+                adapted_params_list = vmap(
+                    inner_update_single, in_dims=(None, None, 0)
+                )(curr_policy_params, curr_policy_buffers, support_td)
 
                 adapted_params = OrderedDict(
-                    (name, adapted_params_list[name]) for name in curr_policy_params.keys()
+                    (name, adapted_params_list[name])
+                    for name in curr_policy_params.keys()
                 )
 
                 adapted_value_params_list = vmap(
@@ -432,7 +435,7 @@ def main():
         )
         if cfg.algorithm == "trpo":
             log_str += f" kl={trpo_logs.get('trpo_kl', 0):.4f}"
-        
+
         print(log_str)
 
         if wandb.run is not None:
@@ -443,39 +446,50 @@ def main():
                 "optimizer/outer_lr": optimizer.param_groups[0]["lr"],
             }
             if cfg.algorithm == "ppo":
-                log_data.update({
-                    "loss/total": total_loss.item(),
-                    "loss/policy": policy_loss.item(),
-                    "loss/value": value_loss.item(),
-                    "ppo/ratio_mean": avg_ratio,
-                    "ppo/entropy_mean": avg_entropy,
-                    "optimizer/grad_norm": grad_norm,
-                })
+                log_data.update(
+                    {
+                        "loss/total": total_loss.item(),
+                        "loss/policy": policy_loss.item(),
+                        "loss/value": value_loss.item(),
+                        "ppo/ratio_mean": avg_ratio,
+                        "ppo/entropy_mean": avg_entropy,
+                        "optimizer/grad_norm": grad_norm,
+                    }
+                )
             elif cfg.algorithm == "trpo":
-                 log_data.update({
-                    "loss/trpo_surr": trpo_logs.get("trpo_surr", 0),
-                    "loss/value": value_loss.item(),
-                    "trpo/kl": trpo_logs.get("trpo_kl", 0),
-                    "trpo/improvement": trpo_logs.get("trpo_improvement", 0),
-                })
-            
+                log_data.update(
+                    {
+                        "loss/trpo_surr": trpo_logs.get("trpo_surr", 0),
+                        "loss/value": value_loss.item(),
+                        "trpo/kl": trpo_logs.get("trpo_kl", 0),
+                        "trpo/improvement": trpo_logs.get("trpo_improvement", 0),
+                    }
+                )
+
             wandb.log(log_data, step=iteration)
 
     # Save Model
     import os
     from datetime import datetime
-    
-    run_name = cfg.wandb.name if cfg.wandb.name else f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+
+    run_name = (
+        cfg.wandb.name
+        if cfg.wandb.name
+        else f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+    )
     save_dir = os.path.join("checkpoints", run_name)
     os.makedirs(save_dir, exist_ok=True)
-    
+
     save_path = os.path.join(save_dir, "model.pt")
-    torch.save({
-        "policy_state_dict": policy_model.state_dict(),
-        "value_state_dict": value_module.state_dict(),
-        "config": asdict(cfg),
-        "optimizer_state_dict": optimizer.state_dict(),
-    }, save_path)
+    torch.save(
+        {
+            "policy_state_dict": policy_model.state_dict(),
+            "value_state_dict": value_module.state_dict(),
+            "config": asdict(cfg),
+            "optimizer_state_dict": optimizer.state_dict(),
+        },
+        save_path,
+    )
     print(f"Model saved to {save_path}")
 
     if wandb.run is not None:

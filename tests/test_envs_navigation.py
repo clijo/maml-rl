@@ -23,7 +23,7 @@ class TestNavigationEnv:
 
     def test_navigation_env_logic(self):
         env = Navigation2DEnv()
-        
+
         # Set a specific goal
         target_goal = np.array([0.5, 0.5], dtype=np.float64)
         env.set_task({"goal": target_goal})
@@ -35,14 +35,14 @@ class TestNavigationEnv:
         # 1. Test step with action within limits
         action = np.array([0.05, 0.05], dtype=np.float64)
         state, reward, terminated, truncated, info = env.step(action)
-        
+
         # New state should be [0.05, 0.05]
         expected_state = np.array([0.05, 0.05], dtype=np.float64)
         assert np.allclose(state, expected_state)
-        
+
         # Distance to goal [0.5, 0.5] is sqrt(0.45^2 + 0.45^2)
         # Reward is -distance^2
-        dist_sq = (0.5 - 0.05)**2 + (0.5 - 0.05)**2
+        dist_sq = (0.5 - 0.05) ** 2 + (0.5 - 0.05) ** 2
         expected_reward = -dist_sq
         assert np.isclose(reward, expected_reward)
         assert not terminated
@@ -52,18 +52,20 @@ class TestNavigationEnv:
         env.reset()
         action_large = np.array([0.2, -0.5], dtype=np.float64)
         state, _, _, _, _ = env.step(action_large)
-        
+
         # Should be clipped to [0.1, -0.1]
         expected_state_clipped = np.array([0.1, -0.1], dtype=np.float64)
         assert np.allclose(state, expected_state_clipped)
 
         # 3. Test termination condition
         # Set state very close to goal
-        env._state = np.array([0.499, 0.499], dtype=np.float64) 
+        env._state = np.array([0.499, 0.499], dtype=np.float64)
         # Distance to [0.5, 0.5] is sqrt(0.001^2 + 0.001^2) approx 0.0014 < 0.01
-        
+
         # Take a tiny step that keeps it within range or 0 step
-        state, reward, terminated, truncated, _ = env.step(np.zeros(2, dtype=np.float64))
+        state, reward, terminated, truncated, _ = env.step(
+            np.zeros(2, dtype=np.float64)
+        )
         assert terminated
 
     def test_navigation_env_reset_with_options(self):

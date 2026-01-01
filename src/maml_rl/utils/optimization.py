@@ -2,12 +2,14 @@ import torch
 from collections import OrderedDict
 from typing import Mapping, Callable, List
 
+
 def parameters_to_vector(params: Mapping[str, torch.Tensor]) -> torch.Tensor:
     """Flatten a dictionary of parameters into a single vector."""
     vec = []
     for _, param in params.items():
         vec.append(param.view(-1))
     return torch.cat(vec)
+
 
 def vector_to_parameters(
     vec: torch.Tensor, template_params: Mapping[str, torch.Tensor]
@@ -20,6 +22,7 @@ def vector_to_parameters(
         new_params[name] = vec[pointer : pointer + num_param].view_as(param)
         pointer += num_param
     return new_params
+
 
 def conjugate_gradients(
     fvp_func: Callable[[torch.Tensor], torch.Tensor],

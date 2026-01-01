@@ -155,7 +155,7 @@ def _adapt_over_tasks(
     adapted_list = vmap(inner_loop, (None, None, 0))(
         policy_params, policy_buffers, support_td
     )
-    
+
     # Reconstruct OrderedDict with batched tensors
     adapted_params = OrderedDict(
         (name, adapted_list[name]) for name in policy_params.keys()
@@ -181,28 +181,36 @@ def outer_step_trpo(
     Perform a single TRPO outer step.
     Updates policy_params in-place (or returns new ones).
     """
-    
+
     # 1. Compute Old Distributions (Reference)
     with torch.no_grad():
         old_adapted_params = _adapt_over_tasks(
-            policy_model, policy_params, policy_buffers, support_td, inner_lr, inner_steps
+            policy_model,
+            policy_params,
+            policy_buffers,
+            support_td,
+            inner_lr,
+            inner_steps,
         )
+
         # Compute old probs/dists on query set for KL
         # We process task-by-task via vmap
         def get_dist(p, t):
             d, _ = _dist_from_params(policy_model, p, policy_buffers, t)
             return d
-        
+
         # This returns a batch of distributions
-        # Note: TanhNormal might not be perfectly vmap-friendly for storage, 
+        # Note: TanhNormal might not be perfectly vmap-friendly for storage,
         # so we store the loc/scale parameters instead if needed, but let's try direct use.
         # Actually, for KL, we need the parameters of the old distribution.
-        
+
         def get_dist_params(p, t):
             out = functional_call(policy_model, (p, policy_buffers), (t,))
             return out.get("loc"), out.get("scale")
 
-        old_locs, old_scales = vmap(get_dist_params, (0, 0))(old_adapted_params, query_td)
+        old_locs, old_scales = vmap(get_dist_params, (0, 0))(
+            old_adapted_params, query_td
+        )
         # Detach them as they are fixed references
         old_locs = old_locs.detach()
         old_scales = old_scales.detach()
@@ -210,23 +218,27 @@ def outer_step_trpo(
     # 2. Define Objective and KL functions w.r.t. Meta-Parameters
     # We work with flattened parameters for CG/Line Search
     flat_params = parameters_to_vector(policy_params)
-    
+
     def get_objective(flat_p):
         """Compute the surrogated return (TRPO objective)."""
         curr_params = vector_to_parameters(flat_p, policy_params)
         adapted_params = _adapt_over_tasks(
             policy_model, curr_params, policy_buffers, support_td, inner_lr, inner_steps
         )
-        
+
         # Compute surrogate loss
         def compute_task_surrogate(p_adapted, t_query, old_loc, old_scale):
-            dist, _ = _dist_from_params(policy_model, p_adapted, policy_buffers, t_query)
+            dist, _ = _dist_from_params(
+                policy_model, p_adapted, policy_buffers, t_query
+            )
             log_prob = _get_log_prob(dist, t_query["action"], t_query.batch_dims)
-            
+
             # Reconstruct old dist for ratio
             old_dist = TanhNormal(old_loc, old_scale)
-            old_log_prob = _get_log_prob(old_dist, t_query["action"], t_query.batch_dims)
-            
+            old_log_prob = _get_log_prob(
+                old_dist, t_query["action"], t_query.batch_dims
+            )
+
             ratio = torch.exp(log_prob - old_log_prob)
             adv = t_query["advantage"]
             return (ratio * adv).mean()
@@ -234,7 +246,7 @@ def outer_step_trpo(
         surrogates = vmap(compute_task_surrogate, (0, 0, 0, 0))(
             adapted_params, query_td, old_locs, old_scales
         )
-        return surrogates.mean() # Maximize this
+        return surrogates.mean()  # Maximize this
 
     def get_kl(flat_p):
         """Compute mean KL divergence between old and new adapted policies."""
@@ -244,11 +256,13 @@ def outer_step_trpo(
         )
 
         def compute_task_kl(p_adapted, t_query, old_loc, old_scale):
-            dist, _ = _dist_from_params(policy_model, p_adapted, policy_buffers, t_query)
+            dist, _ = _dist_from_params(
+                policy_model, p_adapted, policy_buffers, t_query
+            )
             old_dist = TanhNormal(old_loc, old_scale)
             # KL(Old || New)
             return torch.distributions.kl_divergence(old_dist, dist).mean()
-        
+
         kls = vmap(compute_task_kl, (0, 0, 0, 0))(
             adapted_params, query_td, old_locs, old_scales
         )
@@ -258,15 +272,17 @@ def outer_step_trpo(
     # We need to retain graph for FVP if we used a double-backward approach,
     # but here we use a separate function for FVP or re-compute.
     # Standard TRPO: grad of objective, then FVP of KL.
-    
-    loss = get_objective(flat_params) # We want to MAXIMIZE objective, so minimize -objective
-    # Note: TRPO usually maximizes objective. 
+
+    loss = get_objective(
+        flat_params
+    )  # We want to MAXIMIZE objective, so minimize -objective
+    # Note: TRPO usually maximizes objective.
     grads = torch.autograd.grad(loss, flat_params, retain_graph=True)[0]
-    
+
     # 4. Fisher Vector Product
     # FVP(v) = grad( (grad(KL) * v).sum() )
     # We can use autograd.grad on the KL function.
-    
+
     def fisher_vector_product(v):
         kl = get_kl(flat_params)
         kl_grad = torch.autograd.grad(kl, flat_params, create_graph=True)[0]
@@ -276,52 +292,52 @@ def outer_step_trpo(
 
     # 5. Conjugate Gradient
     step_dir = conjugate_gradients(fisher_vector_product, grads, nsteps=cg_iters)
-    
+
     # 6. Line Search
     # We have step direction `step_dir` (x in Hx=g).
     # Step size scaling: beta = sqrt( 2 * max_kl / (xHx) )
     shs = 0.5 * (step_dir * fisher_vector_product(step_dir)).sum(0, keepdim=True)
     lm = torch.sqrt(shs / max_kl)
     full_step = step_dir / lm[0]
-    
+
     # In case of numerical instability
     if torch.isnan(full_step).any():
         print("NaN in TRPO step direction. Skipping update.")
         return policy_params, {"trpo_kl": 0.0, "trpo_surr": 0.0}
 
     old_objective = loss.item()
-    
+
     final_step = None
     expected_improve = (grads * full_step).sum().item()
-    
+
     # Backtracking
     for i in range(line_search_max_steps):
-        step_frac = line_search_backtrack_ratio ** i
+        step_frac = line_search_backtrack_ratio**i
         step = full_step * step_frac
         new_params_flat = flat_params + step
-        
+
         with torch.no_grad():
             new_objective = get_objective(new_params_flat).item()
             new_kl = get_kl(new_params_flat).item()
-            
+
         # Check acceptance
         # 1. Improvement > 0 (or satisfying Armijo condition if strict)
         # 2. KL < max_kl * (something slightly > 1 for tolerance?)
-        
+
         if new_objective > old_objective and new_kl <= max_kl * 1.5:
-             final_step = step
-             break
-    
+            final_step = step
+            break
+
     if final_step is None:
         print("TRPO line search failed.")
         return policy_params, {"trpo_kl": 0.0, "trpo_surr": old_objective}
-    
+
     new_params = vector_to_parameters(flat_params + final_step, policy_params)
-    
+
     return new_params, {
-        "trpo_kl": new_kl, 
+        "trpo_kl": new_kl,
         "trpo_surr": new_objective,
-        "trpo_improvement": new_objective - old_objective
+        "trpo_improvement": new_objective - old_objective,
     }
 
 
@@ -347,7 +363,7 @@ class FunctionalPolicy(nn.Module):
         """Detect if parameters are batched (one extra dimension for task batch)."""
         if not self.params:
             return False
-        
+
         # Use arbitrary key
         name, param = next(iter(self.params.items()))
         try:
@@ -361,10 +377,10 @@ class FunctionalPolicy(nn.Module):
                     break
 
         if model_param is None:
-             # Just assume if not found it might be batched if dim is high?
-             # Safer: assume not batched if we can't verify. 
-             # But MAML code ensures names match.
-             return False
+            # Just assume if not found it might be batched if dim is high?
+            # Safer: assume not batched if we can't verify.
+            # But MAML code ensures names match.
+            return False
 
         return param.ndim > model_param.ndim
 

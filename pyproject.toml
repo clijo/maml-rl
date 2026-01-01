@@ -15,7 +15,7 @@ dependencies = [
 ]
 
 [project.scripts]
-maml-rl = "maml_rl:main"
+maml-rl = "maml_rl.run:main"
 
 [build-system]
 requires = ["uv_build>=0.8.13,<0.9.0"]

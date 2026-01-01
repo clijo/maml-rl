@@ -21,3 +21,5 @@ wheels/
 wandb/
 
 .DS_Store
+
+checkpoints/
