@@ -117,7 +117,7 @@ def make_navigation_vec_env(
     tasks: Sequence[Mapping[str, np.ndarray]],
     device: str = "cpu",
     max_steps: int = 100,
-    norm_obs: bool = False,  # Usually false for simple 2D nav points, but kept for interface consistency
+    norm_obs: bool = False,
 ):
     """Create a parallel Navigation vector environment with fixed tasks."""
     env_fn_list = [

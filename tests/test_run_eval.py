@@ -1,7 +1,10 @@
+import sys
 import os
 import subprocess
 import pytest
 import torch
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
 def test_eval_mode_runs():

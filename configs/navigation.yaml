@@ -1,7 +1,7 @@
 config:
   algorithm: trpo
   rollout_steps: 2000
-  num_iterations: 500
+  num_iterations: 15
   gamma: 0.99
   lam: 0.95
   seed: 42
