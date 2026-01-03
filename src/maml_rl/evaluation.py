@@ -154,18 +154,33 @@ def evaluate(
         if cfg.inner.advantage_norm:
             support_td.set("advantage", normalize_advantages(support_td["advantage"]))
 
-        def inner_step(params, buffers, data):
-            # Inner loop VPG update
-            return inner_update_vpg(policy_model, params, buffers, data, cfg.inner.lr)
-
         for step_k in range(1, cfg.inner.num_steps + 1):
-            # Update params using SUPPORT data
-            current_params_list = vmap(
-                inner_step, in_dims=(None if step_k == 1 else 0, None, 0)
-            )(current_params_list, policy_buffers, support_td)
+            # Create inner loop for exactly step_k steps
+            def make_k_step_loop(k):
+                def inner_k_steps(params, buffers, data):
+                    curr = params
+                    for i in range(k):
+                        # Determine learning rate for this step
+                        current_lr = cfg.inner.lr
+                        if i == 0 and cfg.inner.first_step_lr is not None:
+                            current_lr = cfg.inner.first_step_lr
+
+                        curr = inner_update_vpg(
+                            policy_model, curr, buffers, data, current_lr
+                        )
+                    return curr
+
+                return inner_k_steps
+
+            inner_k = make_k_step_loop(step_k)
+
+            # Always vmap with in_dims=(None, None, 0) - shared initial params
+            adapted_params_batched = vmap(inner_k, in_dims=(None, None, 0))(
+                policy_params, policy_buffers, support_td
+            )
 
             adapted_params = OrderedDict(
-                (n, current_params_list[n]) for n in policy_params.keys()
+                (n, adapted_params_batched[n]) for n in policy_params.keys()
             )
 
             # Evaluate on QUERY data (Full max_steps)

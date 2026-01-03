@@ -1,17 +1,12 @@
 import numpy as np
 
-from maml_rl.envs.navigation import (
-    make_navigation_env,
-    sample_navigation_tasks,
-    make_navigation_vec_env,
-    Navigation2DEnv,
-)
+from maml_rl.envs.navigation import Navigation2DEnv
 
 
 class TestNavigationEnv:
-    def test_sample_navigation_tasks(self):
+    def test_sample_tasks(self):
         num_tasks = 10
-        tasks = sample_navigation_tasks(num_tasks, low=-0.5, high=0.5)
+        tasks = Navigation2DEnv.sample_tasks(num_tasks, low=-0.5, high=0.5)
         assert len(tasks) == num_tasks
         for task in tasks:
             assert "goal" in task
@@ -75,18 +70,12 @@ class TestNavigationEnv:
         env.reset(options={"task": task})
         assert np.allclose(env._goal, task["goal"])
 
-    def test_make_navigation_env_instantiates(self):
-        task = sample_navigation_tasks(1)[0]
-        env = make_navigation_env(task, device="cpu", max_steps=10)
-        td = env.reset()
-        assert "observation" in td.keys()
-        assert env.action_spec is not None
-        env.close()
-
-    def test_make_navigation_vec_env(self):
-        tasks = sample_navigation_tasks(2)
+    def test_make_vec_env(self):
+        tasks = Navigation2DEnv.sample_tasks(2)
         # norm_obs=False for navigation usually, but testing if it works
-        env = make_navigation_vec_env(tasks, device="cpu", max_steps=10, norm_obs=True)
+        env = Navigation2DEnv.make_vec_env(
+            tasks, device="cpu", max_steps=10, norm_obs=True
+        )
 
         # Access the transform to initialize it
         env.transform.init_stats(num_iter=1, reduce_dim=[0, 1], cat_dim=0)

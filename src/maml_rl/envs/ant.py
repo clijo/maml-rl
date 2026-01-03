@@ -1,5 +1,5 @@
 from collections.abc import Sequence
-from typing import List, Mapping, Optional, Tuple
+from typing import Any, List, Mapping, Optional, Tuple
 
 import numpy as np
 from torchrl.envs import GymWrapper, ParallelEnv, TransformedEnv
@@ -10,7 +10,7 @@ from torchrl.envs.transforms import (
     DoubleToFloat,
     ObservationNorm,
 )
-from gymnasium.envs.mujoco.ant_v4 import AntEnv  # gymnasium >=0.28
+from gymnasium.envs.mujoco.ant_v4 import AntEnv
 
 
 class MetaAntGoalVelEnv(AntEnv):
@@ -24,7 +24,7 @@ class MetaAntGoalVelEnv(AntEnv):
         super().__init__(terminate_when_unhealthy=terminate_when_unhealthy, **kwargs)
         self._goal_vel = 0.0
 
-    def set_task(self, task: Mapping[str, float]) -> None:
+    def set_task(self, task: Mapping[str, Any]) -> None:
         self._goal_vel = float(task["velocity"])
 
     def reset(
@@ -33,10 +33,6 @@ class MetaAntGoalVelEnv(AntEnv):
         if options is not None and "task" in options:
             self.set_task(options["task"])
         return super().reset(seed=seed, options=options)
-
-    def sample_tasks(self, num_tasks: int) -> List[Mapping[str, float]]:
-        velocities = np.random.uniform(0.0, 3.0, (num_tasks,))
-        return [{"velocity": float(v)} for v in velocities]
 
     def step(self, action):
         observation, _, terminated, truncated, info = super().step(action)
@@ -48,16 +44,34 @@ class MetaAntGoalVelEnv(AntEnv):
         reward = forward_reward + ctrl_cost + healthy_reward
         return observation, reward, terminated, truncated, info
 
+    @staticmethod
+    def sample_tasks(
+        num_tasks: int, low: float = 0.0, high: float = 3.0
+    ) -> List[Mapping[str, float]]:
+        """Sample target velocities for Ant tasks."""
+        velocities = np.random.uniform(low, high, size=(num_tasks,))
+        return [{"velocity": float(v)} for v in velocities]
 
-def sample_ant_tasks(
-    num_tasks: int, low: float = 0.0, high: float = 3.0
-) -> List[Mapping[str, float]]:
-    """Sample target velocities for Ant tasks."""
-    velocities = np.random.uniform(low, high, size=(num_tasks,))
-    return [{"velocity": float(v)} for v in velocities]
+    @staticmethod
+    def make_vec_env(
+        tasks: Sequence[Mapping[str, float]],
+        device: str = "cpu",
+        max_steps: int = 200,
+        norm_obs: bool = True,
+    ):
+        """Create a parallel Ant GoalVel vector environment with fixed tasks."""
+        env_fn_list = [
+            lambda t=task: _make_ant_env(t, device=device, max_steps=max_steps)
+            for task in tasks
+        ]
+        env = ParallelEnv(num_workers=len(tasks), create_env_fn=env_fn_list)
+        if norm_obs:
+            obs_norm = ObservationNorm(in_keys=["observation"], standard_normal=True)
+            env = TransformedEnv(env, obs_norm)
+        return env
 
 
-def make_ant_env(
+def _make_ant_env(
     task: Mapping[str, float],
     device: str = "cpu",
     render_mode: Optional[str] = None,
@@ -75,22 +89,4 @@ def make_ant_env(
             DoubleToFloat(in_keys=["observation"]),
         ),
     )
-    return env
-
-
-def make_ant_vec_env(
-    tasks: Sequence[Mapping[str, float]],
-    device: str = "cpu",
-    max_steps: int = 200,
-    norm_obs: bool = True,
-):
-    """Create a parallel Ant GoalVel vector environment with fixed tasks."""
-    env_fn_list = [
-        lambda t=task: make_ant_env(t, device=device, max_steps=max_steps)
-        for task in tasks
-    ]
-    env = ParallelEnv(num_workers=len(tasks), create_env_fn=env_fn_list)
-    if norm_obs:
-        obs_norm = ObservationNorm(in_keys=["observation"], standard_normal=True)
-        env = TransformedEnv(env, obs_norm)
     return env

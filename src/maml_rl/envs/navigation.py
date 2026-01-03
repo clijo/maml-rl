@@ -72,28 +72,44 @@ class Navigation2DEnv(gym.Env):
 
         # Terminate when within 0.01 of the goal
         terminated = bool(dist < 0.01)
-        truncated = False  # Handled by StepCounter wrapper usually, but defining here strictly per env logic is fine.
+        truncated = False
 
         return self._state.copy(), float(reward), terminated, truncated, {"error": dist}
 
+    @staticmethod
+    def sample_tasks(
+        num_tasks: int, low: float = -0.5, high: float = 0.5
+    ) -> List[Mapping[str, np.ndarray]]:
+        """Sample tasks for the 2D Navigation environment.
 
-def sample_navigation_tasks(
-    num_tasks: int, low: float = -0.5, high: float = 0.5
-) -> List[Mapping[str, np.ndarray]]:
-    """
-    Sample tasks for the 2D Navigation environment.
-    Goals are randomly chosen within a unit square.
+        Goals are randomly chosen within a unit square.
+        Given the agent starts at (0,0), [-0.5, 0.5] creates goals in all directions.
+        """
+        goals = np.random.uniform(low, high, size=(num_tasks, 2))
+        return [{"goal": goal.astype(np.float64)} for goal in goals]
 
-    The paper says "within a unit square".
-    Usually interpreted as [-0.5, 0.5] x [-0.5, 0.5] or [0, 1] x [0, 1].
-    Given the agent starts at (0,0), [-0.5, 0.5] creates goals in all directions.
-    """
-    # Using uniform distribution for the unit square
-    goals = np.random.uniform(low, high, size=(num_tasks, 2))
-    return [{"goal": goal.astype(np.float64)} for goal in goals]
+    @staticmethod
+    def make_vec_env(
+        tasks: Sequence[Mapping[str, np.ndarray]],
+        device: str = "cpu",
+        max_steps: int = 100,
+        norm_obs: bool = False,
+    ):
+        """Create a parallel Navigation vector environment with fixed tasks."""
+        env_fn_list = [
+            lambda t=task: _make_navigation_env(t, device=device, max_steps=max_steps)
+            for task in tasks
+        ]
+        env = ParallelEnv(num_workers=len(tasks), create_env_fn=env_fn_list)
+
+        if norm_obs:
+            obs_norm = ObservationNorm(in_keys=["observation"], standard_normal=True)
+            env = TransformedEnv(env, obs_norm)
+
+        return env
 
 
-def make_navigation_env(
+def _make_navigation_env(
     task: Mapping[str, np.ndarray],
     device: str = "cpu",
     max_steps: int = 100,
@@ -110,24 +126,4 @@ def make_navigation_env(
             DoubleToFloat(in_keys=["observation"]),
         ),
     )
-    return env
-
-
-def make_navigation_vec_env(
-    tasks: Sequence[Mapping[str, np.ndarray]],
-    device: str = "cpu",
-    max_steps: int = 100,
-    norm_obs: bool = False,
-):
-    """Create a parallel Navigation vector environment with fixed tasks."""
-    env_fn_list = [
-        lambda t=task: make_navigation_env(t, device=device, max_steps=max_steps)
-        for task in tasks
-    ]
-    env = ParallelEnv(num_workers=len(tasks), create_env_fn=env_fn_list)
-
-    if norm_obs:
-        obs_norm = ObservationNorm(in_keys=["observation"], standard_normal=True)
-        env = TransformedEnv(env, obs_norm)
-
     return env

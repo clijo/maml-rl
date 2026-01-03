@@ -21,6 +21,7 @@ class ModelConfig:
 @dataclass
 class InnerConfig:
     lr: float = 0.1
+    first_step_lr: Optional[float] = None
     num_steps: int = 1
     advantage_norm: bool = False
 

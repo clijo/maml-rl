@@ -1,6 +1,6 @@
 algorithm: trpo
-rollout_steps: 2000
-num_iterations: 30
+rollout_steps: 40
+num_iterations: 1
 gamma: 0.99
 lam: 0.95
 seed: 42
@@ -15,9 +15,10 @@ env:
 model:
   hidden_sizes: [100, 100]
 inner:
-  lr: 0.1
-  num_steps: 1
-  advantage_norm: false
+  lr: 0.025
+  first_step_lr: 0.1
+  num_steps: 4
+  advantage_norm: true
 outer:
   lr: 3e-4
   ppo_epochs: 5

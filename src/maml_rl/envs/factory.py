@@ -1,8 +1,18 @@
-from typing import Any, Mapping, Tuple, List
+from typing import Any, Dict, List, Mapping, Tuple, Type
+
 from torchrl.envs import EnvBase
 
-from maml_rl.envs.ant import make_ant_vec_env, sample_ant_tasks
-from maml_rl.envs.navigation import make_navigation_vec_env, sample_navigation_tasks
+from maml_rl.envs.base import MetaEnv
+from maml_rl.envs.ant import MetaAntGoalVelEnv
+from maml_rl.envs.navigation import Navigation2DEnv
+
+
+# Registry of available meta-learning environments.
+# To add a new environment, simply add it to this dict.
+ENV_REGISTRY: Dict[str, Type[MetaEnv]] = {
+    "navigation": Navigation2DEnv,
+    "ant": MetaAntGoalVelEnv,
+}
 
 
 def sample_tasks(
@@ -12,12 +22,9 @@ def sample_tasks(
     task_high: float,
 ) -> List[Mapping[str, Any]]:
     """Sample tasks for the specified environment."""
-    if env_name == "ant":
-        return sample_ant_tasks(num_tasks, low=task_low, high=task_high)
-    elif env_name == "navigation":
-        return sample_navigation_tasks(num_tasks, low=task_low, high=task_high)
-    else:
+    if env_name not in ENV_REGISTRY:
         raise ValueError(f"Unknown environment name: {env_name}")
+    return ENV_REGISTRY[env_name].sample_tasks(num_tasks, low=task_low, high=task_high)
 
 
 def make_vec_env(
@@ -37,24 +44,16 @@ def make_vec_env(
         tasks: List of task specifications
         env: The vectorized environment (ParallelEnv wrapped in transforms)
     """
-    if env_name == "ant":
-        tasks = sample_ant_tasks(num_tasks, low=task_low, high=task_high)
-        env = make_ant_vec_env(
-            tasks,
-            device=device,
-            max_steps=max_steps,
-            norm_obs=norm_obs,
-        )
-    elif env_name == "navigation":
-        tasks = sample_navigation_tasks(num_tasks, low=task_low, high=task_high)
-        env = make_navigation_vec_env(
-            tasks,
-            device=device,
-            max_steps=max_steps,
-            norm_obs=norm_obs,
-        )
-    else:
+    if env_name not in ENV_REGISTRY:
         raise ValueError(f"Unknown environment name: {env_name}")
 
+    env_cls = ENV_REGISTRY[env_name]
+    tasks = env_cls.sample_tasks(num_tasks, low=task_low, high=task_high)
+    env = env_cls.make_vec_env(
+        tasks,
+        device=device,
+        max_steps=max_steps,
+        norm_obs=norm_obs,
+    )
     env.set_seed(seed)
     return tasks, env

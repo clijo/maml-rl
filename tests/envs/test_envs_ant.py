@@ -2,12 +2,7 @@ import pytest
 import numpy as np
 from unittest.mock import patch
 
-from maml_rl.envs.ant import (
-    make_ant_env,
-    sample_ant_tasks,
-    make_ant_vec_env,
-    MetaAntGoalVelEnv,
-)
+from maml_rl.envs.ant import MetaAntGoalVelEnv
 
 # Check availability of AntEnv
 try:
@@ -20,19 +15,15 @@ except (ImportError, Exception):
 
 @pytest.mark.skipif(not ANT_AVAILABLE, reason="AntEnv/mujoco not available")
 class TestAntEnv:
-    def test_sample_ant_tasks(self):
+    def test_sample_tasks(self):
         num_tasks = 10
-        tasks = sample_ant_tasks(num_tasks, low=0.0, high=3.0)
+        tasks = MetaAntGoalVelEnv.sample_tasks(num_tasks, low=0.0, high=3.0)
         assert len(tasks) == num_tasks
         for task in tasks:
             assert "velocity" in task
             assert 0.0 <= task["velocity"] <= 3.0
 
     def test_meta_ant_goal_vel_env_logic(self):
-        # We can test the logic without full physics if we mock the super().step
-        # But since we have mujoco, we can try running it.
-        # If running fails due to missing GL/libraries, we might need to mock.
-
         # Let's try to mock the step to return a specific velocity in info
         with patch("gymnasium.envs.mujoco.ant_v4.AntEnv.step") as mock_step:
             # mock return: obs, reward, terminated, truncated, info
@@ -61,18 +52,10 @@ class TestAntEnv:
         env.reset(options={"task": task})
         assert env._goal_vel == 2.5
 
-    def test_make_ant_env_instantiates(self):
-        task = sample_ant_tasks(1)[0]
-        env = make_ant_env(task, device="cpu", max_steps=10)
-        td = env.reset()
-        assert "observation" in td.keys()
-        assert env.action_spec is not None
-        env.close()
-
-    def test_make_ant_vec_env(self):
-        tasks = sample_ant_tasks(2)
+    def test_make_vec_env(self):
+        tasks = MetaAntGoalVelEnv.sample_tasks(2)
         # By default norm_obs=True, so we must initialize it
-        env = make_ant_vec_env(tasks, device="cpu", max_steps=10)
+        env = MetaAntGoalVelEnv.make_vec_env(tasks, device="cpu", max_steps=10)
 
         # Access the transform to initialize it
         env.transform.init_stats(num_iter=1, reduce_dim=[0, 1], cat_dim=0)
