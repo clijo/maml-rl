@@ -25,6 +25,13 @@ from maml_rl.policies import build_actor_critic, params_and_buffers
 from maml_rl.utils.returns import add_gae, normalize_advantages
 
 
+def _expand_params_for_tasks(params: OrderedDict, num_tasks: int) -> OrderedDict:
+    """Expand params to match vmap output shape [num_tasks, ...] for num_steps=0 case."""
+    return OrderedDict(
+        (name, p.unsqueeze(0).expand(num_tasks, *p.shape)) for name, p in params.items()
+    )
+
+
 def train(cfg: TrainConfig, device: torch.device):
     """
     Run MAML training loop.
@@ -257,17 +264,7 @@ def train(cfg: TrainConfig, device: torch.device):
                         (n, adapted_val_list[n]) for n in curr_value_params.keys()
                     )
                 else:
-                    # No adaptation needed - use current params directly
-                    # Stack to match vmap output shape [num_tasks, ...]
-                    adapted_val = OrderedDict(
-                        (
-                            n,
-                            curr_value_params[n]
-                            .unsqueeze(0)
-                            .expand(num_tasks, *curr_value_params[n].shape),
-                        )
-                        for n in curr_value_params.keys()
-                    )
+                    adapted_val = _expand_params_for_tasks(curr_value_params, num_tasks)
 
                 # Compute loss
                 losses = vmap(compute_value_loss_single, (0, None, 0))(
@@ -316,24 +313,11 @@ def train(cfg: TrainConfig, device: torch.device):
                         for name in curr_value_params.keys()
                     )
                 else:
-                    # No adaptation - stack current params to match vmap output shape
-                    adapted_params = OrderedDict(
-                        (
-                            name,
-                            curr_policy_params[name]
-                            .unsqueeze(0)
-                            .expand(num_tasks, *curr_policy_params[name].shape),
-                        )
-                        for name in curr_policy_params.keys()
+                    adapted_params = _expand_params_for_tasks(
+                        curr_policy_params, num_tasks
                     )
-                    adapted_value_params = OrderedDict(
-                        (
-                            name,
-                            curr_value_params[name]
-                            .unsqueeze(0)
-                            .expand(num_tasks, *curr_value_params[name].shape),
-                        )
-                        for name in curr_value_params.keys()
+                    adapted_value_params = _expand_params_for_tasks(
+                        curr_value_params, num_tasks
                     )
 
                 losses, infos = vmap(outer_loss_ppo, (None, 0, None, 0, None, None))(

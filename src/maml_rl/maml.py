@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from typing import Mapping, Tuple, Dict
+from typing import Dict, Mapping, Tuple
 
 import torch
 from torch import nn

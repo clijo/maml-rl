@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from typing import Iterable, Tuple
 
+import torch
 from torch import nn
 from torchrl.modules import (
     NormalParamExtractor,
@@ -112,9 +113,6 @@ class AnalyticalNavigationOracle(nn.Module):
         # So we output vectors with norm >> 1 (clipped to [-1, 1] by Tanh usually, but here by env bounds)
         # The Env wrapper clips action to [-1, 1] then multiplies by 0.1.
         # So we just output (goal - pos) * Gain.
-
-        import torch
-
         action = torch.clamp(diff * 10.0, -1.0, 1.0)
 
         td.set("action", action)
@@ -133,8 +131,6 @@ class RandomPolicy(nn.Module):
         self.act_dim = act_dim
 
     def forward(self, td):
-        import torch
-
         shape = td.shape + (self.act_dim,)
         action = torch.empty(shape, device=td.device).uniform_(-1.0, 1.0)
         td.set("action", action)

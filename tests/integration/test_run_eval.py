@@ -55,17 +55,17 @@ def test_eval_mode_runs():
         checkpoint_path,
         "--pretrained_checkpoint",
         pretrained_path,
-        "--config.env.name",
+        "--cfg.env.name",
         "navigation",
-        "--config.env.num_tasks",
+        "--cfg.env.num_tasks",
         "2",
-        "--config.rollout_steps",
+        "--cfg.rollout_steps",
         "10",
-        "--config.wandb.enable",
+        "--cfg.wandb.enable",
         "false",
-        "--config.env.device",
+        "--cfg.env.device",
         "cpu",
-        "--config.inner.num_steps",
+        "--cfg.inner.num_steps",
         "2",
     ]
 
@@ -73,7 +73,7 @@ def test_eval_mode_runs():
 
     # Check if it finished successfully
     assert result.returncode == 0, f"Eval mode failed with stderr: {result.stderr}"
-    assert "Loading task config from" in result.stdout
+    assert "Loading checkpoint from" in result.stdout
     assert "Evaluating MAML" in result.stdout
     assert "Evaluating Pretrained Baseline" in result.stdout
     assert "Evaluating Random Init" in result.stdout
@@ -95,15 +95,15 @@ def test_train_mode_no_regression():
         "run.py",
         "--mode",
         "train",
-        "--config.num_iterations",
+        "--cfg.num_iterations",
         "1",
-        "--config.env.num_tasks",
+        "--cfg.env.num_tasks",
         "2",
-        "--config.rollout_steps",
+        "--cfg.rollout_steps",
         "10",
-        "--config.wandb.enable",
+        "--cfg.wandb.enable",
         "false",
-        "--config.env.device",
+        "--cfg.env.device",
         "cpu",
     ]
 
@@ -136,17 +136,17 @@ def test_train_mode_num_steps_zero():
         "run.py",
         "--mode",
         "train",
-        "--config.num_iterations",
+        "--cfg.num_iterations",
         "1",
-        "--config.env.num_tasks",
+        "--cfg.env.num_tasks",
         "2",
-        "--config.rollout_steps",
+        "--cfg.rollout_steps",
         "10",
-        "--config.wandb.enable",
+        "--cfg.wandb.enable",
         "false",
-        "--config.env.device",
+        "--cfg.env.device",
         "cpu",
-        "--config.inner.num_steps",
+        "--cfg.inner.num_steps",
         "0",
     ]
 
