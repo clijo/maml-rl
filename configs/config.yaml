@@ -31,4 +31,3 @@ config:
     cg_iters: 10
     line_search_max_steps: 10
     line_search_backtrack_ratio: 0.5
-

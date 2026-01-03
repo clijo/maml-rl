@@ -1,5 +1,4 @@
 from typing import Any, Mapping, Tuple, List
-import torch
 from torchrl.envs import EnvBase
 
 from maml_rl.envs.ant import make_ant_vec_env, sample_ant_tasks

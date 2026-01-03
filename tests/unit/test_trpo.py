@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 from tensordict import TensorDict
-from torchrl.modules import TanhNormal
 from tensordict.nn import TensorDictSequential, TensorDictModule, NormalParamExtractor
 from collections import OrderedDict
 

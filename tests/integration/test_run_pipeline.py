@@ -2,7 +2,6 @@ import subprocess
 import os
 import shutil
 import sys
-import pytest
 
 
 def test_unified_training_pipeline():

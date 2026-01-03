@@ -338,6 +338,7 @@ def outer_step_trpo(
         "trpo_kl": new_kl,
         "trpo_surr": new_objective,
         "trpo_improvement": new_objective - old_objective,
+        "trpo_expected_improvement": expected_improve,
     }
 
 

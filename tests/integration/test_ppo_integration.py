@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 from tensordict import TensorDict
-from torchrl.modules import ValueOperator, TanhNormal
+from torchrl.modules import ValueOperator
 from tensordict.nn import TensorDictSequential, TensorDictModule, NormalParamExtractor
 from collections import OrderedDict
 from torch.func import vmap, functional_call

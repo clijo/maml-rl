@@ -1,6 +1,5 @@
 """MAML evaluation against baselines."""
 
-import json
 import os
 from collections import OrderedDict
 
@@ -37,7 +36,7 @@ def evaluate(
     config_path = os.path.join(ckpt_dir, "config.json")
     if os.path.exists(config_path):
         print(f"Loading task config from {config_path}...")
-        with open(config_path, "r") as f:
+        with open(config_path, "r"):
             # We just print that we found it, but we rely on passed cfg for system compatibility
             pass
 

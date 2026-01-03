@@ -6,7 +6,6 @@ from collections import OrderedDict
 from dataclasses import asdict
 from datetime import datetime
 
-import numpy as np
 import torch
 import torch.nn.functional as F
 import wandb
@@ -270,7 +269,12 @@ def train(cfg: TrainConfig, device: torch.device):
                     # No adaptation needed - use current params directly
                     # Stack to match vmap output shape [num_tasks, ...]
                     adapted_val = OrderedDict(
-                        (n, curr_value_params[n].unsqueeze(0).expand(num_tasks, *curr_value_params[n].shape))
+                        (
+                            n,
+                            curr_value_params[n]
+                            .unsqueeze(0)
+                            .expand(num_tasks, *curr_value_params[n].shape),
+                        )
                         for n in curr_value_params.keys()
                     )
 
@@ -323,11 +327,21 @@ def train(cfg: TrainConfig, device: torch.device):
                 else:
                     # No adaptation - stack current params to match vmap output shape
                     adapted_params = OrderedDict(
-                        (name, curr_policy_params[name].unsqueeze(0).expand(num_tasks, *curr_policy_params[name].shape))
+                        (
+                            name,
+                            curr_policy_params[name]
+                            .unsqueeze(0)
+                            .expand(num_tasks, *curr_policy_params[name].shape),
+                        )
                         for name in curr_policy_params.keys()
                     )
                     adapted_value_params = OrderedDict(
-                        (name, curr_value_params[name].unsqueeze(0).expand(num_tasks, *curr_value_params[name].shape))
+                        (
+                            name,
+                            curr_value_params[name]
+                            .unsqueeze(0)
+                            .expand(num_tasks, *curr_value_params[name].shape),
+                        )
                         for name in curr_value_params.keys()
                     )
 
@@ -394,6 +408,9 @@ def train(cfg: TrainConfig, device: torch.device):
                 grad_norm = grad_norm.item()
             trpo_logs = {}
 
+            # Additional PPO logging
+            infos["mean_task_policy_loss"] = mean_task_policy_loss
+
         # Common Metrics
         avg_support_reward = support_td.get(("next", "reward")).mean().item()
         avg_query_reward = query_td.get(("next", "reward")).mean().item()
@@ -435,6 +452,9 @@ def train(cfg: TrainConfig, device: torch.device):
                         "loss/value": value_loss.item(),
                         "trpo/kl": trpo_logs.get("trpo_kl", 0),
                         "trpo/improvement": trpo_logs.get("trpo_improvement", 0),
+                        "trpo/expected_improvement": trpo_logs.get(
+                            "trpo_expected_improvement", 0
+                        ),
                     }
                 )
 

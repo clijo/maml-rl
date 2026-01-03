@@ -1,6 +1,6 @@
 import torch
 from collections import OrderedDict
-from typing import Mapping, Callable, List
+from typing import Mapping, Callable
 
 
 def parameters_to_vector(params: Mapping[str, torch.Tensor]) -> torch.Tensor:
