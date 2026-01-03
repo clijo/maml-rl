@@ -25,7 +25,7 @@ uv run run.py --cfg configs/config.yaml
 Override configuration parameters via CLI:
 
 ```bash
-uv run run.py --cfg configs/config.yaml --config.outer.lr 0.0001
+uv run run.py --cfg configs/config.yaml --cfg.outer.lr 0.0001
 ```
 
 ## Structure

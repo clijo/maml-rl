@@ -221,15 +221,6 @@ def test_functional_policy_batched_params():
     assert "action_log_prob" in out.keys()
 
 
-def test_functional_policy_detect_batching_fallback():
-    """Test fallback logic in _detect_batching when parameter name doesn't match."""
-    _, policy_model, _, params, buffers = _make_policy()
-    # Rename a key to trigger fallback
-    bad_params = {"something_else": next(iter(params.values()))}
-    fpol = FunctionalPolicy(policy_model, bad_params, buffers)
-    assert fpol._is_batched is False
-
-
 def test_functional_policy_empty_params():
     """Test FunctionalPolicy with empty parameters."""
     _, policy_model, _, _, buffers = _make_policy()

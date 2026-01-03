@@ -1,6 +1,5 @@
 """MAML evaluation against baselines."""
 
-import os
 from collections import OrderedDict
 
 import numpy as np
@@ -30,15 +29,6 @@ def evaluate(
     """
     if not checkpoint_path:
         raise ValueError("Must provide --checkpoint for evaluation mode.")
-
-    # Try to load config from checkpoint dir
-    ckpt_dir = os.path.dirname(checkpoint_path)
-    config_path = os.path.join(ckpt_dir, "config.json")
-    if os.path.exists(config_path):
-        print(f"Loading task config from {config_path}...")
-        with open(config_path, "r"):
-            # We just print that we found it, but we rely on passed cfg for system compatibility
-            pass
 
     print(f"Loading checkpoint from {checkpoint_path}...")
     checkpoint = torch.load(checkpoint_path, map_location=device)

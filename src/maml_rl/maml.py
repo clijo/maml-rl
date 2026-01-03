@@ -118,7 +118,7 @@ def outer_loss_ppo(
 
     try:
         entropy = dist.entropy().mean()
-    except Exception:
+    except NotImplementedError:
         entropy = torch.zeros((), device=log_prob.device)
 
     loss = policy_loss - entropy_coef * entropy
@@ -361,28 +361,10 @@ class FunctionalPolicy(nn.Module):
         self._is_batched = self._detect_batching()
 
     def _detect_batching(self) -> bool:
-        """Detect if parameters are batched (one extra dimension for task batch)."""
         if not self.params:
             return False
-
-        # Use arbitrary key
         name, param = next(iter(self.params.items()))
-        try:
-            model_param = self.policy_model.get_parameter(name)
-        except AttributeError:
-            model_param = None
-            # Fallback scan
-            for n, p in self.policy_model.named_parameters():
-                if n == name:
-                    model_param = p
-                    break
-
-        if model_param is None:
-            # Just assume if not found it might be batched if dim is high?
-            # Safer: assume not batched if we can't verify.
-            # But MAML code ensures names match.
-            return False
-
+        model_param = self.policy_model.get_parameter(name)
         return param.ndim > model_param.ndim
 
     def forward(self, td: TensorDict) -> TensorDict:

@@ -25,15 +25,6 @@ from maml_rl.policies import build_actor_critic, params_and_buffers
 from maml_rl.utils.returns import add_gae, normalize_advantages
 
 
-class ConfigEncoder(json.JSONEncoder):
-    """Custom encoder to handle potential non-serializable objects."""
-
-    def default(self, obj):
-        if isinstance(obj, set):
-            return list(obj)
-        return super().default(obj)
-
-
 def train(cfg: TrainConfig, device: torch.device):
     """
     Run MAML training loop.
@@ -481,7 +472,7 @@ def train(cfg: TrainConfig, device: torch.device):
     )
 
     with open(os.path.join(save_dir, "config.json"), "w") as f:
-        json.dump(asdict(cfg), f, indent=4, cls=ConfigEncoder)
+        json.dump(asdict(cfg), f, indent=4)
 
     print(f"Model saved to {save_path}")
 

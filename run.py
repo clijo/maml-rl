@@ -13,7 +13,7 @@ import random
 
 import numpy as np
 import torch
-from jsonargparse import ActionConfigFile, ArgumentParser
+from jsonargparse import ArgumentParser
 
 from configs.base import TrainConfig
 from maml_rl.evaluation import evaluate
@@ -26,7 +26,6 @@ def main():
     Run MAML with VPG inner loop and PPO or TRPO outer loop.
     """
     parser = ArgumentParser()
-    parser.add_argument("--cfg", action=ActionConfigFile, help="Path to YAML config")
     parser.add_argument(
         "--mode", type=str, default="train", choices=["train", "eval"], help="Run mode"
     )
@@ -42,9 +41,9 @@ def main():
         default=None,
         help="Path to Pretrained (Baseline) checkpoint",
     )
-    parser.add_class_arguments(TrainConfig, "config")
+    parser.add_class_arguments(TrainConfig, "cfg")
     args = parser.parse_args()
-    cfg: TrainConfig = parser.instantiate_classes(args).config
+    cfg: TrainConfig = parser.instantiate_classes(args).cfg
 
     enable_tf32()
     wandb_setup(cfg)
