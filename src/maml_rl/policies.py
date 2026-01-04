@@ -85,46 +85,8 @@ def params_and_buffers(module: nn.Module):
     return OrderedDict(module.named_parameters()), OrderedDict(module.named_buffers())
 
 
-class AnalyticalNavigationOracle(nn.Module):
-    """
-    Oracle policy for 2D Navigation.
-    Moves directly towards the goal.
-    """
-
-    def __init__(self, goal, device="cpu"):
-        super().__init__()
-        # goal is (2,)
-        import torch
-
-        self.goal = (
-            goal.to(device)
-            if torch.is_tensor(goal)
-            else torch.tensor(goal, device=device)
-        )
-
-    def forward(self, td):
-        # Observation is current position
-        obs = td["observation"]  # (Batch, 2)
-
-        # Direction to goal
-        diff = self.goal - obs
-
-        # The env scales action by 0.1. We want to move max speed (0.1).
-        # So we output vectors with norm >> 1 (clipped to [-1, 1] by Tanh usually, but here by env bounds)
-        # The Env wrapper clips action to [-1, 1] then multiplies by 0.1.
-        # So we just output (goal - pos) * Gain.
-        action = torch.clamp(diff * 10.0, -1.0, 1.0)
-
-        td.set("action", action)
-        if "action_log_prob" not in td.keys():
-            td.set("action_log_prob", torch.zeros_like(action[..., :1]))
-        return td
-
-
 class RandomPolicy(nn.Module):
-    """
-    Random policy for baseline comparison.
-    """
+    """Random policy for baseline comparison."""
 
     def __init__(self, act_dim):
         super().__init__()
@@ -142,6 +104,5 @@ class RandomPolicy(nn.Module):
 __all__ = [
     "build_actor_critic",
     "params_and_buffers",
-    "AnalyticalNavigationOracle",
     "RandomPolicy",
 ]

@@ -54,13 +54,29 @@ class TestAntEnv:
 
     def test_make_vec_env(self):
         tasks = MetaAntGoalVelEnv.sample_tasks(2)
-        # By default norm_obs=True, so we must initialize it
         env = MetaAntGoalVelEnv.make_vec_env(tasks, device="cpu", max_steps=10)
-
-        # Access the transform to initialize it
         env.transform.init_stats(num_iter=1, reduce_dim=[0, 1], cat_dim=0)
 
         td = env.reset()
         assert td.shape[0] == 2
         assert "observation" in td.keys()
         env.close()
+
+    def test_get_task_obs_dim(self):
+        assert MetaAntGoalVelEnv.get_task_obs_dim() == 1
+
+    def test_make_oracle_vec_env(self):
+        tasks = MetaAntGoalVelEnv.sample_tasks(2)
+        env = MetaAntGoalVelEnv.make_oracle_vec_env(tasks, device="cpu", max_steps=10)
+        env.transform.init_stats(num_iter=1, reduce_dim=[0, 1], cat_dim=0)
+
+        td = env.reset()
+        assert td.shape[0] == 2
+        # Oracle obs = standard (27) + goal_vel (1) = 28
+        assert td["observation"].shape[-1] == 28
+        env.close()
+
+    def test_get_oracle_no_checkpoint(self):
+        tasks = MetaAntGoalVelEnv.sample_tasks(2)
+        oracle = MetaAntGoalVelEnv.get_oracle(tasks, device="cpu", checkpoint_path=None)
+        assert oracle is None

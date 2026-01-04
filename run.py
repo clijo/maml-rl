@@ -41,6 +41,12 @@ def main():
         default=None,
         help="Path to Pretrained (Baseline) checkpoint",
     )
+    parser.add_argument(
+        "--oracle_checkpoint",
+        type=str,
+        default=None,
+        help="Path to Oracle checkpoint (trained on oracle observations)",
+    )
     parser.add_class_arguments(TrainConfig, "cfg")
     args = parser.parse_args()
     cfg: TrainConfig = parser.instantiate_classes(args).cfg
@@ -60,7 +66,13 @@ def main():
     if args.mode == "train":
         train(cfg, device)
     else:
-        evaluate(cfg, device, args.checkpoint, args.pretrained_checkpoint)
+        evaluate(
+            cfg,
+            device,
+            args.checkpoint,
+            args.pretrained_checkpoint,
+            args.oracle_checkpoint,
+        )
 
 
 if __name__ == "__main__":

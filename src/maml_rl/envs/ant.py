@@ -1,7 +1,12 @@
 from collections.abc import Sequence
 from typing import Any, List, Mapping, Optional, Tuple
 
+import gymnasium as gym
 import numpy as np
+import torch
+from gymnasium import spaces
+from gymnasium.envs.mujoco.ant_v4 import AntEnv
+from torch import nn
 from torchrl.envs import GymWrapper, ParallelEnv, TransformedEnv
 from torchrl.envs.transforms import (
     Compose,
@@ -10,14 +15,12 @@ from torchrl.envs.transforms import (
     DoubleToFloat,
     ObservationNorm,
 )
-from gymnasium.envs.mujoco.ant_v4 import AntEnv
 
 
 class MetaAntGoalVelEnv(AntEnv):
-    """
-    Ant with a target forward velocity.
+    """Ant with a target forward velocity.
 
-    Reward: -|v_actual - v_goal| + ctrl_cost (ctrl_cost is negative in Gym)
+    Reward: -|v_actual - v_goal| + ctrl_cost + healthy_reward
     """
 
     def __init__(self, terminate_when_unhealthy: bool = False, **kwargs):
@@ -39,7 +42,6 @@ class MetaAntGoalVelEnv(AntEnv):
         x_velocity = info["x_velocity"]
         forward_reward = -1.0 * np.abs(x_velocity - self._goal_vel)
         ctrl_cost = info["reward_ctrl"]
-        # Include healthy reward to encourage survival
         healthy_reward = info.get("reward_survive", 1.0)
         reward = forward_reward + ctrl_cost + healthy_reward
         return observation, reward, terminated, truncated, info
@@ -53,40 +55,114 @@ class MetaAntGoalVelEnv(AntEnv):
         return [{"velocity": float(v)} for v in velocities]
 
     @staticmethod
+    def get_task_obs_dim() -> int:
+        """Oracle observations include 1D goal velocity."""
+        return 1
+
+    @staticmethod
     def make_vec_env(
         tasks: Sequence[Mapping[str, float]],
         device: str = "cpu",
         max_steps: int = 200,
         norm_obs: bool = True,
     ):
-        """Create a parallel Ant GoalVel vector environment with fixed tasks."""
-        env_fn_list = [
-            lambda t=task: _make_ant_env(t, device=device, max_steps=max_steps)
-            for task in tasks
-        ]
-        env = ParallelEnv(num_workers=len(tasks), create_env_fn=env_fn_list)
-        if norm_obs:
-            obs_norm = ObservationNorm(in_keys=["observation"], standard_normal=True)
-            env = TransformedEnv(env, obs_norm)
+        """Create a parallel Ant GoalVel vector environment."""
+        return _make_ant_parallel_env(tasks, device, max_steps, norm_obs, oracle=False)
+
+    @staticmethod
+    def make_oracle_vec_env(
+        tasks: Sequence[Mapping[str, float]],
+        device: str = "cpu",
+        max_steps: int = 200,
+        norm_obs: bool = True,
+    ):
+        """Create a parallel Ant environment with goal velocity in observations."""
+        return _make_ant_parallel_env(tasks, device, max_steps, norm_obs, oracle=True)
+
+    @staticmethod
+    def get_oracle(
+        tasks: Sequence[Mapping[str, float]],
+        device: torch.device,
+        checkpoint_path: Optional[str] = None,
+    ) -> Optional[nn.Module]:
+        """Load pretrained oracle policy from checkpoint."""
+        if checkpoint_path is None:
+            return None
+
+        from maml_rl.policies import build_actor_critic
+
+        # Oracle obs = standard obs + goal_vel
+        # Standard Ant observation is 27-dim (from AntEnv)
+        oracle_obs_dim = 27 + MetaAntGoalVelEnv.get_task_obs_dim()
+        act_dim = 8  # Ant has 8-dimensional action
+
+        checkpoint = torch.load(checkpoint_path, map_location=device)
+        _, oracle_policy, _ = build_actor_critic(
+            oracle_obs_dim,
+            act_dim,
+            hidden_sizes=checkpoint.get("hidden_sizes", (128, 128)),
+        )
+        oracle_policy.load_state_dict(checkpoint["policy_state_dict"])
+        oracle_policy.to(device)
+        return oracle_policy
+
+
+class MetaAntGoalVelOracleEnv(gym.Wrapper):
+    """Wrapper that appends goal velocity to observations for oracle training."""
+
+    def __init__(self, env: MetaAntGoalVelEnv):
+        super().__init__(env)
+        base_obs = env.observation_space
+        oracle_dim = base_obs.shape[0] + 1
+        self.observation_space = spaces.Box(
+            low=-np.inf, high=np.inf, shape=(oracle_dim,), dtype=np.float64
+        )
+
+    def reset(self, **kwargs):
+        obs, info = self.env.reset(**kwargs)
+        return self._augment_obs(obs), info
+
+    def step(self, action):
+        obs, reward, terminated, truncated, info = self.env.step(action)
+        return self._augment_obs(obs), reward, terminated, truncated, info
+
+    def _augment_obs(self, obs: np.ndarray) -> np.ndarray:
+        """Append goal velocity to observation."""
+        return np.append(obs, self.env._goal_vel)
+
+
+def _make_ant_parallel_env(
+    tasks: Sequence[Mapping[str, float]],
+    device: str,
+    max_steps: int,
+    norm_obs: bool,
+    oracle: bool,
+):
+    """Create parallel Ant environment, optionally with oracle observations."""
+
+    def make_single_env(task):
+        base_env = MetaAntGoalVelEnv()
+        base_env.set_task(task)
+
+        if oracle:
+            base_env = MetaAntGoalVelOracleEnv(base_env)
+
+        env = GymWrapper(base_env, device=device)
+        env = TransformedEnv(
+            env,
+            Compose(
+                InitTracker(),
+                StepCounter(max_steps=max_steps),
+                DoubleToFloat(in_keys=["observation"]),
+            ),
+        )
         return env
 
+    env_fn_list = [lambda t=task: make_single_env(t) for task in tasks]
+    env = ParallelEnv(num_workers=len(tasks), create_env_fn=env_fn_list)
 
-def _make_ant_env(
-    task: Mapping[str, float],
-    device: str = "cpu",
-    render_mode: Optional[str] = None,
-    max_steps: int = 200,
-):
-    """Instantiate a single-task Ant env wrapped for TorchRL."""
-    base_env = MetaAntGoalVelEnv(render_mode=render_mode)
-    base_env.set_task(task)
-    env = GymWrapper(base_env, device=device)
-    env = TransformedEnv(
-        env,
-        Compose(
-            InitTracker(),
-            StepCounter(max_steps=max_steps),
-            DoubleToFloat(in_keys=["observation"]),
-        ),
-    )
+    if norm_obs:
+        obs_norm = ObservationNorm(in_keys=["observation"], standard_normal=True)
+        env = TransformedEnv(env, obs_norm)
+
     return env

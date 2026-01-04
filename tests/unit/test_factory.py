@@ -37,8 +37,8 @@ class TestEnvFactory:
         env.close()
 
     def test_factory_unknown_env(self):
-        with pytest.raises(ValueError, match="Unknown environment name"):
+        with pytest.raises(ValueError, match="Unknown environment"):
             sample_tasks("unknown", 1, 0, 1)
 
-        with pytest.raises(ValueError, match="Unknown environment name"):
+        with pytest.raises(ValueError, match="Unknown environment"):
             make_vec_env("unknown", 1, 0, 1, 10, "cpu", True, 0)

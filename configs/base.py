@@ -60,6 +60,7 @@ class WandbConfig:
 @dataclass
 class TrainConfig:
     algorithm: str = "trpo"  # "ppo" or "trpo"
+    oracle: bool = False  # Use oracle env (task params in observation)
     rollout_steps: int = 200
     num_iterations: int = 3
     gamma: float = 0.99

@@ -72,15 +72,30 @@ class TestNavigationEnv:
 
     def test_make_vec_env(self):
         tasks = Navigation2DEnv.sample_tasks(2)
-        # norm_obs=False for navigation usually, but testing if it works
         env = Navigation2DEnv.make_vec_env(
             tasks, device="cpu", max_steps=10, norm_obs=True
         )
-
-        # Access the transform to initialize it
         env.transform.init_stats(num_iter=1, reduce_dim=[0, 1], cat_dim=0)
 
         td = env.reset()
         assert td.shape[0] == 2
         assert "observation" in td.keys()
         env.close()
+
+    def test_get_task_obs_dim(self):
+        assert Navigation2DEnv.get_task_obs_dim() == 2
+
+    def test_make_oracle_vec_env(self):
+        tasks = Navigation2DEnv.sample_tasks(2)
+        env = Navigation2DEnv.make_oracle_vec_env(tasks, device="cpu", max_steps=10)
+
+        td = env.reset()
+        assert td.shape[0] == 2
+        # Oracle obs = position (2) + goal (2) = 4
+        assert td["observation"].shape[-1] == 4
+        env.close()
+
+    def test_get_oracle_no_checkpoint(self):
+        tasks = Navigation2DEnv.sample_tasks(2)
+        oracle = Navigation2DEnv.get_oracle(tasks, device="cpu", checkpoint_path=None)
+        assert oracle is None

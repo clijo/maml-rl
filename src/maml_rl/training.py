@@ -13,7 +13,7 @@ from torch.func import functional_call, vmap
 from torch.optim import Adam
 
 from configs.base import TrainConfig
-from maml_rl.envs.factory import make_vec_env, sample_tasks
+from maml_rl.envs.factory import make_vec_env, make_oracle_vec_env, sample_tasks
 from maml_rl.maml import (
     FunctionalPolicy,
     inner_update_value,
@@ -36,17 +36,36 @@ def train(cfg: TrainConfig, device: torch.device):
     """
     Run MAML training loop.
     """
-    # Create environment once and reuse it
-    tasks, env = make_vec_env(
+    # Sample tasks first
+    tasks = sample_tasks(
         env_name=cfg.env.name,
         num_tasks=cfg.env.num_tasks,
         task_low=cfg.env.task_low,
         task_high=cfg.env.task_high,
-        max_steps=cfg.env.max_steps,
-        device=device,
-        norm_obs=cfg.env.norm_obs,
-        seed=cfg.seed,
     )
+
+    # Create environment (oracle or standard)
+    if cfg.oracle:
+        print("Oracle mode: using environment with task params in observation")
+        env = make_oracle_vec_env(
+            env_name=cfg.env.name,
+            tasks=tasks,
+            max_steps=cfg.env.max_steps,
+            device=str(device),
+            norm_obs=cfg.env.norm_obs,
+            seed=cfg.seed,
+        )
+    else:
+        _, env = make_vec_env(
+            env_name=cfg.env.name,
+            num_tasks=cfg.env.num_tasks,
+            task_low=cfg.env.task_low,
+            task_high=cfg.env.task_high,
+            max_steps=cfg.env.max_steps,
+            device=device,
+            norm_obs=cfg.env.norm_obs,
+            seed=cfg.seed,
+        )
 
     if cfg.env.norm_obs:
         print("Initializing observation normalization statistics...")
@@ -78,6 +97,12 @@ def train(cfg: TrainConfig, device: torch.device):
             list(policy_model.parameters()) + list(value_module.parameters()),
             lr=cfg.outer.lr,
         )
+
+    # Best model tracking
+    best_query_reward = float("-inf")
+    best_policy_state = None
+    best_value_state = None
+    best_iteration = 0
 
     for iteration in range(1, cfg.num_iterations + 1):
         # Update tasks in existing env for better performance
@@ -402,6 +427,17 @@ def train(cfg: TrainConfig, device: torch.device):
 
         print(log_str)
 
+        # Track best model
+        if avg_query_reward > best_query_reward:
+            best_query_reward = avg_query_reward
+            best_policy_state = {
+                k: v.clone() for k, v in policy_model.state_dict().items()
+            }
+            best_value_state = {
+                k: v.clone() for k, v in value_module.state_dict().items()
+            }
+            best_iteration = iteration
+
         if wandb.run is not None:
             log_data = {
                 "iteration": iteration,
@@ -435,7 +471,7 @@ def train(cfg: TrainConfig, device: torch.device):
 
             wandb.log(log_data, step=iteration)
 
-    # Save Model
+    # Save Best Model
     run_name = (
         cfg.wandb.name
         if cfg.wandb.name
@@ -447,10 +483,11 @@ def train(cfg: TrainConfig, device: torch.device):
     save_path = os.path.join(save_dir, "model.pt")
     torch.save(
         {
-            "policy_state_dict": policy_model.state_dict(),
-            "value_state_dict": value_module.state_dict(),
+            "policy_state_dict": best_policy_state,
+            "value_state_dict": best_value_state,
             "config": asdict(cfg),
-            "optimizer_state_dict": optimizer.state_dict(),
+            "best_query_reward": best_query_reward,
+            "best_iteration": best_iteration,
         },
         save_path,
     )
@@ -458,7 +495,9 @@ def train(cfg: TrainConfig, device: torch.device):
     with open(os.path.join(save_dir, "config.json"), "w") as f:
         json.dump(asdict(cfg), f, indent=4)
 
-    print(f"Model saved to {save_path}")
+    print(
+        f"Best model (iter {best_iteration}, reward {best_query_reward:.3f}) saved to {save_path}"
+    )
 
     if wandb.run is not None:
         wandb.finish()

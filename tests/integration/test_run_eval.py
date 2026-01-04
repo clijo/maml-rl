@@ -77,9 +77,10 @@ def test_eval_mode_runs():
     assert "Evaluating MAML" in result.stdout
     assert "Evaluating Pretrained Baseline" in result.stdout
     assert "Evaluating Random Init" in result.stdout
-    assert "Evaluating Oracle" in result.stdout
+    # Oracle now requires a checkpoint, so we expect N/A without one
+    assert "No oracle checkpoint provided" in result.stdout
     assert "Final Summary" in result.stdout
-    assert "Pretrained" in result.stdout  # Check header
+    assert "Pretrained" in result.stdout
 
 
 def test_train_mode_no_regression():
@@ -110,10 +111,9 @@ def test_train_mode_no_regression():
     result = subprocess.run(cmd, capture_output=True, text=True)
     assert result.returncode == 0, f"Train mode failed with stderr: {result.stderr}"
     assert "[iter 1]" in result.stdout
-    assert "Model saved to" in result.stdout
+    assert "Best model" in result.stdout and "saved to" in result.stdout
 
     # Extract save path from output to check for config.json
-    # "Model saved to checkpoints/run_YYYYMMDD_HHMMSS/model.pt"
     import re
 
     match = re.search(r"Model saved to (.*model\.pt)", result.stdout)
@@ -155,4 +155,4 @@ def test_train_mode_num_steps_zero():
         f"Train mode (steps=0) failed with stderr: {result.stderr}"
     )
     assert "[iter 1]" in result.stdout
-    assert "Model saved to" in result.stdout
+    assert "Best model" in result.stdout and "saved to" in result.stdout
