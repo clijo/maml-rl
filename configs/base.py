@@ -66,6 +66,7 @@ class TrainConfig:
     gamma: float = 0.99
     lam: float = 0.95
     seed: int = 0
+    save_interval: int = 50
     env: EnvConfig = field(default_factory=EnvConfig)
     model: ModelConfig = field(default_factory=ModelConfig)
     inner: InnerConfig = field(default_factory=InnerConfig)

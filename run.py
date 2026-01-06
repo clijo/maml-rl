@@ -64,7 +64,7 @@ def main():
     print(f"Algorithm: {cfg.algorithm.upper()}")
 
     if args.mode == "train":
-        train(cfg, device)
+        train(cfg, device, args.checkpoint)
     else:
         evaluate(
             cfg,

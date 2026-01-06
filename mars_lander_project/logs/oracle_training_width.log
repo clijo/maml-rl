@@ -1,0 +1,72 @@
+Device: cpu
+Algorithm: TRPO
+Oracle mode: using environment with task params in observation
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+Process _ProcessNoWarn-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2410, in _run_worker_pipe_shared_mem
+    new_seed = env.set_seed(data[0], static_seed=data[1])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/transforms/transforms.py", line 1269, in set_seed
+    return self.base_env.set_seed(seed, static_seed=static_seed)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/common.py", line 2965, in set_seed
+    self._set_seed(seed)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/libs/gym.py", line 1263, in _set_seed
+    self._set_seed_initial(seed)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/libs/gym.py", line 1315, in _set_seed_initial
+    self.reset(seed=seed)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/common.py", line 2859, in reset
+    tensordict_reset = self._reset(tensordict, **kwargs)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/libs/gym.py", line 1615, in _reset
+    return super()._reset(tensordict, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/gym_like.py", line 529, in _reset
+    obs, info = self._reset_output_transform(self._env.reset(**kwargs))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander.py", line 397, in reset
+    obs, info = self.env.reset(**kwargs)
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander.py", line 110, in reset
+    return self._get_obs(), {}
+           ^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander.py", line 245, in _get_obs
+    if self._oracle:
+       ^^^^^^^^^^^^
+AttributeError: 'MarsLanderEnv' object has no attribute '_oracle'. Did you mean: 'get_oracle'?
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/run.py", line 79, in <module>
+    main()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/run.py", line 67, in main
+    train(cfg, device, args.checkpoint)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/training.py", line 50, in train
+    env = make_oracle_vec_env(
+          ^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/factory.py", line 76, in make_oracle_vec_env
+    env.set_seed(seed)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 72, in decorated_fun
+    return fun(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2270, in set_seed
+    msg, new_seed = channel.recv()
+                    ^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+EOFError

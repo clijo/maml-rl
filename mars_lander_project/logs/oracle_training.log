@@ -1,0 +1,117 @@
+Device: cpu
+Algorithm: TRPO
+Oracle mode: using environment with task params in observation
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+[iter 1] loss=0.122 rew_support=-50.578 rew_query=-50.578 kl=0.0088
+[iter 2] loss=0.072 rew_support=-50.475 rew_query=-50.475 kl=0.0032
+[iter 3] loss=0.138 rew_support=-50.746 rew_query=-50.746 kl=0.0133
+[iter 4] loss=0.140 rew_support=-50.620 rew_query=-50.620 kl=0.0119
+[iter 5] loss=0.136 rew_support=-50.989 rew_query=-50.989 kl=0.0111
+[iter 6] loss=0.136 rew_support=-50.983 rew_query=-50.983 kl=0.0108
+[iter 7] loss=0.134 rew_support=-50.693 rew_query=-50.693 kl=0.0108
+[iter 8] loss=0.134 rew_support=-50.814 rew_query=-50.814 kl=0.0106
+[iter 9] loss=0.135 rew_support=-50.845 rew_query=-50.845 kl=0.0107
+[iter 10] loss=0.133 rew_support=-50.631 rew_query=-50.631 kl=0.0108
+[iter 11] loss=0.132 rew_support=-50.298 rew_query=-50.298 kl=0.0107
+[iter 12] loss=0.131 rew_support=-49.929 rew_query=-49.929 kl=0.0106
+[iter 13] loss=0.129 rew_support=-50.212 rew_query=-50.212 kl=0.0103
+[iter 14] loss=0.127 rew_support=-50.344 rew_query=-50.344 kl=0.0102
+[iter 15] loss=0.128 rew_support=-50.516 rew_query=-50.516 kl=0.0103
+[iter 16] loss=0.130 rew_support=-50.388 rew_query=-50.388 kl=0.0105
+[iter 17] loss=0.127 rew_support=-50.382 rew_query=-50.382 kl=0.0105
+[iter 18] loss=0.126 rew_support=-50.430 rew_query=-50.430 kl=0.0104
+[iter 19] loss=0.124 rew_support=-50.651 rew_query=-50.651 kl=0.0104
+[iter 20] loss=0.121 rew_support=-50.151 rew_query=-50.151 kl=0.0103
+Checkpoint saved to checkpoints/run_20260106_121537/checkpoint_20.pt
+[iter 21] loss=0.119 rew_support=-50.352 rew_query=-50.352 kl=0.0105
+[iter 22] loss=0.118 rew_support=-50.488 rew_query=-50.488 kl=0.0105
+[iter 23] loss=0.119 rew_support=-50.533 rew_query=-50.533 kl=0.0106
+[iter 24] loss=0.118 rew_support=-50.235 rew_query=-50.235 kl=0.0106
+[iter 25] loss=0.118 rew_support=-50.832 rew_query=-50.832 kl=0.0106
+[iter 26] loss=0.117 rew_support=-50.287 rew_query=-50.287 kl=0.0106
+[iter 27] loss=0.115 rew_support=-50.501 rew_query=-50.501 kl=0.0107
+[iter 28] loss=0.112 rew_support=-50.422 rew_query=-50.422 kl=0.0106
+[iter 29] loss=0.111 rew_support=-50.297 rew_query=-50.297 kl=0.0107
+[iter 30] loss=0.108 rew_support=-50.204 rew_query=-50.204 kl=0.0106
+[iter 31] loss=0.103 rew_support=-50.441 rew_query=-50.441 kl=0.0105
+[iter 32] loss=0.090 rew_support=-50.016 rew_query=-50.016 kl=0.0101
+[iter 33] loss=0.092 rew_support=-50.476 rew_query=-50.476 kl=0.0101
+[iter 34] loss=0.084 rew_support=-50.262 rew_query=-50.262 kl=0.0094
+[iter 35] loss=0.090 rew_support=-50.446 rew_query=-50.446 kl=0.0093
+[iter 36] loss=0.084 rew_support=-50.155 rew_query=-50.155 kl=0.0088
+[iter 37] loss=0.086 rew_support=-50.533 rew_query=-50.533 kl=0.0096
+[iter 38] loss=0.086 rew_support=-50.375 rew_query=-50.375 kl=0.0103
+[iter 39] loss=0.084 rew_support=-50.395 rew_query=-50.395 kl=0.0106
+[iter 40] loss=0.082 rew_support=-50.092 rew_query=-50.092 kl=0.0106
+Checkpoint saved to checkpoints/run_20260106_121905/checkpoint_40.pt
+[iter 41] loss=0.083 rew_support=-50.649 rew_query=-50.649 kl=0.0106
+[iter 42] loss=0.086 rew_support=-50.233 rew_query=-50.233 kl=0.0105
+[iter 43] loss=0.085 rew_support=-50.672 rew_query=-50.672 kl=0.0105
+[iter 44] loss=0.087 rew_support=-50.150 rew_query=-50.150 kl=0.0104
+[iter 45] loss=0.082 rew_support=-50.310 rew_query=-50.310 kl=0.0104
+[iter 46] loss=0.086 rew_support=-50.285 rew_query=-50.285 kl=0.0102
+[iter 47] loss=0.080 rew_support=-50.411 rew_query=-50.411 kl=0.0103
+[iter 48] loss=0.071 rew_support=-50.362 rew_query=-50.362 kl=0.0104
+[iter 49] loss=0.066 rew_support=-50.592 rew_query=-50.592 kl=0.0104
+[iter 50] loss=0.058 rew_support=-50.545 rew_query=-50.545 kl=0.0105
+[iter 51] loss=0.052 rew_support=-50.268 rew_query=-50.268 kl=0.0105
+[iter 52] loss=0.046 rew_support=-50.620 rew_query=-50.620 kl=0.0107
+[iter 53] loss=0.042 rew_support=-50.529 rew_query=-50.529 kl=0.0107
+[iter 54] loss=0.041 rew_support=-50.475 rew_query=-50.475 kl=0.0108
+[iter 55] loss=0.044 rew_support=-50.423 rew_query=-50.423 kl=0.0110
+[iter 56] loss=0.043 rew_support=-50.730 rew_query=-50.730 kl=0.0110
+[iter 57] loss=0.052 rew_support=-50.331 rew_query=-50.331 kl=0.0101
+[iter 58] loss=0.040 rew_support=-50.765 rew_query=-50.765 kl=0.0111
+[iter 59] loss=0.038 rew_support=-50.679 rew_query=-50.679 kl=0.0103
+[iter 60] loss=0.040 rew_support=-50.497 rew_query=-50.497 kl=0.0112
+Checkpoint saved to checkpoints/run_20260106_122232/checkpoint_60.pt
+[iter 61] loss=0.032 rew_support=-50.820 rew_query=-50.820 kl=0.0101
+[iter 62] loss=0.037 rew_support=-50.314 rew_query=-50.314 kl=0.0112
+[iter 63] loss=0.044 rew_support=-50.664 rew_query=-50.664 kl=0.0100
+[iter 64] loss=0.046 rew_support=-50.546 rew_query=-50.546 kl=0.0106
+[iter 65] loss=0.043 rew_support=-50.186 rew_query=-50.186 kl=0.0105
+[iter 66] loss=0.030 rew_support=-50.434 rew_query=-50.434 kl=0.0114
+[iter 67] loss=0.023 rew_support=-50.470 rew_query=-50.470 kl=0.0105
+[iter 68] loss=0.031 rew_support=-50.704 rew_query=-50.704 kl=0.0098
+[iter 69] loss=0.037 rew_support=-50.515 rew_query=-50.515 kl=0.0111
+[iter 70] loss=0.048 rew_support=-50.610 rew_query=-50.610 kl=0.0101
+[iter 71] loss=0.047 rew_support=-50.377 rew_query=-50.377 kl=0.0099
+[iter 72] loss=0.024 rew_support=-50.270 rew_query=-50.270 kl=0.0114
+[iter 73] loss=0.045 rew_support=-50.338 rew_query=-50.338 kl=0.0103
+[iter 74] loss=0.025 rew_support=-50.274 rew_query=-50.274 kl=0.0097
+[iter 75] loss=0.020 rew_support=-50.399 rew_query=-50.399 kl=0.0098
+[iter 76] loss=0.016 rew_support=-49.972 rew_query=-49.972 kl=0.0117
+[iter 77] loss=0.021 rew_support=-50.476 rew_query=-50.476 kl=0.0114
+[iter 78] loss=0.018 rew_support=-50.366 rew_query=-50.366 kl=0.0106
+[iter 79] loss=0.016 rew_support=-50.452 rew_query=-50.452 kl=0.0117
+[iter 80] loss=0.017 rew_support=-50.358 rew_query=-50.358 kl=0.0099
+Checkpoint saved to checkpoints/run_20260106_122611/checkpoint_80.pt
+[iter 81] loss=0.021 rew_support=-50.197 rew_query=-50.197 kl=0.0104
+[iter 82] loss=0.015 rew_support=-50.444 rew_query=-50.444 kl=0.0100
+[iter 83] loss=0.019 rew_support=-50.690 rew_query=-50.690 kl=0.0108
+[iter 84] loss=0.017 rew_support=-50.511 rew_query=-50.511 kl=0.0105
+[iter 85] loss=0.018 rew_support=-50.561 rew_query=-50.561 kl=0.0113
+[iter 86] loss=0.020 rew_support=-50.539 rew_query=-50.539 kl=0.0110
+[iter 87] loss=0.024 rew_support=-50.457 rew_query=-50.457 kl=0.0105
+[iter 88] loss=0.017 rew_support=-50.238 rew_query=-50.238 kl=0.0101
+[iter 89] loss=0.023 rew_support=-50.488 rew_query=-50.488 kl=0.0110
+[iter 90] loss=0.028 rew_support=-50.248 rew_query=-50.248 kl=0.0104
+[iter 91] loss=0.015 rew_support=-50.607 rew_query=-50.607 kl=0.0093
+[iter 92] loss=0.010 rew_support=-50.535 rew_query=-50.535 kl=0.0117
+[iter 93] loss=0.029 rew_support=-50.102 rew_query=-50.102 kl=0.0104
+[iter 94] loss=0.028 rew_support=-50.662 rew_query=-50.662 kl=0.0106
+[iter 95] loss=0.022 rew_support=-50.335 rew_query=-50.335 kl=0.0107
+[iter 96] loss=0.015 rew_support=-50.522 rew_query=-50.522 kl=0.0090
+[iter 97] loss=0.017 rew_support=-50.703 rew_query=-50.703 kl=0.0106
+[iter 98] loss=0.010 rew_support=-50.646 rew_query=-50.646 kl=0.0122
+[iter 99] loss=0.012 rew_support=-50.563 rew_query=-50.563 kl=0.0119
+[iter 100] loss=0.014 rew_support=-50.247 rew_query=-50.247 kl=0.0122
+Checkpoint saved to checkpoints/run_20260106_122931/checkpoint_100.pt
+Best model (iter 12, reward -49.929) saved to checkpoints/run_20260106_122931/model.pt
+ter 99] loss=-271.465 rew_support=-49.916 rew_query=-49.916 kl=0.0109
+[iter 100] loss=-273.652 rew_support=-48.811 rew_query=-48.811 kl=0.0027
+Checkpoint saved to checkpoints/run_20260106_122846/checkpoint_100.pt
+Best model (iter 95, reward -48.185) saved to checkpoints/run_20260106_122846/model.pt

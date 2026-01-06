@@ -3,15 +3,15 @@ from typing import Any, List, Mapping, Tuple, Type
 from torchrl.envs import EnvBase
 
 from maml_rl.envs.base import MetaEnv
-from maml_rl.envs.ant import MetaAntGoalVelEnv
-from maml_rl.envs.navigation import Navigation2DEnv
+# from maml_rl.envs.ant import MetaAntGoalVelEnv
+# from maml_rl.envs.navigation import Navigation2DEnv
+from maml_rl.envs.mars_lander import MarsLanderEnv
 
 
 # Registry of available meta-learning environments.
 # To add a new environment, add it to this dict.
-ENV_REGISTRY: dict[str, Type[MetaEnv]] = {
-    "navigation": Navigation2DEnv,
-    "ant": MetaAntGoalVelEnv,
+ENV_REGISTRY = {
+    "mars-lander": MarsLanderEnv,
 }
 
 
@@ -23,7 +23,7 @@ def sample_tasks(
 ) -> List[Mapping[str, Any]]:
     """Sample tasks for the specified environment."""
     env_cls = _get_env_cls(env_name)
-    return env_cls.sample_tasks(num_tasks, low=task_low, high=task_high)
+    return env_cls.sample_tasks(num_tasks, low=task_low, high=task_high, difficulty=0.1)
 
 
 def make_vec_env(
@@ -43,7 +43,7 @@ def make_vec_env(
         env: The vectorized environment
     """
     env_cls = _get_env_cls(env_name)
-    tasks = env_cls.sample_tasks(num_tasks, low=task_low, high=task_high)
+    tasks = env_cls.sample_tasks(num_tasks, low=task_low, high=task_high, difficulty=0.1)
     env = env_cls.make_vec_env(
         tasks,
         device=device,

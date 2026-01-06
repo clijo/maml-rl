@@ -47,6 +47,11 @@ def build_actor_critic(
     # Policy output layer (small gain for near-zero initial mean/action)
     nn.init.orthogonal_(policy_backbone[-1].weight, gain=0.01)
     nn.init.constant_(policy_backbone[-1].bias, 0.0)
+    # BIAS INITIALIZATION:
+    # Set bias for Power action (index 1) to +2.0 to force initial flight
+    # The output is [loc_rot, loc_power, scale_rot, scale_power]
+    with torch.no_grad():
+        policy_backbone[-1].bias[1] = 2.0
 
     policy_model = TensorDictSequential(
         TensorDictModule(policy_backbone, in_keys=["observation"], out_keys=["param"]),

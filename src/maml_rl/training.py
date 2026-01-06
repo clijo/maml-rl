@@ -32,7 +32,7 @@ def _expand_params_for_tasks(params: OrderedDict, num_tasks: int) -> OrderedDict
     )
 
 
-def train(cfg: TrainConfig, device: torch.device):
+def train(cfg: TrainConfig, device: torch.device, checkpoint_path: str = None):
     """
     Run MAML training loop.
     """
@@ -102,9 +102,25 @@ def train(cfg: TrainConfig, device: torch.device):
     best_query_reward = float("-inf")
     best_policy_state = None
     best_value_state = None
+    start_iteration = 1
     best_iteration = 0
 
-    for iteration in range(1, cfg.num_iterations + 1):
+    # Load Checkpoint logic
+    if checkpoint_path is not None:
+        print(f"Resuming training from checkpoint: {checkpoint_path}")
+        checkpoint = torch.load(checkpoint_path, map_location=device)
+        
+        # Load states
+        policy_model.load_state_dict(checkpoint["policy_state_dict"])
+        value_module.load_state_dict(checkpoint["value_state_dict"])
+        
+        # Restore metadata
+        start_iteration = checkpoint.get("iteration", 0) + 1
+        best_query_reward = checkpoint.get("best_query_reward", float("-inf"))
+        
+        print(f"Resuming from iteration {start_iteration}")
+
+    for iteration in range(start_iteration, cfg.num_iterations + 1):
         # Update tasks in existing env for better performance
         if iteration > 1:
             tasks = sample_tasks(
@@ -470,6 +486,26 @@ def train(cfg: TrainConfig, device: torch.device):
                 )
 
             wandb.log(log_data, step=iteration)
+
+        # Periodic Checkpoint
+        if iteration % cfg.save_interval == 0:
+            run_name = cfg.wandb.name if cfg.wandb.name else f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+            save_dir = os.path.join("checkpoints", run_name)
+            os.makedirs(save_dir, exist_ok=True)
+            
+            # Save current state (not necessarily best)
+            save_path = os.path.join(save_dir, f"checkpoint_{iteration}.pt")
+            torch.save(
+                {
+                    "policy_state_dict": policy_model.state_dict(),
+                    "value_state_dict": value_module.state_dict(),
+                    "config": asdict(cfg),
+                    "best_query_reward": best_query_reward,
+                    "iteration": iteration,
+                },
+                save_path,
+            )
+            print(f"Checkpoint saved to {save_path}")
 
     # Save Best Model
     run_name = (

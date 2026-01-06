@@ -1,0 +1,113 @@
+Device: cpu
+Algorithm: TRPO
+Oracle mode: using environment with task params in observation
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+[iter 1] loss=0.096 rew_support=-98.597 rew_query=-98.597 kl=0.0063
+[iter 2] loss=0.101 rew_support=-98.431 rew_query=-98.431 kl=0.0103
+[iter 3] loss=0.135 rew_support=-99.197 rew_query=-99.197 kl=0.0122
+[iter 4] loss=0.145 rew_support=-98.698 rew_query=-98.698 kl=0.0124
+[iter 5] loss=0.140 rew_support=-98.489 rew_query=-98.489 kl=0.0117
+[iter 6] loss=0.134 rew_support=-98.243 rew_query=-98.243 kl=0.0108
+[iter 7] loss=0.134 rew_support=-99.337 rew_query=-99.337 kl=0.0108
+[iter 8] loss=0.133 rew_support=-98.736 rew_query=-98.736 kl=0.0108
+[iter 9] loss=0.135 rew_support=-98.281 rew_query=-98.281 kl=0.0109
+[iter 10] loss=0.134 rew_support=-98.557 rew_query=-98.557 kl=0.0110
+[iter 11] loss=0.132 rew_support=-98.599 rew_query=-98.599 kl=0.0110
+[iter 12] loss=0.134 rew_support=-98.995 rew_query=-98.995 kl=0.0110
+[iter 13] loss=0.132 rew_support=-99.135 rew_query=-99.135 kl=0.0111
+[iter 14] loss=0.132 rew_support=-98.785 rew_query=-98.785 kl=0.0110
+[iter 15] loss=0.133 rew_support=-98.682 rew_query=-98.682 kl=0.0109
+[iter 16] loss=0.132 rew_support=-99.005 rew_query=-99.005 kl=0.0109
+[iter 17] loss=0.130 rew_support=-99.208 rew_query=-99.208 kl=0.0109
+[iter 18] loss=0.130 rew_support=-98.344 rew_query=-98.344 kl=0.0108
+[iter 19] loss=0.129 rew_support=-98.261 rew_query=-98.261 kl=0.0107
+[iter 20] loss=0.128 rew_support=-98.918 rew_query=-98.918 kl=0.0107
+Checkpoint saved to checkpoints/run_20260106_125851/checkpoint_20.pt
+[iter 21] loss=0.128 rew_support=-98.770 rew_query=-98.770 kl=0.0107
+[iter 22] loss=0.124 rew_support=-98.626 rew_query=-98.626 kl=0.0106
+[iter 23] loss=0.124 rew_support=-98.676 rew_query=-98.676 kl=0.0105
+[iter 24] loss=0.121 rew_support=-98.925 rew_query=-98.925 kl=0.0104
+[iter 25] loss=0.118 rew_support=-98.761 rew_query=-98.761 kl=0.0104
+[iter 26] loss=0.113 rew_support=-98.506 rew_query=-98.506 kl=0.0104
+[iter 27] loss=0.110 rew_support=-98.827 rew_query=-98.827 kl=0.0104
+[iter 28] loss=0.105 rew_support=-98.656 rew_query=-98.656 kl=0.0103
+[iter 29] loss=0.101 rew_support=-97.665 rew_query=-97.665 kl=0.0100
+[iter 30] loss=0.094 rew_support=-96.794 rew_query=-96.794 kl=0.0093
+[iter 31] loss=0.090 rew_support=-97.641 rew_query=-97.641 kl=0.0077
+[iter 32] loss=0.099 rew_support=-97.685 rew_query=-97.685 kl=0.0083
+[iter 33] loss=0.105 rew_support=-97.466 rew_query=-97.466 kl=0.0100
+[iter 34] loss=0.104 rew_support=-97.457 rew_query=-97.457 kl=0.0102
+[iter 35] loss=0.100 rew_support=-97.844 rew_query=-97.844 kl=0.0101
+[iter 36] loss=0.099 rew_support=-97.691 rew_query=-97.691 kl=0.0101
+[iter 37] loss=0.096 rew_support=-97.641 rew_query=-97.641 kl=0.0101
+[iter 38] loss=0.094 rew_support=-97.916 rew_query=-97.916 kl=0.0101
+[iter 39] loss=0.090 rew_support=-97.928 rew_query=-97.928 kl=0.0101
+[iter 40] loss=0.088 rew_support=-97.612 rew_query=-97.612 kl=0.0101
+Checkpoint saved to checkpoints/run_20260106_130131/checkpoint_40.pt
+[iter 41] loss=0.086 rew_support=-97.871 rew_query=-97.871 kl=0.0101
+[iter 42] loss=0.084 rew_support=-97.633 rew_query=-97.633 kl=0.0100
+[iter 43] loss=0.081 rew_support=-98.236 rew_query=-98.236 kl=0.0100
+[iter 44] loss=0.080 rew_support=-98.524 rew_query=-98.524 kl=0.0100
+[iter 45] loss=0.078 rew_support=-98.098 rew_query=-98.098 kl=0.0100
+[iter 46] loss=0.076 rew_support=-97.671 rew_query=-97.671 kl=0.0099
+[iter 47] loss=0.075 rew_support=-98.040 rew_query=-98.040 kl=0.0099
+[iter 48] loss=0.072 rew_support=-97.221 rew_query=-97.221 kl=0.0099
+[iter 49] loss=0.068 rew_support=-98.096 rew_query=-98.096 kl=0.0100
+[iter 50] loss=0.066 rew_support=-98.154 rew_query=-98.154 kl=0.0101
+[iter 51] loss=0.063 rew_support=-97.875 rew_query=-97.875 kl=0.0102
+[iter 52] loss=0.061 rew_support=-98.056 rew_query=-98.056 kl=0.0103
+[iter 53] loss=0.045 rew_support=-97.695 rew_query=-97.695 kl=0.0110
+[iter 54] loss=0.056 rew_support=-97.448 rew_query=-97.448 kl=0.0104
+[iter 55] loss=0.058 rew_support=-97.484 rew_query=-97.484 kl=0.0104
+[iter 56] loss=0.057 rew_support=-97.364 rew_query=-97.364 kl=0.0102
+[iter 57] loss=0.045 rew_support=-97.173 rew_query=-97.173 kl=0.0112
+[iter 58] loss=0.047 rew_support=-97.708 rew_query=-97.708 kl=0.0111
+[iter 59] loss=0.047 rew_support=-97.518 rew_query=-97.518 kl=0.0109
+[iter 60] loss=0.045 rew_support=-98.443 rew_query=-98.443 kl=0.0112
+Checkpoint saved to checkpoints/run_20260106_130411/checkpoint_60.pt
+[iter 61] loss=0.049 rew_support=-97.584 rew_query=-97.584 kl=0.0106
+[iter 62] loss=0.049 rew_support=-97.385 rew_query=-97.385 kl=0.0106
+[iter 63] loss=0.038 rew_support=-98.122 rew_query=-98.122 kl=0.0116
+[iter 64] loss=0.044 rew_support=-97.469 rew_query=-97.469 kl=0.0111
+[iter 65] loss=0.031 rew_support=-97.773 rew_query=-97.773 kl=0.0122
+[iter 66] loss=0.029 rew_support=-96.573 rew_query=-96.573 kl=0.0112
+[iter 67] loss=0.034 rew_support=-97.725 rew_query=-97.725 kl=0.0113
+[iter 68] loss=0.036 rew_support=-98.013 rew_query=-98.013 kl=0.0120
+[iter 69] loss=0.032 rew_support=-97.557 rew_query=-97.557 kl=0.0125
+[iter 70] loss=0.033 rew_support=-98.680 rew_query=-98.680 kl=0.0125
+[iter 71] loss=0.028 rew_support=-97.698 rew_query=-97.698 kl=0.0120
+[iter 72] loss=0.029 rew_support=-98.088 rew_query=-98.088 kl=0.0120
+[iter 73] loss=0.026 rew_support=-97.760 rew_query=-97.760 kl=0.0116
+[iter 74] loss=0.037 rew_support=-96.765 rew_query=-96.765 kl=0.0108
+[iter 75] loss=0.029 rew_support=-97.899 rew_query=-97.899 kl=0.0117
+[iter 76] loss=0.026 rew_support=-97.491 rew_query=-97.491 kl=0.0124
+[iter 77] loss=0.023 rew_support=-97.332 rew_query=-97.332 kl=0.0128
+[iter 78] loss=0.022 rew_support=-96.883 rew_query=-96.883 kl=0.0124
+[iter 79] loss=0.028 rew_support=-97.636 rew_query=-97.636 kl=0.0114
+[iter 80] loss=0.031 rew_support=-97.087 rew_query=-97.087 kl=0.0117
+Checkpoint saved to checkpoints/run_20260106_130652/checkpoint_80.pt
+[iter 81] loss=0.022 rew_support=-97.210 rew_query=-97.210 kl=0.0128
+[iter 82] loss=0.022 rew_support=-97.921 rew_query=-97.921 kl=0.0122
+[iter 83] loss=0.032 rew_support=-97.299 rew_query=-97.299 kl=0.0117
+[iter 84] loss=0.020 rew_support=-97.876 rew_query=-97.876 kl=0.0127
+[iter 85] loss=0.031 rew_support=-97.595 rew_query=-97.595 kl=0.0115
+[iter 86] loss=0.029 rew_support=-97.331 rew_query=-97.331 kl=0.0117
+[iter 87] loss=0.022 rew_support=-97.181 rew_query=-97.181 kl=0.0124
+[iter 88] loss=0.019 rew_support=-98.184 rew_query=-98.184 kl=0.0131
+[iter 89] loss=0.020 rew_support=-97.441 rew_query=-97.441 kl=0.0126
+[iter 90] loss=0.020 rew_support=-97.594 rew_query=-97.594 kl=0.0132
+[iter 91] loss=0.019 rew_support=-97.521 rew_query=-97.521 kl=0.0124
+[iter 92] loss=0.018 rew_support=-97.391 rew_query=-97.391 kl=0.0126
+[iter 93] loss=0.018 rew_support=-97.333 rew_query=-97.333 kl=0.0128
+[iter 94] loss=0.023 rew_support=-97.885 rew_query=-97.885 kl=0.0122
+[iter 95] loss=0.017 rew_support=-98.435 rew_query=-98.435 kl=0.0131
+[iter 96] loss=0.021 rew_support=-97.636 rew_query=-97.636 kl=0.0128
+[iter 97] loss=0.015 rew_support=-97.552 rew_query=-97.552 kl=0.0133
+[iter 98] loss=0.013 rew_support=-97.501 rew_query=-97.501 kl=0.0131
+[iter 99] loss=0.014 rew_support=-97.831 rew_query=-97.831 kl=0.0133
+[iter 100] loss=0.013 rew_support=-97.553 rew_query=-97.553 kl=0.0131
+Checkpoint saved to checkpoints/run_20260106_130933/checkpoint_100.pt
+Best model (iter 66, reward -96.573) saved to checkpoints/run_20260106_130933/model.pt

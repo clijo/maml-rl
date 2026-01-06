@@ -1,0 +1,657 @@
+Device: cpu
+Algorithm: TRPO
+Oracle mode: using environment with task params in observation
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+[iter 1] loss=0.093 rew_support=-48.177 rew_query=-48.177 kl=0.0077
+[iter 2] loss=0.068 rew_support=-46.622 rew_query=-46.622 kl=0.0108
+[iter 3] loss=0.087 rew_support=-46.736 rew_query=-46.736 kl=0.0137
+[iter 4] loss=0.093 rew_support=-45.777 rew_query=-45.777 kl=0.0079
+[iter 5] loss=0.106 rew_support=-48.092 rew_query=-48.092 kl=0.0100
+[iter 6] loss=0.097 rew_support=-47.959 rew_query=-47.959 kl=0.0123
+[iter 7] loss=0.103 rew_support=-46.960 rew_query=-46.960 kl=0.0120
+[iter 8] loss=0.104 rew_support=-48.615 rew_query=-48.615 kl=0.0126
+[iter 9] loss=0.109 rew_support=-49.987 rew_query=-49.987 kl=0.0088
+[iter 10] loss=0.101 rew_support=-49.028 rew_query=-49.028 kl=0.0103
+[iter 11] loss=0.110 rew_support=-47.014 rew_query=-47.014 kl=0.0096
+[iter 12] loss=0.106 rew_support=-48.209 rew_query=-48.209 kl=0.0091
+[iter 13] loss=0.111 rew_support=-48.739 rew_query=-48.739 kl=0.0089
+[iter 14] loss=0.099 rew_support=-46.804 rew_query=-46.804 kl=0.0091
+[iter 15] loss=0.111 rew_support=-48.676 rew_query=-48.676 kl=0.0089
+[iter 16] loss=0.111 rew_support=-47.513 rew_query=-47.513 kl=0.0092
+[iter 17] loss=0.109 rew_support=-47.399 rew_query=-47.399 kl=0.0090
+[iter 18] loss=0.111 rew_support=-47.379 rew_query=-47.379 kl=0.0092
+[iter 19] loss=0.112 rew_support=-48.672 rew_query=-48.672 kl=0.0095
+[iter 20] loss=0.114 rew_support=-48.366 rew_query=-48.366 kl=0.0095
+[iter 21] loss=0.109 rew_support=-48.980 rew_query=-48.980 kl=0.0093
+[iter 22] loss=0.112 rew_support=-48.068 rew_query=-48.068 kl=0.0094
+[iter 23] loss=0.108 rew_support=-46.756 rew_query=-46.756 kl=0.0095
+[iter 24] loss=0.110 rew_support=-47.462 rew_query=-47.462 kl=0.0097
+[iter 25] loss=0.110 rew_support=-47.215 rew_query=-47.215 kl=0.0097
+[iter 26] loss=0.110 rew_support=-47.887 rew_query=-47.887 kl=0.0096
+[iter 27] loss=0.111 rew_support=-48.402 rew_query=-48.402 kl=0.0096
+[iter 28] loss=0.108 rew_support=-47.163 rew_query=-47.163 kl=0.0094
+[iter 29] loss=0.105 rew_support=-47.218 rew_query=-47.218 kl=0.0101
+[iter 30] loss=0.107 rew_support=-47.091 rew_query=-47.091 kl=0.0105
+[iter 31] loss=0.108 rew_support=-47.379 rew_query=-47.379 kl=0.0104
+[iter 32] loss=0.111 rew_support=-48.565 rew_query=-48.565 kl=0.0104
+[iter 33] loss=0.110 rew_support=-47.307 rew_query=-47.307 kl=0.0104
+[iter 34] loss=0.108 rew_support=-48.036 rew_query=-48.036 kl=0.0104
+[iter 35] loss=0.105 rew_support=-49.021 rew_query=-49.021 kl=0.0103
+[iter 36] loss=0.103 rew_support=-47.501 rew_query=-47.501 kl=0.0103
+[iter 37] loss=0.103 rew_support=-46.776 rew_query=-46.776 kl=0.0102
+[iter 38] loss=0.101 rew_support=-48.972 rew_query=-48.972 kl=0.0101
+[iter 39] loss=0.097 rew_support=-48.295 rew_query=-48.295 kl=0.0101
+[iter 40] loss=0.093 rew_support=-48.818 rew_query=-48.818 kl=0.0101
+[iter 41] loss=0.091 rew_support=-47.010 rew_query=-47.010 kl=0.0101
+[iter 42] loss=0.090 rew_support=-47.518 rew_query=-47.518 kl=0.0100
+[iter 43] loss=0.083 rew_support=-47.484 rew_query=-47.484 kl=0.0100
+[iter 44] loss=0.081 rew_support=-47.633 rew_query=-47.633 kl=0.0098
+[iter 45] loss=0.072 rew_support=-45.876 rew_query=-45.876 kl=0.0099
+[iter 46] loss=0.073 rew_support=-49.315 rew_query=-49.315 kl=0.0100
+[iter 47] loss=0.066 rew_support=-48.969 rew_query=-48.969 kl=0.0100
+[iter 48] loss=0.063 rew_support=-47.511 rew_query=-47.511 kl=0.0100
+[iter 49] loss=0.057 rew_support=-48.030 rew_query=-48.030 kl=0.0100
+[iter 50] loss=0.056 rew_support=-49.052 rew_query=-49.052 kl=0.0099
+Checkpoint saved to checkpoints/run_20260106_135439/checkpoint_50.pt
+[iter 51] loss=0.053 rew_support=-48.446 rew_query=-48.446 kl=0.0101
+[iter 52] loss=0.047 rew_support=-47.933 rew_query=-47.933 kl=0.0102
+[iter 53] loss=0.048 rew_support=-48.936 rew_query=-48.936 kl=0.0105
+[iter 54] loss=0.043 rew_support=-47.832 rew_query=-47.832 kl=0.0102
+[iter 55] loss=0.044 rew_support=-48.036 rew_query=-48.036 kl=0.0103
+[iter 56] loss=0.045 rew_support=-48.815 rew_query=-48.815 kl=0.0101
+[iter 57] loss=0.053 rew_support=-47.615 rew_query=-47.615 kl=0.0105
+[iter 58] loss=0.065 rew_support=-47.201 rew_query=-47.201 kl=0.0107
+[iter 59] loss=0.072 rew_support=-47.524 rew_query=-47.524 kl=0.0108
+[iter 60] loss=0.092 rew_support=-48.526 rew_query=-48.526 kl=0.0113
+[iter 61] loss=0.100 rew_support=-47.472 rew_query=-47.472 kl=0.0103
+[iter 62] loss=0.093 rew_support=-46.620 rew_query=-46.620 kl=0.0104
+[iter 63] loss=0.104 rew_support=-47.744 rew_query=-47.744 kl=0.0104
+[iter 64] loss=0.115 rew_support=-49.388 rew_query=-49.388 kl=0.0108
+[iter 65] loss=0.117 rew_support=-47.979 rew_query=-47.979 kl=0.0116
+[iter 66] loss=0.132 rew_support=-46.860 rew_query=-46.860 kl=0.0120
+[iter 67] loss=0.146 rew_support=-48.134 rew_query=-48.134 kl=0.0133
+[iter 68] loss=0.164 rew_support=-46.438 rew_query=-46.438 kl=0.0139
+[iter 69] loss=0.159 rew_support=-47.806 rew_query=-47.806 kl=0.0141
+[iter 70] loss=0.161 rew_support=-46.668 rew_query=-46.668 kl=0.0137
+[iter 71] loss=0.156 rew_support=-46.269 rew_query=-46.269 kl=0.0133
+[iter 72] loss=0.160 rew_support=-48.816 rew_query=-48.816 kl=0.0139
+[iter 73] loss=0.156 rew_support=-46.413 rew_query=-46.413 kl=0.0132
+[iter 74] loss=0.154 rew_support=-47.890 rew_query=-47.890 kl=0.0129
+[iter 75] loss=0.151 rew_support=-46.065 rew_query=-46.065 kl=0.0128
+[iter 76] loss=0.155 rew_support=-46.752 rew_query=-46.752 kl=0.0131
+[iter 77] loss=0.148 rew_support=-46.490 rew_query=-46.490 kl=0.0128
+[iter 78] loss=0.145 rew_support=-47.685 rew_query=-47.685 kl=0.0126
+[iter 79] loss=0.138 rew_support=-45.614 rew_query=-45.614 kl=0.0125
+[iter 80] loss=0.139 rew_support=-44.901 rew_query=-44.901 kl=0.0124
+[iter 81] loss=0.137 rew_support=-45.231 rew_query=-45.231 kl=0.0124
+[iter 82] loss=0.133 rew_support=-46.513 rew_query=-46.513 kl=0.0128
+[iter 83] loss=0.127 rew_support=-45.235 rew_query=-45.235 kl=0.0120
+[iter 84] loss=0.126 rew_support=-45.058 rew_query=-45.058 kl=0.0122
+[iter 85] loss=0.124 rew_support=-46.295 rew_query=-46.295 kl=0.0124
+[iter 86] loss=0.123 rew_support=-45.164 rew_query=-45.164 kl=0.0125
+[iter 87] loss=0.116 rew_support=-46.523 rew_query=-46.523 kl=0.0124
+Process _ProcessNoWarn-18:
+Process _ProcessNoWarn-19:
+Process _ProcessNoWarn-17:
+Process _ProcessNoWarn-20:
+Process _ProcessNoWarn-11:
+Process _ProcessNoWarn-16:
+Process _ProcessNoWarn-10:
+Process _ProcessNoWarn-14:
+Process _ProcessNoWarn-15:
+Process _ProcessNoWarn-13:
+Process _ProcessNoWarn-12:
+Process _ProcessNoWarn-9:
+Process _ProcessNoWarn-8:
+Process _ProcessNoWarn-7:
+Process _ProcessNoWarn-5:
+Process _ProcessNoWarn-6:
+Process _ProcessNoWarn-4:
+Process _ProcessNoWarn-1:
+Process _ProcessNoWarn-3:
+Process _ProcessNoWarn-2:
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+
+The above exception was the direct cause of the following exception:
+
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+EOFError
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+EOFError
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+
+The above exception was the direct cause of the following exception:
+
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+EOFError
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+Traceback (most recent call last):
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+EOFError: proc 250253 failed, last command: step.
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The above exception was the direct cause of the following exception:
+
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+EOFError: proc 250246 failed, last command: step.
+
+The above exception was the direct cause of the following exception:
+
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+
+The above exception was the direct cause of the following exception:
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+
+The above exception was the direct cause of the following exception:
+
+EOFError: proc 250262 failed, last command: step.
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+EOFError: proc 250261 failed, last command: step.
+EOFError: proc 250258 failed, last command: step.
+EOFError: proc 250247 failed, last command: step.
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+EOFError: proc 250252 failed, last command: step.
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: proc 250249 failed, last command: step.
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+EOFError: proc 250254 failed, last command: step.
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+EOFError: proc 250260 failed, last command: step.
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+
+The above exception was the direct cause of the following exception:
+
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+EOFError: proc 250243 failed, last command: step.
+EOFError: proc 250250 failed, last command: step.
+EOFError: proc 250259 failed, last command: step.
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+EOFError: proc 250256 failed, last command: step.
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+EOFError
+EOFError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The above exception was the direct cause of the following exception:
+
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+Traceback (most recent call last):
+Traceback (most recent call last):
+EOFError: proc 250255 failed, last command: step.
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+EOFError: proc 250248 failed, last command: step.
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+EOFError: proc 250251 failed, last command: step.
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 250245 failed, last command: step.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 250244 failed, last command: step.
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+EOFError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 250257 failed, last command: step.
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 100 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
