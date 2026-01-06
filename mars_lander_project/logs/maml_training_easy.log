@@ -1,0 +1,23 @@
+Device: cpu
+Algorithm: TRPO
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+[iter 1] loss=511.084 rew_support=-18.112 rew_query=-15.223 kl=0.0012
+[iter 2] loss=310.489 rew_support=-18.227 rew_query=-15.434 kl=0.0013
+[iter 3] loss=175.106 rew_support=-18.244 rew_query=-15.270 kl=0.0005
+[iter 4] loss=87.926 rew_support=-18.342 rew_query=-15.219 kl=0.0015
+[iter 5] loss=35.689 rew_support=-18.287 rew_query=-15.577 kl=0.0029
+[iter 6] loss=9.347 rew_support=-18.381 rew_query=-15.340 kl=0.0037
+[iter 7] loss=-15.424 rew_support=-18.257 rew_query=-15.467 kl=0.0048
+[iter 8] loss=-21.745 rew_support=-18.257 rew_query=-15.239 kl=0.0044
+[iter 9] loss=-29.070 rew_support=-18.259 rew_query=-15.436 kl=0.0070
+[iter 10] loss=-34.614 rew_support=-18.221 rew_query=-15.377 kl=0.0093
+[iter 11] loss=-34.030 rew_support=-18.274 rew_query=-15.096 kl=0.0061
+[iter 12] loss=-29.931 rew_support=-18.253 rew_query=-15.731 kl=0.0090
+[iter 13] loss=-28.593 rew_support=-18.225 rew_query=-15.616 kl=0.0103
+[iter 14] loss=-13.662 rew_support=-18.337 rew_query=-14.961 kl=0.0097
+[iter 15] loss=-19.650 rew_support=-18.299 rew_query=-15.382 kl=0.0074
+[iter 16] loss=-11.903 rew_support=-18.354 rew_query=-15.394 kl=0.0091
+[iter 17] loss=-22.492 rew_support=-18.316 rew_query=-15.556 kl=0.0088

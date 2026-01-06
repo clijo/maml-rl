@@ -26,9 +26,9 @@ def load_model(checkpoint_path: str, device: str):
     
     # We need to know obs_dim/act_dim. 
     # Hardcoding for MarsLander for now or we could instantiate env.
-    # Standard: 7. Oracle: 11.
+    # Standard: 9 (was 7). Oracle: 14 (was 11).
     is_oracle = cfg_dict.get("oracle", False)
-    obs_dim = 11 if is_oracle else 7
+    obs_dim = 14 if is_oracle else 9
     act_dim = 2
     
     actor, policy_model, _ = build_actor_critic(obs_dim, act_dim, hidden_sizes)

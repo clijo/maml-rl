@@ -93,11 +93,13 @@ class MarsLanderEnv(gym.Env):
             start_x = start_x_task
         else:
             start_x = self.np_random.uniform(2000, 5000)
-            
-        start_hs = self.np_random.uniform(-50, 50)
+        
+        # Initial Velocities/Rotation (from Task for Easy Mode)
+        start_hs = self._task.get("start_hs", self.np_random.uniform(-50, 50))
+        start_rotate = self._task.get("start_rotate", self.np_random.uniform(-90, 90))
+        
         start_vs = self.np_random.uniform(-50, 0) # Moving down
         start_fuel = self.np_random.uniform(500, 2000)
-        start_rotate = self.np_random.uniform(-90, 90)
         start_power = 0.0
         
         self.state = np.array([
@@ -192,10 +194,15 @@ class MarsLanderEnv(gym.Env):
         phi_new = compute_potential(x_new, y_new, hs_new, vs_new)
 
         # Shaping reward (Gamma should be close to 1, e.g. 0.999)
-        shaping = 0.999 * phi_new - phi_old
-        reward += shaping
+        # shaping = 0.999 * phi_new - phi_old
+        # reward += shaping
+        # DISABLED shaping for now to verify pure crash/land incentives first? 
+        # Actually user wants "crash and learn". Shaping helps navigation. 
+        # But if we start ABOVE target, shaping is less critical for X, mostly Y.
+        # Let's keep shaping but reduced scale? No, keep it standard.
+        reward += (0.999 * phi_new - phi_old)
 
-            # Check Crash/Landing
+        # Check Crash/Landing
         if y_new <= 0 or x_new < 0 or x_new > self.MAP_WIDTH:
             terminated = True
             
@@ -213,10 +220,21 @@ class MarsLanderEnv(gym.Env):
             if landing_conditions_met:
                 reward += 100.0 + fuel * 0.01 # Bonus for saving fuel (reduced multiplier)
             else:
-                # Crash penalty
-                reward -= 1000.0 
-                # Shaping: penalized for high speed impact
-                reward -= np.abs(vs_new) + np.abs(hs_new)
+                # SOFT CRASH LOGIC
+                # Penalty = Base Crash Penalty + Speed Penalty
+                # Previous: -1000 fixed.
+                # New: -100 fixed. + Penalty proportional to speed.
+                # Max speed impact ~100m/s. -100 penal.
+                # "Good" crash (surviving impact but maybe wrong place/angle): Low penalty.
+                reward -= 100.0 
+                
+                # Speed penalty: Strong enough to prefer slowing down over just crashing fast.
+                # abs(vs) can be 50-100. 
+                # If vs=100, penalty should be significant.
+                # Let's say penalty = 2.0 * speed
+                reward -= 2.0 * (np.abs(vs_new) + np.abs(hs_new))
+                
+                # Distance penalty to discourage crashing far away (still relevant)
                 reward -= dist_x * 0.1
         
         return self._get_obs(), reward, terminated, truncated, {}
@@ -241,18 +259,6 @@ class MarsLanderEnv(gym.Env):
             dist_ground / self.MAP_HEIGHT # Normalized distance to ground
         ], dtype=np.float32)
         
-        # If Oracle, append task parameters to observation
-        if self._oracle:
-            # Task: [gravity, wind_x, wind_y, target_x, landing_width]
-            task_obs = np.array([
-                self.gravity, 
-                self.wind[0], 
-                self.wind[1],
-                self.target_x / self.MAP_WIDTH,
-                self.landing_width / 2000.0 # Normalize width approx
-            ], dtype=np.float32)
-            return np.concatenate([obs, task_obs]).astype(np.float32)
-            
         return obs
 
     def set_task(self, task: Dict[str, Any]):
@@ -269,26 +275,28 @@ class MarsLanderEnv(gym.Env):
         Generate a set of tasks with difficulty scaling.
         difficulty: 0.0 (Easy) to 1.0 (Hard)
         
-        Easy: 
-        - Start Altitude ~200m
-        - Gravity ~3.711
-        - Target directly under or very close to start x.
+        Easy (0.0): 
+        - Vertical Descent ONLY.
+        - Start Altitude Low (~500m).
+        - Start Gravity ~3.711.
+        - No Wind.
+        - Target directly under start x.
+        - Upright (0 angle), 0 HS, Moving down.
         
-        Hard: 
-        - Start Altitude ~3000m
-        - Gravity varies
-        - Target far from start x.
+        Hard (1.0): 
+        - High Altitude, High Wind, Variable Gravity.
+        - Target far away.
         """
         tasks = []
         for _ in range(num_tasks):
             # Scale parameters by difficulty
             
-            # Gravity
+            # Gravity: Easy = 3.711, Hard = [1.6, 9.0]
             grav_center = 3.711
             grav_spread = 5.0 * difficulty
             gravity = np.clip(np.random.uniform(grav_center - grav_spread, grav_center + grav_spread), 1.6, 9.0)
             
-            # Wind
+            # Wind: Easy = 0. Hard = [-10, 10]
             wind_scale = 10.0 * difficulty
             wind = [
                 np.random.uniform(-wind_scale, wind_scale),
@@ -296,35 +304,45 @@ class MarsLanderEnv(gym.Env):
             ]
             
             # Start Altitude
-            min_alt = 200.0 + (1800.0 * difficulty)
-            max_alt = 400.0 + (2600.0 * difficulty)
+            # Easy: 500m - 800m (Close enough to learn braking, high enough to react)
+            min_alt = 500.0 + (1500.0 * difficulty)
+            max_alt = 800.0 + (2200.0 * difficulty)
             start_y = np.random.uniform(min_alt, max_alt)
             
-            # Start X (randomize to cover map)
+            # Start X 
             start_x = np.random.uniform(1000, 6000)
             
-            # Target X placement relative to Start X based on Difficulty
-            # Easy (0.0): Offset 0. 
-            # Hard (1.0): Offset up to 3000m (half map width).
-            max_offset = 500.0 + (2500.0 * difficulty)
+            # Target X placement
+            # Easy (0.0): Exactly under start_x (offset 0)
+            max_offset = 3000.0 * difficulty
             offset = np.random.uniform(-max_offset, max_offset)
-            target_x = np.clip(start_x + offset, 500, 6500) # Keep within map bounds
+            target_x = np.clip(start_x + offset, 500, 6500) 
             
-            # Landing Width scaling
-            # Easy: Wide (1000m - 2000m)
-            # Hard: Narrow (200m - 500m)
-            # Linearly interpolate
+            # Landing Width
+            # Easy: Wide. Hard: Narrow.
             min_width = 800.0 - (600.0 * difficulty)
             max_width = 2000.0 - (1000.0 * difficulty)
             landing_width = np.random.uniform(min_width, max_width)
             
+            # Initial Conditions
+            # Easy: 0 HS, 0 Angle. Hard: Random.
+            # We pass these to task so reset() can use them
+            if difficulty < 0.2:
+                start_hs = 0.0
+                start_rotate = 0.0
+            else:
+                start_hs = np.random.uniform(-50, 50)
+                start_rotate = np.random.uniform(-90, 90)
+
             task = {
                 "gravity": gravity,
                 "wind": wind,
                 "target_x": target_x,
-                "landing_width": landing_width, # Variable width
+                "landing_width": landing_width,
                 "start_y": start_y,
                 "start_x": start_x, 
+                "start_hs": start_hs,
+                "start_rotate": start_rotate,
                 "difficulty": difficulty
             }
             tasks.append(task)
@@ -343,6 +361,9 @@ class MarsLanderEnv(gym.Env):
         norm_obs: bool = True,
     ):
         """Create a parallel Mars Lander vector environment."""
+        # Note: factory.py calls sample_tasks with difficulty=0.1 in the caller (run.py or main)
+        # or we check where sample_tasks is called.
+        # Actually factory.py doesn't call sample_tasks, run.py does via factory.
         return _make_mars_parallel_env(tasks, device, max_steps, norm_obs, oracle=False)
 
     @staticmethod
@@ -408,14 +429,16 @@ class MetaMarsLanderOracleEnv(gym.Wrapper):
         gravity = task.get("gravity", self.env.GRAVITY_MARS)
         wind = task.get("wind", [0.0, 0.0])
         target_x = task.get("target_x", self.env.MAP_WIDTH // 2)
+        landing_width = task.get("landing_width", 1000.0)
         
-        task_info = np.array([gravity, wind[0], wind[1], target_x], dtype=np.float32)
+        task_info = np.array([gravity, wind[0], wind[1], target_x, landing_width], dtype=np.float32)
         
         # Normalize task info to be roughly in similar range as obs if possible, 
         # or just append raw. Raw is usually fine for neural nets if not huge.
         # Wind is small, gravity ~ [1.6, 10], target_x ~ [2500, 4500].
         # Target X needs normalization!
         task_info[3] = task_info[3] / self.env.MAP_WIDTH
+        task_info[4] = task_info[4] / 2000.0 # Normalize width approx
         
         return np.concatenate([obs, task_info])
 
