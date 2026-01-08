@@ -9,7 +9,7 @@ import wandb
 from torch.func import vmap
 
 from configs.base import TrainConfig
-from maml_rl.envs.factory import make_vec_env, ENV_REGISTRY
+from maml_rl.envs.factory import make_vec_env, sample_tasks, ENV_REGISTRY
 from maml_rl.maml import FunctionalPolicy, inner_update_vpg
 from maml_rl.policies import (
     build_actor_critic,
@@ -33,13 +33,17 @@ def evaluate(
     checkpoint = torch.load(checkpoint_path, map_location=device)
 
     # Create environment
-    tasks, env = make_vec_env(
+    tasks = sample_tasks(
         env_name=cfg.env.name,
-        num_tasks=cfg.env.num_tasks,  # Use num_tasks from config for batch size
+        num_tasks=cfg.env.num_tasks,
         task_low=cfg.env.task_low,
         task_high=cfg.env.task_high,
+    )
+    env = make_vec_env(
+        env_name=cfg.env.name,
+        tasks=tasks,
         max_steps=cfg.env.max_steps,
-        device=device,
+        device=str(device),
         norm_obs=cfg.env.norm_obs,
         seed=cfg.seed + 1000,  # Different seed for evaluation
     )
@@ -235,21 +239,27 @@ def evaluate(
             norm_obs=cfg.env.norm_obs,
             seed=cfg.seed + 2000,
         )
-        if cfg.env.norm_obs:
-            oracle_env.transform.init_stats(num_iter=5, reduce_dim=[0, 1], cat_dim=0)
+        try:
+            if cfg.env.norm_obs:
+                oracle_env.transform.init_stats(
+                    num_iter=5, reduce_dim=[0, 1], cat_dim=0
+                )
 
-        oracle_env.reset()
-        with torch.no_grad():
-            oracle_td = oracle_env.rollout(
-                max_steps=cfg.env.max_steps,
-                policy=oracle_policy,
-                break_when_any_done=False,
-                auto_reset=True,
+            oracle_env.reset()
+            with torch.no_grad():
+                oracle_td = oracle_env.rollout(
+                    max_steps=cfg.env.max_steps,
+                    policy=oracle_policy,
+                    break_when_any_done=False,
+                    auto_reset=True,
+                )
+            rew_oracle = oracle_td.get(("next", "reward")).mean(dim=1).cpu().numpy()
+            oracle_results[0] = (rew_oracle.mean(), rew_oracle.std())
+            print(
+                f"[Oracle] Reward: {rew_oracle.mean():.3f} +/- {rew_oracle.std():.3f}"
             )
-        rew_oracle = oracle_td.get(("next", "reward")).mean(dim=1).cpu().numpy()
-        oracle_results[0] = (rew_oracle.mean(), rew_oracle.std())
-        print(f"[Oracle] Reward: {rew_oracle.mean():.3f} +/- {rew_oracle.std():.3f}")
-        oracle_env.close()
+        finally:
+            oracle_env.close()
 
     # 4. Logging and Summary
     if wandb.run:
@@ -387,3 +397,6 @@ def evaluate(
     plt.savefig(plot_path, dpi=150)
     plt.close(fig)
     print(f"\nPlot saved to {plot_path}")
+
+    if wandb.run is not None:
+        wandb.finish()

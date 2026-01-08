@@ -96,11 +96,18 @@ class MetaAntGoalVelEnv(AntEnv):
         oracle_obs_dim = 27 + MetaAntGoalVelEnv.get_task_obs_dim()
         act_dim = 8  # Ant has 8-dimensional action
 
-        checkpoint = torch.load(checkpoint_path, map_location=device)
+        checkpoint = torch.load(
+            checkpoint_path, map_location=device, weights_only=False
+        )
+        # Get hidden_sizes from checkpoint config, fall back to direct key, then default
+        if "config" in checkpoint and "model" in checkpoint["config"]:
+            hidden_sizes = checkpoint["config"]["model"].get("hidden_sizes", (100, 100))
+        else:
+            hidden_sizes = checkpoint.get("hidden_sizes", (100, 100))
         _, oracle_policy, _ = build_actor_critic(
             oracle_obs_dim,
             act_dim,
-            hidden_sizes=checkpoint.get("hidden_sizes", (128, 128)),
+            hidden_sizes=hidden_sizes,
         )
         oracle_policy.load_state_dict(checkpoint["policy_state_dict"])
         oracle_policy.to(device)

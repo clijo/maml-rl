@@ -18,11 +18,10 @@ class TestEnvFactory:
         assert all("velocity" in t for t in tasks)
 
     def test_make_vec_env_ant(self):
-        tasks, env = make_vec_env(
+        tasks = sample_tasks("ant", num_tasks=2, task_low=0.0, task_high=3.0)
+        env = make_vec_env(
             env_name="ant",
-            num_tasks=2,
-            task_low=0.0,
-            task_high=3.0,
+            tasks=tasks,
             max_steps=10,
             device="cpu",
             norm_obs=True,
@@ -41,4 +40,4 @@ class TestEnvFactory:
             sample_tasks("unknown", 1, 0, 1)
 
         with pytest.raises(ValueError, match="Unknown environment"):
-            make_vec_env("unknown", 1, 0, 1, 10, "cpu", True, 0)
+            make_vec_env("unknown", [{"goal": 0}], 10, "cpu", True, 0)

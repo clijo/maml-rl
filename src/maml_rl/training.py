@@ -1,16 +1,16 @@
 """MAML training loop."""
 
-import json
 import os
+import yaml
 from collections import OrderedDict
 from dataclasses import asdict
 from datetime import datetime
 
 import torch
 import torch.nn.functional as F
-import wandb
 from torch.func import functional_call, vmap
 from torch.optim import Adam
+import wandb
 
 from configs.base import TrainConfig
 from maml_rl.envs.factory import make_vec_env, make_oracle_vec_env, sample_tasks
@@ -56,13 +56,11 @@ def train(cfg: TrainConfig, device: torch.device):
             seed=cfg.seed,
         )
     else:
-        _, env = make_vec_env(
+        env = make_vec_env(
             env_name=cfg.env.name,
-            num_tasks=cfg.env.num_tasks,
-            task_low=cfg.env.task_low,
-            task_high=cfg.env.task_high,
+            tasks=tasks,
             max_steps=cfg.env.max_steps,
-            device=device,
+            device=str(device),
             norm_obs=cfg.env.norm_obs,
             seed=cfg.seed,
         )
@@ -492,8 +490,8 @@ def train(cfg: TrainConfig, device: torch.device):
         save_path,
     )
 
-    with open(os.path.join(save_dir, "config.json"), "w") as f:
-        json.dump(asdict(cfg), f, indent=4)
+    with open(os.path.join(save_dir, "config.yaml"), "w") as f:
+        yaml.dump(asdict(cfg), f)
 
     print(
         f"Best model (iter {best_iteration}, reward {best_query_reward:.3f}) saved to {save_path}"

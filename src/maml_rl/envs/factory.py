@@ -1,4 +1,4 @@
-from typing import Any, List, Mapping, Tuple, Type
+from typing import Any, List, Mapping, Type
 
 from torchrl.envs import EnvBase
 
@@ -28,22 +28,26 @@ def sample_tasks(
 
 def make_vec_env(
     env_name: str,
-    num_tasks: int,
-    task_low: float,
-    task_high: float,
+    tasks: List[Mapping[str, Any]],
     max_steps: int,
     device: str,
     norm_obs: bool,
     seed: int,
-) -> Tuple[List[Mapping[str, Any]], EnvBase]:
-    """Create a vectorized environment and sample tasks.
+) -> EnvBase:
+    """Create a vectorized environment for given tasks.
+
+    Args:
+        env_name: Name of the environment
+        tasks: Pre-sampled task specifications
+        max_steps: Maximum steps per episode
+        device: Device string ("cpu", "cuda", etc.)
+        norm_obs: Whether to normalize observations
+        seed: Random seed
 
     Returns:
-        tasks: List of task specifications
         env: The vectorized environment
     """
     env_cls = _get_env_cls(env_name)
-    tasks = env_cls.sample_tasks(num_tasks, low=task_low, high=task_high)
     env = env_cls.make_vec_env(
         tasks,
         device=device,
@@ -51,7 +55,7 @@ def make_vec_env(
         norm_obs=norm_obs,
     )
     env.set_seed(seed)
-    return tasks, env
+    return env
 
 
 def make_oracle_vec_env(

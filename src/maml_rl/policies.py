@@ -1,7 +1,6 @@
 from collections import OrderedDict
 from typing import Iterable, Tuple
 
-import torch
 from torch import nn
 from torchrl.modules import (
     NormalParamExtractor,
@@ -85,24 +84,7 @@ def params_and_buffers(module: nn.Module):
     return OrderedDict(module.named_parameters()), OrderedDict(module.named_buffers())
 
 
-class RandomPolicy(nn.Module):
-    """Random policy for baseline comparison."""
-
-    def __init__(self, act_dim):
-        super().__init__()
-        self.act_dim = act_dim
-
-    def forward(self, td):
-        shape = td.shape + (self.act_dim,)
-        action = torch.empty(shape, device=td.device).uniform_(-1.0, 1.0)
-        td.set("action", action)
-        if "action_log_prob" not in td.keys():
-            td.set("action_log_prob", torch.zeros_like(action[..., :1]))
-        return td
-
-
 __all__ = [
     "build_actor_critic",
     "params_and_buffers",
-    "RandomPolicy",
 ]
