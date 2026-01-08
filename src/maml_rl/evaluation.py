@@ -10,7 +10,7 @@ from torch.func import vmap
 
 from configs.base import TrainConfig
 from maml_rl.envs.factory import make_vec_env, sample_tasks, ENV_REGISTRY
-from maml_rl.maml import FunctionalPolicy, inner_update_vpg
+from maml_rl.maml import FunctionalPolicy, inner_update_vpg, inner_update_value
 from maml_rl.policies import (
     build_actor_critic,
     params_and_buffers,
@@ -124,6 +124,9 @@ def evaluate(
 
         # Step 0 (Pre-adaptation)
         policy_params, policy_buffers = params_and_buffers(policy_model)
+        value_params, value_buffers = params_and_buffers(
+            value_module
+        )  # Get value params
 
         # 1. Measure Pre-adaptation Performance (Eval/Query Set)
         # Use FULL max_steps for proper evaluation metric
@@ -141,6 +144,7 @@ def evaluate(
         # Adaptation Loop: collect fresh support data after each gradient step
         # This matches the MAML paper's test-time procedure
         current_params = policy_params
+        current_value_params = value_params  # Initialize current value params
         params_are_batched = False
 
         for step_k in range(1, cfg.inner.num_steps + 1):
@@ -177,8 +181,19 @@ def evaluate(
             def inner_one_step(params, buffers, data):
                 return inner_update_vpg(policy_model, params, buffers, data, current_lr)
 
+            # Define value update step
+            def inner_update_value_single(params, buffers, data):
+                curr = params
+                for _ in range(cfg.inner.num_steps):
+                    curr = inner_update_value(
+                        value_module, curr, buffers, data, current_lr
+                    )
+                return curr
+
             # After first step, params are batched [num_tasks, ...], so change in_dims
             params_in_dim = 0 if params_are_batched else None
+
+            # 1. Adapt Policy
             adapted_params_batched = vmap(
                 inner_one_step, in_dims=(params_in_dim, None, 0)
             )(current_params, policy_buffers, support_td)
@@ -187,8 +202,46 @@ def evaluate(
                 (n, adapted_params_batched[n]) for n in policy_params.keys()
             )
 
+            # 2. Adapt Value Function
+            # We assume initial_params for value is passed in or we track it
+            # But wait, run_adaptation receives `value_module` but we need its params/buffers
+            # Let's initialize them before the loop if not already done.
+            # However, `value_module` params are static unless we adapt them.
+            # We need to track `current_value_params` similar to `current_params` (policy).
+
+            # Let's look at how training.py does it. It adapts from the BASE value params every time?
+            # actually training.py lines 186-191 adapt from `value_params` (base) using `support_td`.
+            # But wait, if we do multi-step, we should adapt sequentially?
+            # in training.py: vmap(inner_update_value_single) where inner_update_value_single does K steps.
+            # So `value_params` input to vmap are the BASE parameters.
+            # Here in evaluation, we are stepping k=1..N.
+            # If we want to match training.py exactly:
+            # Training loop adapts Base -> Adapted (K steps) in one go for the query set.
+            # Evaluation loop steps k=1, evaluates, then k=2, etc.
+            # So at step k, we should arguably adapt from Step k-1?
+            # Or does training.py only support 1-step adaptation effectively?
+            # In training.py:
+            #   inner_update_single does `range(cfg.inner.num_steps)` loops.
+            #   Then `adapted_params` are used for query.
+            #
+            # In evaluation.py, we want to plot performance at step 1, 2, ...
+            # So we are doing the adaptation incrementally.
+
+            # So for Value function:
+            # If we want to use the adapted value function for calculating GAE for the NEXT step (k+1),
+            # we need to maintain `current_value_params`.
+
+            adapted_value_batched = vmap(
+                inner_update_value_single, in_dims=(params_in_dim, None, 0)
+            )(current_value_params, value_buffers, support_td)
+
+            adapted_value_params = OrderedDict(
+                (n, adapted_value_batched[n]) for n in value_params.keys()
+            )
+
             # Update current_params for next iteration (now batched)
             current_params = adapted_params
+            current_value_params = adapted_value_params
             params_are_batched = True
 
             # Evaluate on QUERY data (Full max_steps)
