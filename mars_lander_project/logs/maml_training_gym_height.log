@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/run.py", line 19, in <module>
+    from maml_rl.evaluation import evaluate
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/evaluation.py", line 12, in <module>
+    from maml_rl.envs.factory import make_vec_env, ENV_REGISTRY
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/factory.py", line 9, in <module>
+    from maml_rl.envs.mars_lander_gym import MarsLanderGymEnv
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander_gym.py", line 63, in <module>
+    class MarsLanderGymEnv(gym.Env, EzPickle):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander_gym.py", line 456, in MarsLanderGymEnv
+    tasks: Sequence[dict],
+           ^^^^^^^^
+NameError: name 'Sequence' is not defined

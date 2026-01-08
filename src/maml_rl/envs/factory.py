@@ -7,7 +7,6 @@ from maml_rl.envs.base import MetaEnv
 # from maml_rl.envs.navigation import Navigation2DEnv
 from maml_rl.envs.mars_lander import MarsLanderEnv
 
-
 # Registry of available meta-learning environments.
 # To add a new environment, add it to this dict.
 ENV_REGISTRY = {
@@ -20,10 +19,20 @@ def sample_tasks(
     num_tasks: int,
     task_low: float,
     task_high: float,
+    difficulty: float = 0.0,
 ) -> List[Mapping[str, Any]]:
     """Sample tasks for the specified environment."""
     env_cls = _get_env_cls(env_name)
-    return env_cls.sample_tasks(num_tasks, low=task_low, high=task_high, difficulty=0.1)
+    # User Request: Fixed Start, Fixed Physics, Variable Landing
+    return env_cls.sample_tasks(
+        num_tasks, 
+        low=task_low, 
+        high=task_high, 
+        difficulty=difficulty,
+        randomize_physics=False,
+        randomize_start=False,
+        randomize_landing=True
+    )
 
 
 def make_vec_env(
@@ -35,6 +44,7 @@ def make_vec_env(
     device: str,
     norm_obs: bool,
     seed: int,
+    difficulty: float = 0.0,
 ) -> Tuple[List[Mapping[str, Any]], EnvBase]:
     """Create a vectorized environment and sample tasks.
 
@@ -43,7 +53,15 @@ def make_vec_env(
         env: The vectorized environment
     """
     env_cls = _get_env_cls(env_name)
-    tasks = env_cls.sample_tasks(num_tasks, low=task_low, high=task_high, difficulty=0.1)
+    tasks = env_cls.sample_tasks(
+        num_tasks, 
+        low=task_low, 
+        high=task_high, 
+        difficulty=difficulty,
+        randomize_physics=False,
+        randomize_start=False,
+        randomize_landing=True
+    )
     env = env_cls.make_vec_env(
         tasks,
         device=device,

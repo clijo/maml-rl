@@ -1,0 +1,874 @@
+nohup: ignoring input
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+Device: cpu
+Algorithm: TRPO
+[iter 1] loss=-27.785 rew_support=-6.963 rew_query=-15.849 kl=0.0148
+[iter 2] loss=-25.892 rew_support=-7.041 rew_query=-15.424 kl=0.0121
+[iter 3] loss=-31.883 rew_support=-7.100 rew_query=-15.420 kl=0.0029
+[iter 4] loss=-60.622 rew_support=-7.065 rew_query=-15.688 kl=0.0098
+[iter 5] loss=-64.848 rew_support=-7.178 rew_query=-15.349 kl=0.0032
+[iter 6] loss=-33.237 rew_support=-7.350 rew_query=-16.095 kl=0.0085
+[iter 7] loss=-31.378 rew_support=-7.311 rew_query=-16.441 kl=0.0095
+[iter 8] loss=-14.150 rew_support=-7.374 rew_query=-15.613 kl=0.0086
+[iter 9] loss=-21.840 rew_support=-7.283 rew_query=-15.255 kl=0.0109
+[iter 10] loss=-47.857 rew_support=-7.207 rew_query=-15.728 kl=0.0026
+[iter 11] loss=-16.481 rew_support=-7.351 rew_query=-15.138 kl=0.0104
+[iter 12] loss=-45.675 rew_support=-7.263 rew_query=-16.062 kl=0.0116
+[iter 13] loss=-29.907 rew_support=-7.212 rew_query=-15.407 kl=0.0094
+[iter 14] loss=-15.208 rew_support=-7.316 rew_query=-14.695 kl=0.0090
+[iter 15] loss=-32.543 rew_support=-7.312 rew_query=-15.741 kl=0.0103
+[iter 16] loss=-41.107 rew_support=-7.212 rew_query=-16.621 kl=0.0127
+[iter 17] loss=-30.453 rew_support=-7.268 rew_query=-15.178 kl=0.0101
+[iter 18] loss=-5.103 rew_support=-7.369 rew_query=-15.785 kl=0.0066
+[iter 19] loss=-68.908 rew_support=-7.420 rew_query=-15.522 kl=0.0097
+[iter 20] loss=-68.601 rew_support=-7.254 rew_query=-16.006 kl=0.0093
+[iter 21] loss=-98.894 rew_support=-7.506 rew_query=-15.511 kl=0.0135
+[iter 22] loss=-96.177 rew_support=-7.356 rew_query=-14.976 kl=0.0095
+[iter 23] loss=-86.924 rew_support=-7.300 rew_query=-14.628 kl=0.0121
+[iter 24] loss=-69.556 rew_support=-7.465 rew_query=-14.708 kl=0.0126
+[iter 25] loss=-47.886 rew_support=-7.257 rew_query=-15.281 kl=0.0112
+[iter 26] loss=-27.387 rew_support=-7.115 rew_query=-16.198 kl=0.0098
+[iter 27] loss=-12.081 rew_support=-7.207 rew_query=-13.641 kl=0.0107
+[iter 28] loss=-31.200 rew_support=-7.512 rew_query=-15.757 kl=0.0097
+[iter 29] loss=-25.909 rew_support=-7.250 rew_query=-15.450 kl=0.0032
+[iter 30] loss=-41.972 rew_support=-7.264 rew_query=-15.300 kl=0.0100
+[iter 31] loss=-35.714 rew_support=-7.361 rew_query=-15.259 kl=0.0104
+[iter 32] loss=-15.482 rew_support=-7.362 rew_query=-15.269 kl=0.0148
+[iter 33] loss=-38.480 rew_support=-7.271 rew_query=-15.918 kl=0.0038
+[iter 34] loss=-21.630 rew_support=-7.256 rew_query=-15.237 kl=0.0040
+[iter 35] loss=-8.632 rew_support=-7.344 rew_query=-15.840 kl=0.0143
+[iter 36] loss=-28.856 rew_support=-7.257 rew_query=-16.405 kl=0.0122
+[iter 37] loss=-44.760 rew_support=-7.411 rew_query=-15.701 kl=0.0133
+[iter 38] loss=-43.691 rew_support=-7.271 rew_query=-15.838 kl=0.0044
+[iter 39] loss=-24.600 rew_support=-7.410 rew_query=-15.067 kl=0.0047
+[iter 40] loss=-34.756 rew_support=-7.158 rew_query=-16.475 kl=0.0145
+[iter 41] loss=15.544 rew_support=-7.505 rew_query=-14.468 kl=0.0056
+[iter 42] loss=-47.313 rew_support=-7.363 rew_query=-15.454 kl=0.0148
+[iter 43] loss=-54.924 rew_support=-7.308 rew_query=-15.361 kl=0.0142
+[iter 44] loss=-49.315 rew_support=-7.308 rew_query=-15.911 kl=0.0033
+[iter 45] loss=-34.604 rew_support=-7.111 rew_query=-15.730 kl=0.0024
+[iter 46] loss=-7.324 rew_support=-7.349 rew_query=-15.705 kl=0.0055
+[iter 47] loss=-9.091 rew_support=-7.466 rew_query=-15.275 kl=0.0089
+[iter 48] loss=-21.477 rew_support=-7.367 rew_query=-15.549 kl=0.0045
+[iter 49] loss=-29.998 rew_support=-7.375 rew_query=-15.876 kl=0.0041
+[iter 50] loss=-20.233 rew_support=-7.316 rew_query=-15.234 kl=0.0111
+[iter 51] loss=-34.932 rew_support=-7.358 rew_query=-16.013 kl=0.0095
+[iter 52] loss=-28.273 rew_support=-7.297 rew_query=-15.899 kl=0.0055
+[iter 53] loss=-23.002 rew_support=-7.254 rew_query=-15.704 kl=0.0115
+[iter 54] loss=-20.132 rew_support=-7.315 rew_query=-16.022 kl=0.0130
+[iter 55] loss=-21.622 rew_support=-7.366 rew_query=-14.410 kl=0.0032
+[iter 56] loss=-17.894 rew_support=-7.312 rew_query=-15.932 kl=0.0104
+[iter 57] loss=-12.829 rew_support=-7.259 rew_query=-15.492 kl=0.0138
+[iter 58] loss=-4.083 rew_support=-7.410 rew_query=-15.417 kl=0.0047
+[iter 59] loss=-31.537 rew_support=-7.223 rew_query=-14.191 kl=0.0037
+[iter 60] loss=-29.551 rew_support=-7.160 rew_query=-16.203 kl=0.0043
+[iter 61] loss=-13.528 rew_support=-7.202 rew_query=-15.711 kl=0.0144
+[iter 62] loss=-7.087 rew_support=-7.461 rew_query=-16.810 kl=0.0120
+[iter 63] loss=-11.433 rew_support=-7.314 rew_query=-14.536 kl=0.0032
+[iter 64] loss=-20.499 rew_support=-7.262 rew_query=-15.323 kl=0.0047
+[iter 65] loss=-19.282 rew_support=-7.160 rew_query=-15.162 kl=0.0037
+[iter 66] loss=-19.885 rew_support=-7.366 rew_query=-16.636 kl=0.0148
+[iter 67] loss=7.105 rew_support=-7.364 rew_query=-15.124 kl=0.0048
+[iter 68] loss=-16.821 rew_support=-7.317 rew_query=-15.029 kl=0.0031
+[iter 69] loss=-13.172 rew_support=-7.419 rew_query=-16.423 kl=0.0067
+[iter 70] loss=-16.553 rew_support=-7.414 rew_query=-15.639 kl=0.0047
+[iter 71] loss=-3.666 rew_support=-7.266 rew_query=-14.637 kl=0.0040
+[iter 72] loss=-23.027 rew_support=-7.355 rew_query=-14.841 kl=0.0053
+[iter 73] loss=-6.108 rew_support=-7.310 rew_query=-14.821 kl=0.0024
+[iter 74] loss=-2.036 rew_support=-7.405 rew_query=-14.396 kl=0.0104
+[iter 75] loss=-10.973 rew_support=-7.205 rew_query=-14.482 kl=0.0045
+[iter 76] loss=-25.938 rew_support=-7.209 rew_query=-16.221 kl=0.0026
+[iter 77] loss=-8.488 rew_support=-7.355 rew_query=-16.063 kl=0.0123
+[iter 78] loss=6.630 rew_support=-7.313 rew_query=-15.449 kl=0.0061
+[iter 79] loss=-21.864 rew_support=-7.309 rew_query=-15.680 kl=0.0035
+[iter 80] loss=-21.832 rew_support=-7.319 rew_query=-15.757 kl=0.0035
+[iter 81] loss=8.394 rew_support=-7.459 rew_query=-15.494 kl=0.0089
+[iter 82] loss=-12.779 rew_support=-7.357 rew_query=-15.135 kl=0.0033
+[iter 83] loss=-16.962 rew_support=-7.266 rew_query=-16.124 kl=0.0054
+[iter 84] loss=-13.725 rew_support=-7.423 rew_query=-15.917 kl=0.0056
+[iter 85] loss=10.238 rew_support=-7.470 rew_query=-15.206 kl=0.0080
+[iter 86] loss=-5.158 rew_support=-7.338 rew_query=-15.741 kl=0.0112
+[iter 87] loss=-10.288 rew_support=-7.261 rew_query=-15.426 kl=0.0048
+[iter 88] loss=-9.055 rew_support=-7.204 rew_query=-15.442 kl=0.0025
+[iter 89] loss=-3.636 rew_support=-7.402 rew_query=-15.957 kl=0.0123
+[iter 90] loss=-6.793 rew_support=-7.510 rew_query=-15.452 kl=0.0020
+[iter 91] loss=-9.501 rew_support=-7.199 rew_query=-15.125 kl=0.0129
+[iter 92] loss=-6.468 rew_support=-7.273 rew_query=-15.610 kl=0.0060
+[iter 93] loss=-12.226 rew_support=-7.314 rew_query=-15.810 kl=0.0042
+[iter 94] loss=-3.988 rew_support=-7.375 rew_query=-15.300 kl=0.0071
+[iter 95] loss=-14.676 rew_support=-7.198 rew_query=-15.374 kl=0.0028
+[iter 96] loss=-7.153 rew_support=-7.152 rew_query=-15.347 kl=0.0093
+[iter 97] loss=-0.740 rew_support=-7.260 rew_query=-15.912 kl=0.0083
+[iter 98] loss=6.126 rew_support=-7.259 rew_query=-15.186 kl=0.0035
+[iter 99] loss=-10.849 rew_support=-7.215 rew_query=-16.139 kl=0.0031
+[iter 100] loss=-4.723 rew_support=-7.259 rew_query=-16.753 kl=0.0029
+Checkpoint saved to checkpoints/run_20260107_193739/checkpoint_100.pt
+[iter 101] loss=-8.267 rew_support=-7.315 rew_query=-16.780 kl=0.0057
+[iter 102] loss=2.260 rew_support=-7.315 rew_query=-14.957 kl=0.0071
+[iter 103] loss=-10.241 rew_support=-7.460 rew_query=-16.592 kl=0.0099
+[iter 104] loss=-10.807 rew_support=-7.256 rew_query=-15.984 kl=0.0025
+[iter 105] loss=2.058 rew_support=-7.256 rew_query=-15.979 kl=0.0024
+[iter 106] loss=-13.506 rew_support=-7.303 rew_query=-16.165 kl=0.0035
+[iter 107] loss=2.584 rew_support=-7.314 rew_query=-16.041 kl=0.0027
+[iter 108] loss=-8.503 rew_support=-7.356 rew_query=-16.553 kl=0.0034
+[iter 109] loss=-11.993 rew_support=-7.311 rew_query=-16.147 kl=0.0023
+[iter 110] loss=23.368 rew_support=-7.419 rew_query=-15.452 kl=0.0095
+[iter 111] loss=-8.664 rew_support=-7.250 rew_query=-15.856 kl=0.0130
+[iter 112] loss=-9.309 rew_support=-7.108 rew_query=-15.755 kl=0.0044
+[iter 113] loss=-11.392 rew_support=-7.253 rew_query=-16.677 kl=0.0044
+[iter 114] loss=2.835 rew_support=-7.357 rew_query=-15.952 kl=0.0091
+[iter 115] loss=-1.295 rew_support=-7.213 rew_query=-15.479 kl=0.0032
+[iter 116] loss=-5.784 rew_support=-7.314 rew_query=-15.201 kl=0.0032
+[iter 117] loss=-4.185 rew_support=-7.361 rew_query=-15.575 kl=0.0037
+[iter 118] loss=-3.599 rew_support=-7.364 rew_query=-15.567 kl=0.0032
+[iter 119] loss=-1.126 rew_support=-7.322 rew_query=-15.506 kl=0.0121
+[iter 120] loss=-2.279 rew_support=-7.154 rew_query=-14.972 kl=0.0059
+[iter 121] loss=3.909 rew_support=-7.301 rew_query=-16.296 kl=0.0019
+[iter 122] loss=-10.490 rew_support=-7.358 rew_query=-16.326 kl=0.0035
+[iter 123] loss=-2.908 rew_support=-7.317 rew_query=-15.086 kl=0.0027
+[iter 124] loss=-1.796 rew_support=-7.256 rew_query=-15.578 kl=0.0034
+[iter 125] loss=2.711 rew_support=-7.264 rew_query=-14.178 kl=0.0057
+[iter 126] loss=-4.199 rew_support=-7.405 rew_query=-16.086 kl=0.0036
+[iter 127] loss=3.075 rew_support=-7.424 rew_query=-15.101 kl=0.0021
+[iter 128] loss=5.989 rew_support=-7.257 rew_query=-14.684 kl=0.0021
+[iter 129] loss=-10.087 rew_support=-7.306 rew_query=-15.436 kl=0.0115
+[iter 130] loss=-12.414 rew_support=-7.262 rew_query=-15.638 kl=0.0137
+[iter 131] loss=2.453 rew_support=-7.351 rew_query=-15.556 kl=0.0038
+[iter 132] loss=-8.506 rew_support=-7.367 rew_query=-16.441 kl=0.0034
+[iter 133] loss=-8.982 rew_support=-7.336 rew_query=-15.912 kl=0.0029
+[iter 134] loss=10.128 rew_support=-7.353 rew_query=-16.053 kl=0.0009
+[iter 135] loss=-8.117 rew_support=-7.305 rew_query=-15.265 kl=0.0143
+[iter 136] loss=-2.932 rew_support=-7.264 rew_query=-15.622 kl=0.0065
+[iter 137] loss=1.433 rew_support=-7.360 rew_query=-15.420 kl=0.0053
+[iter 138] loss=-1.901 rew_support=-7.307 rew_query=-14.552 kl=0.0035
+[iter 139] loss=-8.917 rew_support=-7.252 rew_query=-16.899 kl=0.0040
+[iter 140] loss=-4.948 rew_support=-7.266 rew_query=-16.234 kl=0.0056
+[iter 141] loss=6.446 rew_support=-7.364 rew_query=-15.709 kl=0.0011
+[iter 142] loss=-8.371 rew_support=-7.313 rew_query=-16.148 kl=0.0067
+[iter 143] loss=0.940 rew_support=-7.311 rew_query=-15.650 kl=0.0092
+[iter 144] loss=1.545 rew_support=-7.359 rew_query=-15.241 kl=0.0073
+[iter 145] loss=-7.748 rew_support=-7.255 rew_query=-15.831 kl=0.0143
+[iter 146] loss=-0.848 rew_support=-7.312 rew_query=-16.461 kl=0.0021
+[iter 147] loss=5.167 rew_support=-7.321 rew_query=-15.405 kl=0.0035
+[iter 148] loss=-10.010 rew_support=-7.413 rew_query=-15.760 kl=0.0073
+[iter 149] loss=1.910 rew_support=-7.408 rew_query=-15.349 kl=0.0019
+[iter 150] loss=-0.184 rew_support=-7.359 rew_query=-14.474 kl=0.0065
+[iter 151] loss=4.411 rew_support=-7.300 rew_query=-15.728 kl=0.0005
+[iter 152] loss=-4.487 rew_support=-7.161 rew_query=-15.996 kl=0.0091
+[iter 153] loss=2.327 rew_support=-7.367 rew_query=-15.509 kl=0.0003
+[iter 154] loss=-9.998 rew_support=-7.357 rew_query=-16.316 kl=0.0145
+[iter 155] loss=-0.388 rew_support=-7.300 rew_query=-15.188 kl=0.0039
+[iter 156] loss=-8.856 rew_support=-7.161 rew_query=-15.852 kl=0.0033
+[iter 157] loss=-0.376 rew_support=-7.120 rew_query=-16.757 kl=0.0072
+[iter 158] loss=5.139 rew_support=-7.249 rew_query=-15.289 kl=0.0056
+[iter 159] loss=-2.464 rew_support=-7.337 rew_query=-16.016 kl=0.0024
+[iter 160] loss=-15.314 rew_support=-7.156 rew_query=-16.344 kl=0.0134
+[iter 161] loss=0.216 rew_support=-7.311 rew_query=-16.995 kl=0.0071
+[iter 162] loss=8.267 rew_support=-7.364 rew_query=-15.701 kl=0.0037
+[iter 163] loss=3.370 rew_support=-7.318 rew_query=-15.289 kl=0.0044
+[iter 164] loss=-5.592 rew_support=-7.263 rew_query=-15.715 kl=0.0042
+[iter 165] loss=1.872 rew_support=-7.260 rew_query=-14.746 kl=0.0028
+[iter 166] loss=-1.369 rew_support=-7.301 rew_query=-15.648 kl=0.0030
+[iter 167] loss=-2.385 rew_support=-7.363 rew_query=-15.366 kl=0.0123
+[iter 168] loss=-5.198 rew_support=-7.404 rew_query=-14.914 kl=0.0043
+[iter 169] loss=-1.525 rew_support=-7.268 rew_query=-15.172 kl=0.0073
+[iter 170] loss=-1.051 rew_support=-7.262 rew_query=-15.535 kl=0.0026
+[iter 171] loss=7.553 rew_support=-7.251 rew_query=-15.480 kl=0.0009
+[iter 172] loss=-4.134 rew_support=-7.372 rew_query=-15.162 kl=0.0146
+[iter 173] loss=-8.198 rew_support=-7.215 rew_query=-15.646 kl=0.0140
+[iter 174] loss=3.151 rew_support=-7.209 rew_query=-15.193 kl=0.0139
+[iter 175] loss=-2.177 rew_support=-7.409 rew_query=-15.537 kl=0.0065
+[iter 176] loss=-4.528 rew_support=-7.265 rew_query=-16.810 kl=0.0108
+[iter 177] loss=5.550 rew_support=-7.409 rew_query=-15.940 kl=0.0042
+[iter 178] loss=-3.092 rew_support=-7.254 rew_query=-14.796 kl=0.0048
+[iter 179] loss=-3.686 rew_support=-7.209 rew_query=-16.906 kl=0.0134
+[iter 180] loss=0.374 rew_support=-7.159 rew_query=-14.498 kl=0.0075
+[iter 181] loss=-5.330 rew_support=-7.363 rew_query=-16.338 kl=0.0074
+[iter 182] loss=1.084 rew_support=-7.367 rew_query=-15.494 kl=0.0086
+[iter 183] loss=-4.309 rew_support=-7.158 rew_query=-16.291 kl=0.0052
+[iter 184] loss=9.133 rew_support=-7.258 rew_query=-14.537 kl=0.0143
+[iter 185] loss=4.844 rew_support=-7.199 rew_query=-14.962 kl=0.0111
+[iter 186] loss=-3.864 rew_support=-7.266 rew_query=-16.191 kl=0.0010
+[iter 187] loss=-4.484 rew_support=-7.262 rew_query=-15.264 kl=0.0043
+[iter 188] loss=1.627 rew_support=-7.203 rew_query=-15.859 kl=0.0039
+[iter 189] loss=-3.522 rew_support=-7.404 rew_query=-15.505 kl=0.0034
+[iter 190] loss=2.543 rew_support=-7.379 rew_query=-15.346 kl=0.0119
+[iter 191] loss=-9.502 rew_support=-7.257 rew_query=-16.685 kl=0.0125
+[iter 192] loss=-1.102 rew_support=-7.321 rew_query=-15.568 kl=0.0051
+[iter 193] loss=-9.130 rew_support=-7.363 rew_query=-16.470 kl=0.0095
+[iter 194] loss=7.198 rew_support=-7.364 rew_query=-15.689 kl=0.0075
+[iter 195] loss=-1.264 rew_support=-7.364 rew_query=-14.828 kl=0.0042
+[iter 196] loss=2.187 rew_support=-7.309 rew_query=-15.445 kl=0.0084
+[iter 197] loss=4.376 rew_support=-7.251 rew_query=-16.097 kl=0.0102
+[iter 198] loss=0.630 rew_support=-7.304 rew_query=-15.533 kl=0.0117
+[iter 199] loss=12.734 rew_support=-7.249 rew_query=-15.461 kl=0.0021
+[iter 200] loss=-6.011 rew_support=-7.268 rew_query=-16.138 kl=0.0123
+Checkpoint saved to checkpoints/run_20260107_194208/checkpoint_200.pt
+[iter 201] loss=26.008 rew_support=-7.315 rew_query=-15.561 kl=0.0041
+[iter 202] loss=-5.675 rew_support=-7.370 rew_query=-16.215 kl=0.0107
+[iter 203] loss=-6.497 rew_support=-7.209 rew_query=-16.277 kl=0.0051
+[iter 204] loss=7.765 rew_support=-7.360 rew_query=-14.840 kl=0.0034
+[iter 205] loss=-4.734 rew_support=-7.268 rew_query=-15.166 kl=0.0108
+[iter 206] loss=25.214 rew_support=-7.312 rew_query=-15.720 kl=0.0093
+[iter 207] loss=7.008 rew_support=-7.370 rew_query=-16.133 kl=0.0035
+[iter 208] loss=-3.029 rew_support=-7.357 rew_query=-15.041 kl=0.0065
+[iter 209] loss=-5.501 rew_support=-7.503 rew_query=-15.961 kl=0.0047
+[iter 210] loss=-4.270 rew_support=-7.413 rew_query=-16.064 kl=0.0028
+[iter 211] loss=2.761 rew_support=-7.156 rew_query=-15.975 kl=0.0072
+[iter 212] loss=-3.043 rew_support=-7.306 rew_query=-15.192 kl=0.0022
+[iter 213] loss=8.931 rew_support=-7.402 rew_query=-16.325 kl=0.0020
+[iter 214] loss=-6.182 rew_support=-7.304 rew_query=-15.299 kl=0.0055
+[iter 215] loss=-7.698 rew_support=-7.349 rew_query=-14.980 kl=0.0057
+[iter 216] loss=11.342 rew_support=-7.458 rew_query=-15.598 kl=0.0018
+[iter 217] loss=-3.474 rew_support=-7.406 rew_query=-15.616 kl=0.0023
+[iter 218] loss=-8.405 rew_support=-7.315 rew_query=-15.606 kl=0.0059
+[iter 219] loss=-6.263 rew_support=-7.425 rew_query=-15.469 kl=0.0128
+[iter 220] loss=-1.064 rew_support=-7.221 rew_query=-15.320 kl=0.0111
+[iter 221] loss=22.547 rew_support=-7.153 rew_query=-16.139 kl=0.0100
+[iter 222] loss=-1.504 rew_support=-7.262 rew_query=-15.580 kl=0.0073
+[iter 223] loss=-1.538 rew_support=-7.407 rew_query=-15.501 kl=0.0073
+[iter 224] loss=7.004 rew_support=-7.364 rew_query=-15.156 kl=0.0063
+[iter 225] loss=-1.762 rew_support=-7.257 rew_query=-15.277 kl=0.0062
+[iter 226] loss=-1.337 rew_support=-7.506 rew_query=-14.684 kl=0.0081
+[iter 227] loss=3.535 rew_support=-7.309 rew_query=-14.938 kl=0.0033
+[iter 228] loss=-7.978 rew_support=-7.320 rew_query=-15.913 kl=0.0024
+[iter 229] loss=-2.189 rew_support=-7.367 rew_query=-14.795 kl=0.0040
+[iter 230] loss=-0.829 rew_support=-7.409 rew_query=-16.028 kl=0.0104
+[iter 231] loss=-4.917 rew_support=-7.414 rew_query=-16.441 kl=0.0104
+[iter 232] loss=11.335 rew_support=-7.261 rew_query=-15.759 kl=0.0032
+[iter 233] loss=24.646 rew_support=-7.357 rew_query=-14.510 kl=0.0031
+[iter 234] loss=-5.914 rew_support=-7.361 rew_query=-15.462 kl=0.0051
+[iter 235] loss=-8.385 rew_support=-7.366 rew_query=-15.527 kl=0.0017
+[iter 236] loss=-5.060 rew_support=-7.407 rew_query=-14.937 kl=0.0031
+[iter 237] loss=-1.775 rew_support=-7.313 rew_query=-15.035 kl=0.0086
+[iter 238] loss=-8.627 rew_support=-7.312 rew_query=-16.157 kl=0.0120
+[iter 239] loss=16.363 rew_support=-7.408 rew_query=-15.384 kl=0.0119
+[iter 240] loss=-10.290 rew_support=-7.401 rew_query=-15.936 kl=0.0115
+[iter 241] loss=1.936 rew_support=-7.310 rew_query=-15.515 kl=0.0028
+[iter 242] loss=-6.622 rew_support=-7.210 rew_query=-16.242 kl=0.0097
+[iter 243] loss=14.000 rew_support=-7.265 rew_query=-14.660 kl=0.0125
+[iter 244] loss=-8.526 rew_support=-7.359 rew_query=-16.309 kl=0.0091
+[iter 245] loss=-1.872 rew_support=-7.365 rew_query=-16.370 kl=0.0071
+[iter 246] loss=0.921 rew_support=-7.312 rew_query=-16.411 kl=0.0061
+[iter 247] loss=3.863 rew_support=-7.106 rew_query=-15.349 kl=0.0134
+[iter 248] loss=-11.373 rew_support=-7.259 rew_query=-16.778 kl=0.0112
+[iter 249] loss=30.889 rew_support=-7.261 rew_query=-14.654 kl=0.0121
+[iter 250] loss=-8.052 rew_support=-7.165 rew_query=-14.903 kl=0.0060
+[iter 251] loss=-9.897 rew_support=-7.458 rew_query=-16.238 kl=0.0102
+[iter 252] loss=13.364 rew_support=-7.252 rew_query=-14.870 kl=0.0132
+[iter 253] loss=-8.750 rew_support=-7.260 rew_query=-16.032 kl=0.0137
+[iter 254] loss=-8.974 rew_support=-7.162 rew_query=-16.137 kl=0.0119
+[iter 255] loss=9.494 rew_support=-7.418 rew_query=-16.472 kl=0.0032
+[iter 256] loss=-6.580 rew_support=-7.211 rew_query=-15.074 kl=0.0043
+[iter 257] loss=13.067 rew_support=-7.398 rew_query=-15.578 kl=0.0062
+[iter 258] loss=4.605 rew_support=-7.305 rew_query=-16.580 kl=0.0069
+[iter 259] loss=-7.487 rew_support=-7.149 rew_query=-16.464 kl=0.0034
+[iter 260] loss=0.405 rew_support=-7.414 rew_query=-15.680 kl=0.0048
+[iter 261] loss=1.257 rew_support=-7.214 rew_query=-15.527 kl=0.0117
+[iter 262] loss=4.127 rew_support=-7.516 rew_query=-16.113 kl=0.0088
+[iter 263] loss=-8.158 rew_support=-7.201 rew_query=-15.480 kl=0.0077
+[iter 264] loss=2.218 rew_support=-7.319 rew_query=-15.051 kl=0.0035
+[iter 265] loss=-5.829 rew_support=-7.349 rew_query=-15.633 kl=0.0021
+[iter 266] loss=-8.831 rew_support=-7.273 rew_query=-16.203 kl=0.0002
+[iter 267] loss=4.664 rew_support=-7.307 rew_query=-15.146 kl=0.0035
+[iter 268] loss=-3.832 rew_support=-7.117 rew_query=-15.576 kl=0.0093
+[iter 269] loss=15.466 rew_support=-7.305 rew_query=-14.506 kl=0.0040
+[iter 270] loss=-1.836 rew_support=-7.351 rew_query=-15.737 kl=0.0105
+[iter 271] loss=5.651 rew_support=-7.148 rew_query=-15.749 kl=0.0054
+[iter 272] loss=-8.971 rew_support=-7.058 rew_query=-15.440 kl=0.0065
+[iter 273] loss=2.542 rew_support=-7.361 rew_query=-15.174 kl=0.0131
+[iter 274] loss=0.258 rew_support=-7.411 rew_query=-15.701 kl=0.0130
+[iter 275] loss=-8.899 rew_support=-7.306 rew_query=-15.587 kl=0.0031
+[iter 276] loss=-2.891 rew_support=-7.367 rew_query=-16.192 kl=0.0069
+[iter 277] loss=11.020 rew_support=-7.303 rew_query=-16.395 kl=0.0127
+[iter 278] loss=0.348 rew_support=-7.258 rew_query=-16.408 kl=0.0094
+[iter 279] loss=-5.953 rew_support=-7.370 rew_query=-16.003 kl=0.0040
+[iter 280] loss=6.036 rew_support=-7.319 rew_query=-15.880 kl=0.0038
+[iter 281] loss=0.691 rew_support=-7.115 rew_query=-14.580 kl=0.0080
+[iter 282] loss=-3.280 rew_support=-7.357 rew_query=-14.633 kl=0.0078
+[iter 283] loss=0.702 rew_support=-7.260 rew_query=-15.025 kl=0.0025
+[iter 284] loss=2.898 rew_support=-7.306 rew_query=-15.820 kl=0.0126
+[iter 285] loss=-2.381 rew_support=-7.251 rew_query=-16.187 kl=0.0062
+[iter 286] loss=-1.730 rew_support=-7.317 rew_query=-15.537 kl=0.0093
+[iter 287] loss=5.096 rew_support=-7.315 rew_query=-14.928 kl=0.0090
+[iter 288] loss=5.557 rew_support=-7.310 rew_query=-15.549 kl=0.0059
+[iter 289] loss=-8.205 rew_support=-7.150 rew_query=-14.322 kl=0.0082
+[iter 290] loss=-6.827 rew_support=-7.312 rew_query=-16.285 kl=0.0115
+[iter 291] loss=8.364 rew_support=-7.408 rew_query=-15.564 kl=0.0074
+[iter 292] loss=8.946 rew_support=-7.263 rew_query=-15.560 kl=0.0072
+[iter 293] loss=4.422 rew_support=-7.412 rew_query=-15.800 kl=0.0046
+[iter 294] loss=-3.442 rew_support=-7.256 rew_query=-15.390 kl=0.0086
+[iter 295] loss=-5.308 rew_support=-7.270 rew_query=-15.286 kl=0.0122
+[iter 296] loss=12.693 rew_support=-7.351 rew_query=-14.388 kl=0.0098
+[iter 297] loss=-7.243 rew_support=-7.217 rew_query=-15.170 kl=0.0082
+[iter 298] loss=3.534 rew_support=-7.363 rew_query=-14.900 kl=0.0067
+[iter 299] loss=0.618 rew_support=-7.357 rew_query=-15.600 kl=0.0140
+[iter 300] loss=8.161 rew_support=-7.407 rew_query=-14.934 kl=0.0063
+Checkpoint saved to checkpoints/run_20260107_194621/checkpoint_300.pt
+[iter 301] loss=-0.144 rew_support=-7.215 rew_query=-14.524 kl=0.0027
+[iter 302] loss=-3.282 rew_support=-7.401 rew_query=-15.506 kl=0.0062
+[iter 303] loss=-9.981 rew_support=-7.353 rew_query=-15.624 kl=0.0093
+[iter 304] loss=0.881 rew_support=-7.448 rew_query=-16.399 kl=0.0074
+[iter 305] loss=6.836 rew_support=-7.311 rew_query=-15.501 kl=0.0041
+[iter 306] loss=1.502 rew_support=-7.358 rew_query=-15.385 kl=0.0103
+[iter 307] loss=-13.323 rew_support=-7.211 rew_query=-15.842 kl=0.0053
+[iter 308] loss=6.697 rew_support=-7.109 rew_query=-14.575 kl=0.0032
+[iter 309] loss=-9.544 rew_support=-7.165 rew_query=-15.771 kl=0.0101
+[iter 310] loss=2.792 rew_support=-7.368 rew_query=-16.275 kl=0.0034
+[iter 311] loss=-5.004 rew_support=-7.252 rew_query=-15.947 kl=0.0066
+[iter 312] loss=2.345 rew_support=-7.358 rew_query=-15.929 kl=0.0087
+[iter 313] loss=2.061 rew_support=-7.258 rew_query=-15.221 kl=0.0032
+[iter 314] loss=8.580 rew_support=-7.302 rew_query=-14.925 kl=0.0080
+[iter 315] loss=-2.907 rew_support=-7.356 rew_query=-16.206 kl=0.0033
+[iter 316] loss=-9.404 rew_support=-7.177 rew_query=-15.821 kl=0.0095
+[iter 317] loss=4.171 rew_support=-7.413 rew_query=-16.145 kl=0.0083
+[iter 318] loss=1.882 rew_support=-7.406 rew_query=-15.190 kl=0.0039
+[iter 319] loss=-12.441 rew_support=-7.201 rew_query=-15.783 kl=0.0042
+[iter 320] loss=-9.363 rew_support=-7.314 rew_query=-15.887 kl=0.0061
+[iter 321] loss=23.827 rew_support=-7.510 rew_query=-15.222 kl=0.0031
+[iter 322] loss=0.313 rew_support=-7.302 rew_query=-14.814 kl=0.0110
+[iter 323] loss=-0.346 rew_support=-7.309 rew_query=-15.531 kl=0.0139
+[iter 324] loss=8.813 rew_support=-7.207 rew_query=-14.338 kl=0.0141
+[iter 325] loss=-4.155 rew_support=-7.420 rew_query=-15.077 kl=0.0089
+[iter 326] loss=-2.305 rew_support=-7.319 rew_query=-15.314 kl=0.0036
+[iter 327] loss=1.858 rew_support=-7.315 rew_query=-15.908 kl=0.0107
+[iter 328] loss=6.403 rew_support=-7.310 rew_query=-14.599 kl=0.0141
+[iter 329] loss=-1.102 rew_support=-7.261 rew_query=-15.577 kl=0.0055
+[iter 330] loss=-7.189 rew_support=-7.209 rew_query=-15.940 kl=0.0077
+[iter 331] loss=-9.115 rew_support=-7.200 rew_query=-15.837 kl=0.0026
+[iter 332] loss=-7.044 rew_support=-7.258 rew_query=-16.714 kl=0.0093
+[iter 333] loss=4.173 rew_support=-7.308 rew_query=-16.579 kl=0.0144
+[iter 334] loss=12.558 rew_support=-7.410 rew_query=-15.612 kl=0.0117
+[iter 335] loss=8.499 rew_support=-7.313 rew_query=-14.580 kl=0.0127
+[iter 336] loss=0.393 rew_support=-7.248 rew_query=-14.877 kl=0.0076
+[iter 337] loss=4.621 rew_support=-7.252 rew_query=-15.212 kl=0.0103
+[iter 338] loss=-4.083 rew_support=-7.364 rew_query=-15.442 kl=0.0031
+[iter 339] loss=1.005 rew_support=-7.464 rew_query=-16.158 kl=0.0037
+[iter 340] loss=-4.067 rew_support=-7.303 rew_query=-15.217 kl=0.0038
+[iter 341] loss=-2.867 rew_support=-7.355 rew_query=-15.558 kl=0.0099
+[iter 342] loss=12.553 rew_support=-7.460 rew_query=-15.232 kl=0.0125
+[iter 343] loss=-6.311 rew_support=-7.405 rew_query=-16.183 kl=0.0075
+[iter 344] loss=0.905 rew_support=-7.117 rew_query=-14.445 kl=0.0044
+[iter 345] loss=-1.937 rew_support=-7.306 rew_query=-16.040 kl=0.0085
+[iter 346] loss=4.493 rew_support=-7.318 rew_query=-15.151 kl=0.0125
+[iter 347] loss=-5.236 rew_support=-7.407 rew_query=-15.293 kl=0.0070
+[iter 348] loss=-1.171 rew_support=-7.262 rew_query=-15.657 kl=0.0095
+[iter 349] loss=-8.958 rew_support=-7.199 rew_query=-16.282 kl=0.0083
+[iter 350] loss=6.964 rew_support=-7.216 rew_query=-15.291 kl=0.0033
+[iter 351] loss=-6.935 rew_support=-7.411 rew_query=-16.714 kl=0.0074
+[iter 352] loss=-2.668 rew_support=-7.303 rew_query=-17.071 kl=0.0136
+[iter 353] loss=13.738 rew_support=-7.425 rew_query=-15.249 kl=0.0116
+[iter 354] loss=4.810 rew_support=-7.214 rew_query=-15.361 kl=0.0142
+[iter 355] loss=6.283 rew_support=-7.310 rew_query=-15.702 kl=0.0125
+[iter 356] loss=-1.469 rew_support=-7.358 rew_query=-15.511 kl=0.0124
+[iter 357] loss=-13.466 rew_support=-7.264 rew_query=-16.945 kl=0.0080
+[iter 358] loss=5.847 rew_support=-7.361 rew_query=-15.801 kl=0.0140
+[iter 359] loss=-4.935 rew_support=-7.290 rew_query=-16.547 kl=0.0079
+[iter 360] loss=-1.912 rew_support=-7.151 rew_query=-16.240 kl=0.0118
+[iter 361] loss=3.792 rew_support=-7.400 rew_query=-15.430 kl=0.0137
+[iter 362] loss=2.730 rew_support=-7.212 rew_query=-15.066 kl=0.0087
+[iter 363] loss=4.090 rew_support=-7.305 rew_query=-16.287 kl=0.0125
+[iter 364] loss=12.642 rew_support=-7.399 rew_query=-15.328 kl=0.0112
+[iter 365] loss=-1.676 rew_support=-7.215 rew_query=-15.377 kl=0.0114
+[iter 366] loss=-4.288 rew_support=-7.106 rew_query=-15.767 kl=0.0096
+[iter 367] loss=-3.037 rew_support=-7.163 rew_query=-15.592 kl=0.0064
+[iter 368] loss=11.824 rew_support=-7.360 rew_query=-14.806 kl=0.0122
+[iter 369] loss=-1.860 rew_support=-7.214 rew_query=-16.237 kl=0.0089
+[iter 370] loss=8.213 rew_support=-7.253 rew_query=-15.485 kl=0.0099
+[iter 371] loss=1.656 rew_support=-7.409 rew_query=-15.365 kl=0.0035
+[iter 372] loss=-0.787 rew_support=-7.408 rew_query=-16.054 kl=0.0127
+[iter 373] loss=3.611 rew_support=-7.461 rew_query=-14.963 kl=0.0112
+[iter 374] loss=0.110 rew_support=-7.352 rew_query=-14.459 kl=0.0146
+[iter 375] loss=-10.564 rew_support=-7.267 rew_query=-15.573 kl=0.0084
+[iter 376] loss=0.778 rew_support=-7.366 rew_query=-15.051 kl=0.0119
+[iter 377] loss=-2.378 rew_support=-7.161 rew_query=-15.761 kl=0.0074
+[iter 378] loss=3.199 rew_support=-7.205 rew_query=-14.960 kl=0.0144
+[iter 379] loss=-5.691 rew_support=-7.105 rew_query=-16.114 kl=0.0085
+[iter 380] loss=6.707 rew_support=-7.212 rew_query=-15.124 kl=0.0112
+[iter 381] loss=12.661 rew_support=-7.303 rew_query=-15.068 kl=0.0118
+[iter 382] loss=-0.832 rew_support=-7.402 rew_query=-16.047 kl=0.0080
+[iter 383] loss=3.458 rew_support=-7.311 rew_query=-15.744 kl=0.0133
+[iter 384] loss=0.840 rew_support=-7.191 rew_query=-15.350 kl=0.0032
+[iter 385] loss=-9.196 rew_support=-7.261 rew_query=-15.966 kl=0.0086
+[iter 386] loss=11.407 rew_support=-7.416 rew_query=-15.725 kl=0.0116
+[iter 387] loss=-8.527 rew_support=-7.342 rew_query=-16.000 kl=0.0091
+[iter 388] loss=-1.140 rew_support=-7.312 rew_query=-15.373 kl=0.0118
+[iter 389] loss=-3.817 rew_support=-7.214 rew_query=-15.677 kl=0.0089
+[iter 390] loss=-9.372 rew_support=-7.260 rew_query=-16.516 kl=0.0085
+[iter 391] loss=2.942 rew_support=-7.417 rew_query=-15.450 kl=0.0078
+[iter 392] loss=12.916 rew_support=-7.210 rew_query=-15.041 kl=0.0105
+[iter 393] loss=-8.740 rew_support=-7.160 rew_query=-15.987 kl=0.0089
+[iter 394] loss=10.356 rew_support=-7.399 rew_query=-15.238 kl=0.0122
+[iter 395] loss=-1.434 rew_support=-7.361 rew_query=-15.554 kl=0.0122
+[iter 396] loss=7.815 rew_support=-7.410 rew_query=-15.610 kl=0.0112
+[iter 397] loss=0.004 rew_support=-7.354 rew_query=-15.443 kl=0.0064
+[iter 398] loss=-8.094 rew_support=-7.209 rew_query=-15.224 kl=0.0088
+[iter 399] loss=4.848 rew_support=-7.459 rew_query=-16.693 kl=0.0081
+[iter 400] loss=-2.418 rew_support=-7.365 rew_query=-16.303 kl=0.0100
+Checkpoint saved to checkpoints/run_20260107_195034/checkpoint_400.pt
+[iter 401] loss=-1.968 rew_support=-7.362 rew_query=-15.098 kl=0.0105
+[iter 402] loss=6.307 rew_support=-7.421 rew_query=-14.771 kl=0.0122
+[iter 403] loss=5.035 rew_support=-7.355 rew_query=-15.421 kl=0.0071
+[iter 404] loss=3.893 rew_support=-7.358 rew_query=-15.489 kl=0.0116
+[iter 405] loss=-4.986 rew_support=-7.192 rew_query=-15.910 kl=0.0091
+[iter 406] loss=-6.684 rew_support=-7.249 rew_query=-14.894 kl=0.0089
+[iter 407] loss=-4.641 rew_support=-7.259 rew_query=-15.816 kl=0.0085
+[iter 408] loss=11.449 rew_support=-7.149 rew_query=-14.846 kl=0.0116
+[iter 409] loss=-1.027 rew_support=-7.412 rew_query=-16.509 kl=0.0113
+[iter 410] loss=-1.621 rew_support=-7.310 rew_query=-14.597 kl=0.0113
+[iter 411] loss=-5.983 rew_support=-7.355 rew_query=-16.285 kl=0.0090
+[iter 412] loss=3.197 rew_support=-7.211 rew_query=-15.028 kl=0.0116
+[iter 413] loss=-6.824 rew_support=-7.315 rew_query=-17.101 kl=0.0081
+[iter 414] loss=10.811 rew_support=-7.254 rew_query=-14.182 kl=0.0115
+[iter 415] loss=2.308 rew_support=-7.411 rew_query=-15.645 kl=0.0116
+[iter 416] loss=-3.395 rew_support=-7.213 rew_query=-16.113 kl=0.0079
+[iter 417] loss=-1.576 rew_support=-7.271 rew_query=-15.691 kl=0.0090
+[iter 418] loss=0.558 rew_support=-7.313 rew_query=-15.734 kl=0.0114
+[iter 419] loss=-4.127 rew_support=-7.262 rew_query=-15.097 kl=0.0089
+[iter 420] loss=-0.266 rew_support=-7.359 rew_query=-15.453 kl=0.0073
+[iter 421] loss=16.667 rew_support=-7.208 rew_query=-14.802 kl=0.0115
+[iter 422] loss=12.212 rew_support=-7.469 rew_query=-16.347 kl=0.0111
+[iter 423] loss=-3.413 rew_support=-7.267 rew_query=-15.901 kl=0.0083
+[iter 424] loss=-7.904 rew_support=-7.217 rew_query=-15.903 kl=0.0084
+[iter 425] loss=17.688 rew_support=-7.470 rew_query=-15.357 kl=0.0115
+[iter 426] loss=1.033 rew_support=-7.201 rew_query=-15.439 kl=0.0122
+[iter 427] loss=-6.061 rew_support=-7.308 rew_query=-16.030 kl=0.0085
+[iter 428] loss=3.423 rew_support=-7.407 rew_query=-15.240 kl=0.0079
+[iter 429] loss=-1.722 rew_support=-7.348 rew_query=-15.754 kl=0.0065
+[iter 430] loss=-2.434 rew_support=-7.314 rew_query=-15.474 kl=0.0083
+[iter 431] loss=5.979 rew_support=-7.257 rew_query=-15.497 kl=0.0085
+[iter 432] loss=3.555 rew_support=-7.256 rew_query=-14.594 kl=0.0082
+[iter 433] loss=-8.122 rew_support=-7.363 rew_query=-15.924 kl=0.0087
+[iter 434] loss=-4.985 rew_support=-7.209 rew_query=-15.999 kl=0.0084
+[iter 435] loss=11.298 rew_support=-7.365 rew_query=-15.571 kl=0.0114
+[iter 436] loss=5.573 rew_support=-7.455 rew_query=-16.217 kl=0.0071
+[iter 437] loss=-6.523 rew_support=-7.366 rew_query=-15.405 kl=0.0083
+[iter 438] loss=2.287 rew_support=-7.356 rew_query=-15.871 kl=0.0115
+[iter 439] loss=8.638 rew_support=-7.368 rew_query=-14.762 kl=0.0112
+[iter 440] loss=5.769 rew_support=-7.453 rew_query=-14.906 kl=0.0097
+[iter 441] loss=-9.462 rew_support=-7.407 rew_query=-16.100 kl=0.0086
+[iter 442] loss=1.185 rew_support=-7.211 rew_query=-15.031 kl=0.0140
+[iter 443] loss=-4.470 rew_support=-7.270 rew_query=-16.098 kl=0.0091
+[iter 444] loss=-3.214 rew_support=-7.316 rew_query=-15.312 kl=0.0077
+[iter 445] loss=9.248 rew_support=-7.356 rew_query=-14.959 kl=0.0097
+[iter 446] loss=-7.046 rew_support=-7.316 rew_query=-16.139 kl=0.0087
+[iter 447] loss=5.127 rew_support=-7.216 rew_query=-15.986 kl=0.0142
+[iter 448] loss=-2.776 rew_support=-7.273 rew_query=-15.876 kl=0.0096
+[iter 449] loss=-8.260 rew_support=-7.268 rew_query=-16.756 kl=0.0085
+[iter 450] loss=4.124 rew_support=-7.212 rew_query=-15.368 kl=0.0077
+[iter 451] loss=4.243 rew_support=-7.264 rew_query=-15.568 kl=0.0100
+[iter 452] loss=12.130 rew_support=-7.509 rew_query=-14.539 kl=0.0116
+[iter 453] loss=-4.398 rew_support=-7.203 rew_query=-15.300 kl=0.0083
+[iter 454] loss=1.951 rew_support=-7.203 rew_query=-16.122 kl=0.0062
+[iter 455] loss=1.006 rew_support=-7.310 rew_query=-15.752 kl=0.0137
+[iter 456] loss=7.030 rew_support=-7.357 rew_query=-14.655 kl=0.0114
+[iter 457] loss=-5.958 rew_support=-7.360 rew_query=-15.840 kl=0.0095
+[iter 458] loss=1.551 rew_support=-7.358 rew_query=-15.078 kl=0.0123
+[iter 459] loss=-7.886 rew_support=-7.260 rew_query=-15.085 kl=0.0085
+[iter 460] loss=-5.625 rew_support=-7.255 rew_query=-16.586 kl=0.0080
+[iter 461] loss=4.029 rew_support=-7.252 rew_query=-15.773 kl=0.0123
+[iter 462] loss=-2.525 rew_support=-7.107 rew_query=-15.493 kl=0.0087
+[iter 463] loss=11.845 rew_support=-7.259 rew_query=-15.091 kl=0.0116
+[iter 464] loss=-2.833 rew_support=-7.316 rew_query=-14.673 kl=0.0087
+[iter 465] loss=-6.834 rew_support=-7.207 rew_query=-15.690 kl=0.0087
+[iter 466] loss=4.233 rew_support=-7.109 rew_query=-15.584 kl=0.0099
+[iter 467] loss=0.700 rew_support=-7.201 rew_query=-15.003 kl=0.0097
+[iter 468] loss=1.967 rew_support=-7.413 rew_query=-16.100 kl=0.0087
+[iter 469] loss=-5.328 rew_support=-7.158 rew_query=-15.912 kl=0.0088
+[iter 470] loss=8.211 rew_support=-7.359 rew_query=-14.910 kl=0.0120
+[iter 471] loss=6.503 rew_support=-7.307 rew_query=-15.399 kl=0.0103
+[iter 472] loss=-4.051 rew_support=-7.215 rew_query=-15.967 kl=0.0073
+[iter 473] loss=1.834 rew_support=-7.370 rew_query=-15.388 kl=0.0103
+[iter 474] loss=1.299 rew_support=-7.243 rew_query=-15.291 kl=0.0057
+[iter 475] loss=-1.666 rew_support=-7.397 rew_query=-15.833 kl=0.0068
+[iter 476] loss=-2.692 rew_support=-7.303 rew_query=-15.965 kl=0.0079
+[iter 477] loss=-5.233 rew_support=-7.263 rew_query=-17.142 kl=0.0065
+[iter 478] loss=12.105 rew_support=-7.360 rew_query=-15.918 kl=0.0111
+[iter 479] loss=-0.417 rew_support=-7.357 rew_query=-15.828 kl=0.0058
+[iter 480] loss=-1.468 rew_support=-7.355 rew_query=-15.456 kl=0.0096
+[iter 481] loss=-2.157 rew_support=-7.270 rew_query=-16.522 kl=0.0122
+[iter 482] loss=-2.785 rew_support=-7.161 rew_query=-15.245 kl=0.0109
+[iter 483] loss=5.559 rew_support=-7.360 rew_query=-15.442 kl=0.0081
+[iter 484] loss=-0.758 rew_support=-7.220 rew_query=-14.795 kl=0.0085
+[iter 485] loss=-9.910 rew_support=-7.399 rew_query=-17.132 kl=0.0069
+[iter 486] loss=6.124 rew_support=-7.357 rew_query=-15.737 kl=0.0034
+[iter 487] loss=11.201 rew_support=-7.405 rew_query=-14.646 kl=0.0116
+[iter 488] loss=-1.886 rew_support=-7.253 rew_query=-15.456 kl=0.0078
+[iter 489] loss=6.472 rew_support=-7.307 rew_query=-14.979 kl=0.0119
+[iter 490] loss=6.396 rew_support=-7.346 rew_query=-14.585 kl=0.0104
+[iter 491] loss=2.836 rew_support=-7.356 rew_query=-15.321 kl=0.0117
+[iter 492] loss=2.480 rew_support=-7.155 rew_query=-15.229 kl=0.0080
+[iter 493] loss=-3.576 rew_support=-7.367 rew_query=-15.798 kl=0.0083
+[iter 494] loss=-3.885 rew_support=-7.299 rew_query=-16.286 kl=0.0027
+[iter 495] loss=1.343 rew_support=-7.341 rew_query=-15.132 kl=0.0094
+[iter 496] loss=-8.221 rew_support=-7.460 rew_query=-15.578 kl=0.0072
+[iter 497] loss=-6.080 rew_support=-7.205 rew_query=-16.178 kl=0.0121
+[iter 498] loss=8.509 rew_support=-7.360 rew_query=-14.544 kl=0.0032
+[iter 499] loss=0.472 rew_support=-7.313 rew_query=-15.727 kl=0.0113
+[iter 500] loss=-0.861 rew_support=-7.298 rew_query=-16.379 kl=0.0119
+Checkpoint saved to checkpoints/run_20260107_195501/checkpoint_500.pt
+[iter 501] loss=-4.179 rew_support=-7.357 rew_query=-16.469 kl=0.0093
+[iter 502] loss=12.357 rew_support=-7.340 rew_query=-14.727 kl=0.0028
+[iter 503] loss=3.440 rew_support=-7.272 rew_query=-15.424 kl=0.0120
+[iter 504] loss=1.219 rew_support=-7.304 rew_query=-15.885 kl=0.0052
+[iter 505] loss=1.565 rew_support=-7.329 rew_query=-15.163 kl=0.0130
+[iter 506] loss=0.336 rew_support=-7.308 rew_query=-15.572 kl=0.0091
+[iter 507] loss=-5.545 rew_support=-7.262 rew_query=-14.828 kl=0.0099
+[iter 508] loss=-3.080 rew_support=-7.316 rew_query=-15.900 kl=0.0038
+[iter 509] loss=18.300 rew_support=-7.247 rew_query=-14.334 kl=0.0087
+[iter 510] loss=-9.455 rew_support=-7.214 rew_query=-14.986 kl=0.0075
+[iter 511] loss=3.446 rew_support=-7.255 rew_query=-14.488 kl=0.0051
+[iter 512] loss=-4.711 rew_support=-7.216 rew_query=-16.047 kl=0.0087
+[iter 513] loss=0.849 rew_support=-7.445 rew_query=-15.616 kl=0.0142
+[iter 514] loss=9.754 rew_support=-7.410 rew_query=-15.099 kl=0.0088
+[iter 515] loss=4.003 rew_support=-7.456 rew_query=-15.318 kl=0.0107
+[iter 516] loss=-3.208 rew_support=-7.412 rew_query=-16.079 kl=0.0072
+[iter 517] loss=-9.875 rew_support=-7.149 rew_query=-16.378 kl=0.0054
+[iter 518] loss=3.117 rew_support=-7.304 rew_query=-15.656 kl=0.0101
+[iter 519] loss=-1.829 rew_support=-7.149 rew_query=-15.222 kl=0.0116
+[iter 520] loss=3.074 rew_support=-7.268 rew_query=-14.877 kl=0.0115
+[iter 521] loss=4.901 rew_support=-7.258 rew_query=-15.526 kl=0.0132
+[iter 522] loss=12.304 rew_support=-7.456 rew_query=-15.203 kl=0.0078
+[iter 523] loss=-1.105 rew_support=-7.412 rew_query=-15.272 kl=0.0033
+[iter 524] loss=3.392 rew_support=-7.370 rew_query=-14.529 kl=0.0036
+[iter 525] loss=-1.722 rew_support=-7.298 rew_query=-15.693 kl=0.0037
+[iter 526] loss=-4.961 rew_support=-7.230 rew_query=-15.194 kl=0.0069
+[iter 527] loss=-9.090 rew_support=-7.212 rew_query=-15.769 kl=0.0055
+[iter 528] loss=3.598 rew_support=-7.364 rew_query=-16.010 kl=0.0111
+[iter 529] loss=14.487 rew_support=-7.417 rew_query=-15.209 kl=0.0055
+[iter 530] loss=-9.573 rew_support=-7.169 rew_query=-16.443 kl=0.0072
+[iter 531] loss=-4.627 rew_support=-7.260 rew_query=-16.279 kl=0.0068
+[iter 532] loss=16.576 rew_support=-7.151 rew_query=-15.167 kl=0.0035
+[iter 533] loss=-2.042 rew_support=-7.362 rew_query=-16.030 kl=0.0085
+[iter 534] loss=1.535 rew_support=-7.256 rew_query=-14.542 kl=0.0028
+[iter 535] loss=0.201 rew_support=-7.356 rew_query=-16.347 kl=0.0098
+[iter 536] loss=-5.049 rew_support=-7.255 rew_query=-15.749 kl=0.0081
+[iter 537] loss=1.826 rew_support=-7.311 rew_query=-14.683 kl=0.0040
+[iter 538] loss=-1.150 rew_support=-7.356 rew_query=-16.010 kl=0.0052
+[iter 539] loss=6.949 rew_support=-7.358 rew_query=-16.260 kl=0.0126
+[iter 540] loss=12.875 rew_support=-7.299 rew_query=-14.943 kl=0.0031
+[iter 541] loss=-8.689 rew_support=-7.300 rew_query=-15.331 kl=0.0081
+[iter 542] loss=-5.257 rew_support=-7.361 rew_query=-15.889 kl=0.0098
+[iter 543] loss=7.004 rew_support=-7.409 rew_query=-15.349 kl=0.0083
+[iter 544] loss=-1.391 rew_support=-7.299 rew_query=-16.099 kl=0.0059
+[iter 545] loss=1.039 rew_support=-7.358 rew_query=-15.570 kl=0.0115
+[iter 546] loss=-5.743 rew_support=-7.362 rew_query=-16.013 kl=0.0043
+[iter 547] loss=9.947 rew_support=-7.361 rew_query=-15.324 kl=0.0047
+[iter 548] loss=-2.669 rew_support=-7.214 rew_query=-14.879 kl=0.0050
+[iter 549] loss=-5.188 rew_support=-7.405 rew_query=-16.350 kl=0.0084
+[iter 550] loss=20.393 rew_support=-7.402 rew_query=-14.613 kl=0.0125
+[iter 551] loss=-5.920 rew_support=-7.360 rew_query=-15.393 kl=0.0085
+[iter 552] loss=-7.632 rew_support=-7.315 rew_query=-15.402 kl=0.0089
+[iter 553] loss=5.074 rew_support=-7.368 rew_query=-15.435 kl=0.0102
+[iter 554] loss=0.063 rew_support=-7.313 rew_query=-15.780 kl=0.0080
+[iter 555] loss=-5.160 rew_support=-7.251 rew_query=-15.191 kl=0.0026
+[iter 556] loss=4.336 rew_support=-7.369 rew_query=-14.534 kl=0.0122
+[iter 557] loss=3.956 rew_support=-7.246 rew_query=-15.295 kl=0.0030
+[iter 558] loss=-2.351 rew_support=-7.347 rew_query=-15.724 kl=0.0079
+[iter 559] loss=-7.865 rew_support=-7.258 rew_query=-17.396 kl=0.0095
+[iter 560] loss=8.189 rew_support=-7.359 rew_query=-15.801 kl=0.0077
+[iter 561] loss=6.180 rew_support=-7.311 rew_query=-15.191 kl=0.0051
+[iter 562] loss=-12.483 rew_support=-7.266 rew_query=-16.991 kl=0.0087
+[iter 563] loss=1.922 rew_support=-7.166 rew_query=-15.854 kl=0.0116
+[iter 564] loss=-5.841 rew_support=-7.263 rew_query=-16.061 kl=0.0074
+[iter 565] loss=10.849 rew_support=-7.319 rew_query=-15.244 kl=0.0104
+[iter 566] loss=7.387 rew_support=-7.576 rew_query=-16.334 kl=0.0033
+[iter 567] loss=2.429 rew_support=-7.402 rew_query=-15.550 kl=0.0143
+[iter 568] loss=0.384 rew_support=-7.264 rew_query=-15.028 kl=0.0067
+[iter 569] loss=9.608 rew_support=-7.313 rew_query=-14.719 kl=0.0128
+[iter 570] loss=-12.050 rew_support=-7.207 rew_query=-15.954 kl=0.0072
+[iter 571] loss=-1.401 rew_support=-7.042 rew_query=-15.097 kl=0.0108
+[iter 572] loss=3.572 rew_support=-7.416 rew_query=-15.350 kl=0.0149
+[iter 573] loss=-0.675 rew_support=-7.350 rew_query=-15.826 kl=0.0052
+[iter 574] loss=3.241 rew_support=-7.462 rew_query=-15.776 kl=0.0029
+[iter 575] loss=2.662 rew_support=-7.217 rew_query=-14.655 kl=0.0031
+[iter 576] loss=2.435 rew_support=-7.360 rew_query=-15.675 kl=0.0034
+[iter 577] loss=4.291 rew_support=-7.206 rew_query=-14.945 kl=0.0077
+[iter 578] loss=-16.732 rew_support=-6.977 rew_query=-16.614 kl=0.0081
+[iter 579] loss=7.796 rew_support=-7.237 rew_query=-15.638 kl=0.0048
+[iter 580] loss=1.974 rew_support=-7.314 rew_query=-15.379 kl=0.0028
+Process _ProcessNoWarn-9:
+Process _ProcessNoWarn-7:
+Process _ProcessNoWarn-10:
+Process _ProcessNoWarn-6:
+Process _ProcessNoWarn-8:
+Process _ProcessNoWarn-5:
+Process _ProcessNoWarn-4:
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+
+The above exception was the direct cause of the following exception:
+
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+EOFError
+Traceback (most recent call last):
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+Traceback (most recent call last):
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+
+The above exception was the direct cause of the following exception:
+
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 2859925 failed, last command: step.
+EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: proc 2859929 failed, last command: step.
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+
+The above exception was the direct cause of the following exception:
+
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 2859928 failed, last command: step.
+Traceback (most recent call last):
+
+The above exception was the direct cause of the following exception:
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+EOFError: proc 2859926 failed, last command: step.
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+EOFError: proc 2859927 failed, last command: step.
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 2859923 failed, last command: step.
+EOFError: proc 2859924 failed, last command: step.
+Process _ProcessNoWarn-3:
+Process _ProcessNoWarn-2:
+Process _ProcessNoWarn-1:
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+EOFError
+EOFError
+Traceback (most recent call last):
+
+The above exception was the direct cause of the following exception:
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 2859922 failed, last command: step.
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+EOFError: proc 2859921 failed, last command: step.
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+EOFError
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 2859920 failed, last command: step.
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 50 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

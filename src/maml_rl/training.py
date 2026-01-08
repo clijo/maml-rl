@@ -42,6 +42,7 @@ def train(cfg: TrainConfig, device: torch.device, checkpoint_path: str = None):
         num_tasks=cfg.env.num_tasks,
         task_low=cfg.env.task_low,
         task_high=cfg.env.task_high,
+        difficulty=0.0
     )
 
     # Create environment (oracle or standard)
@@ -65,6 +66,7 @@ def train(cfg: TrainConfig, device: torch.device, checkpoint_path: str = None):
             device=device,
             norm_obs=cfg.env.norm_obs,
             seed=cfg.seed,
+            difficulty=0.0
         )
 
     if cfg.env.norm_obs:
@@ -121,13 +123,21 @@ def train(cfg: TrainConfig, device: torch.device, checkpoint_path: str = None):
         print(f"Resuming from iteration {start_iteration}")
 
     for iteration in range(start_iteration, cfg.num_iterations + 1):
+        # Curriculum: User requested to cap difficulty at 0.1 for now
+        difficulty = 0.1
+        
         # Update tasks in existing env for better performance
+        # Relaunch tasks if difficulty changed OR just every iteration as before?
+        # Standard MAML resamples tasks every iteration.
+        # We also want to update difficulty.
+        
         if iteration > 1:
             tasks = sample_tasks(
                 env_name=cfg.env.name,
                 num_tasks=cfg.env.num_tasks,
                 task_low=cfg.env.task_low,
                 task_high=cfg.env.task_high,
+                difficulty=difficulty
             )
             # Update tasks via reset options
             env.reset(options=[{"task": t} for t in tasks])

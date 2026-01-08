@@ -1,0 +1,408 @@
+nohup: ignoring input
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+Device: cpu
+Algorithm: TRPO
+[iter 1] loss=49.342 rew_support=-7.446 rew_query=-10.331 kl=0.0020
+[iter 2] loss=7.109 rew_support=-7.242 rew_query=-10.755 kl=0.0050
+[iter 3] loss=13.321 rew_support=-7.242 rew_query=-10.120 kl=0.0038
+[iter 4] loss=12.938 rew_support=-7.447 rew_query=-10.205 kl=0.0030
+[iter 5] loss=-3.800 rew_support=-7.385 rew_query=-10.403 kl=0.0036
+[iter 6] loss=-12.100 rew_support=-7.381 rew_query=-10.970 kl=0.0028
+[iter 7] loss=-20.836 rew_support=-7.225 rew_query=-11.911 kl=0.0035
+[iter 8] loss=10.114 rew_support=-7.274 rew_query=-9.160 kl=0.0134
+[iter 9] loss=5.096 rew_support=-7.337 rew_query=-10.242 kl=0.0031
+[iter 10] loss=-0.755 rew_support=-7.331 rew_query=-10.177 kl=0.0035
+[iter 11] loss=6.506 rew_support=-7.596 rew_query=-11.201 kl=0.0034
+[iter 12] loss=-20.317 rew_support=-7.352 rew_query=-10.837 kl=0.0030
+[iter 13] loss=6.487 rew_support=-7.408 rew_query=-10.009 kl=0.0046
+[iter 14] loss=10.318 rew_support=-7.510 rew_query=-8.682 kl=0.0043
+[iter 15] loss=-23.522 rew_support=-7.506 rew_query=-9.984 kl=0.0074
+[iter 16] loss=-26.887 rew_support=-7.404 rew_query=-10.975 kl=0.0038
+[iter 17] loss=2.601 rew_support=-7.462 rew_query=-10.106 kl=0.0025
+[iter 18] loss=-9.192 rew_support=-7.563 rew_query=-11.586 kl=0.0033
+[iter 19] loss=4.103 rew_support=-7.616 rew_query=-11.153 kl=0.0029
+[iter 20] loss=-4.748 rew_support=-7.448 rew_query=-9.963 kl=0.0024
+[iter 21] loss=4.836 rew_support=-7.704 rew_query=-10.046 kl=0.0028
+[iter 22] loss=15.861 rew_support=-7.550 rew_query=-9.167 kl=0.0029
+[iter 23] loss=-16.321 rew_support=-7.495 rew_query=-10.197 kl=0.0051
+[iter 24] loss=0.533 rew_support=-7.663 rew_query=-9.171 kl=0.0032
+[iter 25] loss=-23.074 rew_support=-7.453 rew_query=-10.501 kl=0.0055
+[iter 26] loss=-13.298 rew_support=-7.305 rew_query=-10.358 kl=0.0025
+[iter 27] loss=22.539 rew_support=-7.402 rew_query=-9.431 kl=0.0019
+[iter 28] loss=-7.502 rew_support=-7.710 rew_query=-10.960 kl=0.0025
+[iter 29] loss=-4.978 rew_support=-7.444 rew_query=-9.840 kl=0.0025
+[iter 30] loss=-15.147 rew_support=-7.457 rew_query=-10.733 kl=0.0042
+[iter 31] loss=-8.240 rew_support=-7.555 rew_query=-10.448 kl=0.0044
+[iter 32] loss=10.032 rew_support=-7.557 rew_query=-9.720 kl=0.0020
+[iter 33] loss=-14.818 rew_support=-7.464 rew_query=-10.444 kl=0.0023
+[iter 34] loss=-2.083 rew_support=-7.451 rew_query=-10.198 kl=0.0031
+[iter 35] loss=-10.032 rew_support=-7.539 rew_query=-10.675 kl=0.0035
+[iter 36] loss=-3.370 rew_support=-7.453 rew_query=-9.529 kl=0.0025
+[iter 37] loss=-10.114 rew_support=-7.606 rew_query=-10.659 kl=0.0024
+[iter 38] loss=-8.379 rew_support=-7.464 rew_query=-10.271 kl=0.0027
+[iter 39] loss=8.840 rew_support=-7.605 rew_query=-9.941 kl=0.0020
+[iter 40] loss=-13.132 rew_support=-7.351 rew_query=-10.252 kl=0.0027
+[iter 41] loss=10.461 rew_support=-7.701 rew_query=-10.218 kl=0.0016
+[iter 42] loss=-1.028 rew_support=-7.558 rew_query=-9.847 kl=0.0029
+[iter 43] loss=-2.755 rew_support=-7.503 rew_query=-10.586 kl=0.0025
+[iter 44] loss=-4.554 rew_support=-7.500 rew_query=-9.857 kl=0.0025
+[iter 45] loss=-12.114 rew_support=-7.303 rew_query=-10.559 kl=0.0025
+[iter 46] loss=-3.058 rew_support=-7.547 rew_query=-10.404 kl=0.0021
+[iter 47] loss=15.711 rew_support=-7.662 rew_query=-9.194 kl=0.0086
+[iter 48] loss=-19.596 rew_support=-7.563 rew_query=-10.540 kl=0.0052
+[iter 49] loss=-15.352 rew_support=-7.568 rew_query=-10.877 kl=0.0027
+[iter 50] loss=0.458 rew_support=-7.510 rew_query=-10.762 kl=0.0106
+Checkpoint saved to checkpoints/run_20260107_122801/checkpoint_50.pt
+[iter 51] loss=-1.611 rew_support=-7.554 rew_query=-10.153 kl=0.0022
+[iter 52] loss=3.680 rew_support=-7.492 rew_query=-10.393 kl=0.0024
+[iter 53] loss=-9.438 rew_support=-7.447 rew_query=-10.547 kl=0.0058
+[iter 54] loss=-6.582 rew_support=-7.510 rew_query=-10.619 kl=0.0025
+[iter 55] loss=3.757 rew_support=-7.562 rew_query=-9.699 kl=0.0025
+[iter 56] loss=0.836 rew_support=-7.505 rew_query=-9.953 kl=0.0029
+[iter 57] loss=-6.735 rew_support=-7.454 rew_query=-10.686 kl=0.0023
+[iter 58] loss=0.285 rew_support=-7.609 rew_query=-10.574 kl=0.0023
+[iter 59] loss=-1.102 rew_support=-7.414 rew_query=-9.868 kl=0.0022
+[iter 60] loss=-9.600 rew_support=-7.351 rew_query=-10.440 kl=0.0058
+[iter 61] loss=-7.527 rew_support=-7.395 rew_query=-10.190 kl=0.0039
+[iter 62] loss=5.644 rew_support=-7.658 rew_query=-9.823 kl=0.0112
+[iter 63] loss=5.492 rew_support=-7.508 rew_query=-9.815 kl=0.0014
+[iter 64] loss=-7.451 rew_support=-7.454 rew_query=-10.232 kl=0.0055
+[iter 65] loss=-6.697 rew_support=-7.352 rew_query=-9.532 kl=0.0028
+[iter 66] loss=1.508 rew_support=-7.562 rew_query=-10.059 kl=0.0029
+[iter 67] loss=2.004 rew_support=-7.559 rew_query=-10.040 kl=0.0020
+[iter 68] loss=3.481 rew_support=-7.513 rew_query=-9.259 kl=0.0027
+[iter 69] loss=-9.941 rew_support=-7.616 rew_query=-10.626 kl=0.0035
+[iter 70] loss=-0.623 rew_support=-7.610 rew_query=-9.714 kl=0.0024
+[iter 71] loss=-8.054 rew_support=-7.458 rew_query=-10.879 kl=0.0044
+[iter 72] loss=-8.495 rew_support=-7.551 rew_query=-10.209 kl=0.0038
+[iter 73] loss=1.589 rew_support=-7.504 rew_query=-9.963 kl=0.0024
+[iter 74] loss=13.955 rew_support=-7.601 rew_query=-8.967 kl=0.0066
+[iter 75] loss=-3.134 rew_support=-7.399 rew_query=-10.421 kl=0.0032
+[iter 76] loss=-12.692 rew_support=-7.399 rew_query=-10.366 kl=0.0037
+[iter 77] loss=-8.525 rew_support=-7.549 rew_query=-10.629 kl=0.0042
+[iter 78] loss=4.399 rew_support=-7.507 rew_query=-9.706 kl=0.0117
+[iter 79] loss=6.639 rew_support=-7.504 rew_query=-10.261 kl=0.0079
+[iter 80] loss=-4.125 rew_support=-7.513 rew_query=-9.913 kl=0.0037
+[iter 81] loss=-1.232 rew_support=-7.656 rew_query=-10.433 kl=0.0022
+[iter 82] loss=-4.878 rew_support=-7.551 rew_query=-9.913 kl=0.0091
+[iter 83] loss=-11.745 rew_support=-7.459 rew_query=-11.132 kl=0.0047
+[iter 84] loss=-1.523 rew_support=-7.619 rew_query=-9.971 kl=0.0125
+[iter 85] loss=-2.870 rew_support=-7.666 rew_query=-11.138 kl=0.0037
+[iter 86] loss=-0.889 rew_support=-7.535 rew_query=-10.173 kl=0.0038
+[iter 87] loss=3.335 rew_support=-7.457 rew_query=-10.178 kl=0.0127
+[iter 88] loss=3.388 rew_support=-7.395 rew_query=-10.097 kl=0.0013
+[iter 89] loss=-1.281 rew_support=-7.597 rew_query=-10.532 kl=0.0023
+[iter 90] loss=3.240 rew_support=-7.709 rew_query=-9.759 kl=0.0038
+[iter 91] loss=9.915 rew_support=-7.391 rew_query=-8.863 kl=0.0039
+[iter 92] loss=-7.204 rew_support=-7.467 rew_query=-10.714 kl=0.0048
+[iter 93] loss=-3.185 rew_support=-7.511 rew_query=-9.704 kl=0.0040
+[iter 94] loss=1.172 rew_support=-7.572 rew_query=-9.458 kl=0.0023
+[iter 95] loss=11.178 rew_support=-7.392 rew_query=-8.860 kl=0.0081
+[iter 96] loss=-5.736 rew_support=-7.346 rew_query=-10.281 kl=0.0041
+[iter 97] loss=-9.901 rew_support=-7.455 rew_query=-10.288 kl=0.0073
+[iter 98] loss=3.542 rew_support=-7.453 rew_query=-9.671 kl=0.0020
+[iter 99] loss=-12.495 rew_support=-7.409 rew_query=-11.241 kl=0.0053
+[iter 100] loss=-4.975 rew_support=-7.452 rew_query=-10.880 kl=0.0052
+Checkpoint saved to checkpoints/run_20260107_123015/checkpoint_100.pt
+[iter 101] loss=-1.133 rew_support=-7.508 rew_query=-11.043 kl=0.0069
+[iter 102] loss=-1.434 rew_support=-7.509 rew_query=-10.260 kl=0.0106
+[iter 103] loss=-1.949 rew_support=-7.656 rew_query=-11.421 kl=0.0019
+[iter 104] loss=3.824 rew_support=-7.452 rew_query=-10.082 kl=0.0117
+[iter 105] loss=12.706 rew_support=-7.448 rew_query=-9.861 kl=0.0009
+[iter 106] loss=-7.301 rew_support=-7.499 rew_query=-10.569 kl=0.0068
+[iter 107] loss=-4.742 rew_support=-7.508 rew_query=-11.075 kl=0.0054
+[iter 108] loss=1.454 rew_support=-7.551 rew_query=-10.210 kl=0.0010
+[iter 109] loss=3.854 rew_support=-7.505 rew_query=-10.140 kl=0.0038
+[iter 110] loss=0.654 rew_support=-7.614 rew_query=-9.882 kl=0.0064
+[iter 111] loss=-9.778 rew_support=-7.445 rew_query=-10.586 kl=0.0053
+[iter 112] loss=-5.616 rew_support=-7.300 rew_query=-11.151 kl=0.0058
+[iter 113] loss=8.666 rew_support=-7.448 rew_query=-9.548 kl=0.0005
+[iter 114] loss=-4.417 rew_support=-7.553 rew_query=-10.708 kl=0.0056
+[iter 115] loss=-2.626 rew_support=-7.407 rew_query=-10.372 kl=0.0088
+[iter 116] loss=-1.205 rew_support=-7.508 rew_query=-10.900 kl=0.0045
+[iter 117] loss=1.420 rew_support=-7.557 rew_query=-10.235 kl=0.0043
+Process _ProcessNoWarn-9:
+Process _ProcessNoWarn-8:
+Process _ProcessNoWarn-6:
+Process _ProcessNoWarn-5:
+Process _ProcessNoWarn-3:
+Process _ProcessNoWarn-10:
+Process _ProcessNoWarn-7:
+Process _ProcessNoWarn-4:
+Process _ProcessNoWarn-2:
+Process _ProcessNoWarn-1:
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+EOFError
+EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+
+The above exception was the direct cause of the following exception:
+
+
+The above exception was the direct cause of the following exception:
+
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 772628 failed, last command: step_and_maybe_reset.
+EOFError: proc 772627 failed, last command: step_and_maybe_reset.
+EOFError: proc 772625 failed, last command: step_and_maybe_reset.
+
+The above exception was the direct cause of the following exception:
+
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 772630 failed, last command: step_and_maybe_reset.
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2398, in _run_worker_pipe_shared_mem
+    cmd, data = child_pipe.recv()
+                ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 250, in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 430, in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+EOFError
+EOFError
+  File "/usr/lib/python3.12/multiprocessing/connection.py", line 399, in _recv
+    raise EOFError
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError
+EOFError: proc 772631 failed, last command: step_and_maybe_reset.
+EOFError
+
+The above exception was the direct cause of the following exception:
+
+
+The above exception was the direct cause of the following exception:
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+Traceback (most recent call last):
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/_utils.py", line 594, in run
+    return mp.Process.run(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+EOFError: proc 772626 failed, last command: step_and_maybe_reset.
+EOFError: proc 772629 failed, last command: step_and_maybe_reset.
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 772624 failed, last command: step_and_maybe_reset.
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 2405, in _run_worker_pipe_shared_mem
+    raise EOFError(f"proc {pid} failed, last command: {cmd}.") from err
+EOFError: proc 772632 failed, last command: step_and_maybe_reset.
+EOFError: proc 772623 failed, last command: step_and_maybe_reset.
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 50 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '

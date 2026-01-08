@@ -1,0 +1,56 @@
+Device: cpu
+Algorithm: TRPO
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander.py", line 41, in __init__
+    import mars_lander_cpp
+ModuleNotFoundError: No module named 'mars_lander_cpp'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander.py", line 43, in __init__
+    from maml_rl.envs import mars_lander_cpp
+ImportError: cannot import name 'mars_lander_cpp' from 'maml_rl.envs' (unknown location). Did you mean: 'mars_lander'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/run.py", line 79, in <module>
+    main()
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/run.py", line 67, in main
+    train(cfg, device, args.checkpoint)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/training.py", line 59, in train
+    _, env = make_vec_env(
+             ^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/factory.py", line 63, in make_vec_env
+    env = env_cls.make_vec_env(
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander.py", line 246, in make_vec_env
+    return _make_mars_parallel_env(tasks, device, max_steps, norm_obs, oracle=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander.py", line 354, in _make_mars_parallel_env
+    env = ParallelEnv(num_workers=len(tasks), create_env_fn=env_fn_list)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 137, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/common.py", line 263, in __call__
+    instance: EnvBase = super().__call__(*args, **kwargs)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 374, in __init__
+    self._get_metadata(create_env_fn, create_env_kwargs)
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/batched_envs.py", line 527, in _get_metadata
+    get_env_metadata(create_env_fn[i], create_env_kwargs[i]).clone()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/.venv/lib/python3.12/site-packages/torchrl/envs/env_creator.py", line 241, in get_env_metadata
+    env = env_or_creator(**kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander.py", line 351, in <lambda>
+    env_fn_list = [lambda t=task: make_single_env(t) for task in tasks]
+                                  ^^^^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander.py", line 335, in make_single_env
+    base_env = MarsLanderEnv()
+               ^^^^^^^^^^^^^^^
+  File "/home/smaug/Documents/MASTER/ReinforcementLearning/maml-rl/maml-rl/src/maml_rl/envs/mars_lander.py", line 45, in __init__
+    raise ImportError("Could not import mars_lander_cpp. Did you compile the extension?")
+ImportError: Could not import mars_lander_cpp. Did you compile the extension?

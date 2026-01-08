@@ -1,13 +1,13 @@
 algorithm: trpo
-rollout_steps: 2000
-num_iterations: 100
+rollout_steps: 500
+num_iterations: 10000
 gamma: 0.99
 lam: 0.95
 seed: 42
-save_interval: 20
+save_interval: 100
 env:
   name: mars-lander
-  num_tasks: 20
+  num_tasks: 10
   max_steps: 500
   task_low: 0.0
   task_high: 0.0 # Not used for Mars Lander logic (randomized inside env)
