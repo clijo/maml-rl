@@ -195,6 +195,13 @@ def train(cfg: TrainConfig, device: torch.device):
                 policy_model, adapted_params, policy_buffers
             )
 
+            # Reset environment for Query set (Evaluation)
+            # IMPORTANT: We do NOT pass options here because we want to PERSIST the tasks
+            # set during the support phase. Since the environment is stateful regarding tasks
+            # (until set_task is called again), a plain reset() just resets the physical state
+            # but keeps the current task configuration.
+            env.reset()
+
             with torch.no_grad():
                 query_td = env.rollout(
                     max_steps=cfg.rollout_steps,
@@ -414,9 +421,10 @@ def train(cfg: TrainConfig, device: torch.device):
         avg_query_reward = query_td.get(("next", "reward")).mean().item()
 
         # Print
+        metric_name = "objective" if cfg.algorithm == "trpo" else "loss"
         log_str = (
             f"[iter {iteration}] "
-            f"loss={total_loss if isinstance(total_loss, float) else total_loss.item():.3f} "
+            f"{metric_name}={total_loss if isinstance(total_loss, float) else total_loss.item():.3f} "
             f"rew_support={avg_support_reward:.3f} "
             f"rew_query={avg_query_reward:.3f}"
         )
@@ -457,7 +465,7 @@ def train(cfg: TrainConfig, device: torch.device):
             elif cfg.algorithm == "trpo":
                 log_data.update(
                     {
-                        "loss/trpo_surr": trpo_logs.get("trpo_surr", 0),
+                        "trpo/surrogate_objective": trpo_logs.get("trpo_surr", 0),
                         "loss/value": value_loss.item(),
                         "trpo/kl": trpo_logs.get("trpo_kl", 0),
                         "trpo/improvement": trpo_logs.get("trpo_improvement", 0),

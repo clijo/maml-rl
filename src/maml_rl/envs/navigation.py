@@ -6,14 +6,16 @@ import numpy as np
 import torch
 from gymnasium import spaces
 from torch import nn
-from torchrl.envs import GymWrapper, ParallelEnv, TransformedEnv
+from torchrl.envs import TransformedEnv
 from torchrl.envs.transforms import (
     Compose,
     InitTracker,
     StepCounter,
-    DoubleToFloat,
     ObservationNorm,
+    CatTensors,
 )
+
+from maml_rl.envs.navigation_vectorized import Navigation2DVectorized
 
 
 class Navigation2DEnv(gym.Env):
@@ -63,8 +65,7 @@ class Navigation2DEnv(gym.Env):
         num_tasks: int, low: float = -0.5, high: float = 0.5
     ) -> List[Mapping[str, np.ndarray]]:
         """Sample goal positions within a square."""
-        goals = np.random.uniform(low, high, size=(num_tasks, 2))
-        return [{"goal": goal.astype(np.float64)} for goal in goals]
+        return Navigation2DVectorized.sample_tasks(num_tasks, low, high)
 
     @staticmethod
     def get_task_obs_dim() -> int:
@@ -78,8 +79,10 @@ class Navigation2DEnv(gym.Env):
         max_steps: int = 100,
         norm_obs: bool = False,
     ):
-        """Create a parallel Navigation vector environment."""
-        return _make_nav_parallel_env(tasks, device, max_steps, norm_obs, oracle=False)
+        """Create a vectorized Navigation environment."""
+        return _make_nav_vectorized_env(
+            tasks, device, max_steps, norm_obs, oracle=False
+        )
 
     @staticmethod
     def make_oracle_vec_env(
@@ -88,8 +91,8 @@ class Navigation2DEnv(gym.Env):
         max_steps: int = 100,
         norm_obs: bool = False,
     ):
-        """Create a parallel Navigation environment with goal in observations."""
-        return _make_nav_parallel_env(tasks, device, max_steps, norm_obs, oracle=True)
+        """Create a vectorized Navigation environment with oracle observations."""
+        return _make_nav_vectorized_env(tasks, device, max_steps, norm_obs, oracle=True)
 
     @staticmethod
     def get_oracle(
@@ -115,15 +118,15 @@ class Navigation2DEnv(gym.Env):
             hidden_sizes = checkpoint["config"]["model"].get("hidden_sizes", (100, 100))
         else:
             hidden_sizes = checkpoint.get("hidden_sizes", (100, 100))
-        _, oracle_policy, _ = build_actor_critic(
+        oracle_actor, oracle_policy_model, _ = build_actor_critic(
             oracle_obs_dim, act_dim, hidden_sizes=hidden_sizes
         )
-        oracle_policy.load_state_dict(checkpoint["policy_state_dict"])
-        oracle_policy.to(device)
-        return oracle_policy
+        oracle_policy_model.load_state_dict(checkpoint["policy_state_dict"])
+        oracle_actor.to(device)
+        return oracle_actor
 
 
-class Navigation2DOracleEnv(gym.Wrapper):
+class Navigation2DOracleWrapper(gym.Wrapper):
     """Wrapper that appends goal position to observations for oracle training."""
 
     def __init__(self, env: Navigation2DEnv):
@@ -146,38 +149,49 @@ class Navigation2DOracleEnv(gym.Wrapper):
         return np.concatenate([obs, self.env._goal])
 
 
-def _make_nav_parallel_env(
+def _make_nav_vectorized_env(
     tasks: Sequence[Mapping[str, np.ndarray]],
     device: str,
     max_steps: int,
     norm_obs: bool,
     oracle: bool,
 ):
-    """Create parallel Navigation environment, optionally with oracle observations."""
+    """Create vectorized Navigation environment."""
+    num_tasks = len(tasks)
 
-    def make_single_env(task):
-        base_env = Navigation2DEnv()
-        base_env.set_task(task)
+    # Base vectorized env
+    env = Navigation2DVectorized(num_tasks=num_tasks, device=device)
 
-        if oracle:
-            base_env = Navigation2DOracleEnv(base_env)
+    # Set the specific tasks (goals)
+    # The vectorized env expects list of dicts, same format
+    env.set_task(tasks)
 
-        env = GymWrapper(base_env, device=device)
-        env = TransformedEnv(
-            env,
-            Compose(
-                InitTracker(),
-                StepCounter(max_steps=max_steps),
-                DoubleToFloat(in_keys=["observation"]),
-            ),
+    # Transforms
+    transforms = [
+        InitTracker(),
+        StepCounter(max_steps=max_steps),
+    ]
+
+    if oracle:
+        # We need to append goal to observation.
+        # Navigation2DVectorized returns "observation" and "goals".
+        # We use CatTensors to concat them into "observation".
+        transforms.append(
+            CatTensors(
+                in_keys=["observation", "goals"],
+                out_key="observation",
+                dim=-1,
+                del_keys=False,
+            )
         )
-        return env
 
-    env_fn_list = [lambda t=task: make_single_env(t) for task in tasks]
-    env = ParallelEnv(num_workers=len(tasks), create_env_fn=env_fn_list)
+    # Compose transforms
+    env = TransformedEnv(env, Compose(*transforms))
 
     if norm_obs:
+        # Note: Vectorized envs need standard_normal=True usually
         obs_norm = ObservationNorm(in_keys=["observation"], standard_normal=True)
         env = TransformedEnv(env, obs_norm)
+        # Initialize stats if needed? Usually training loop does it.
 
     return env

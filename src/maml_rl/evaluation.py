@@ -342,19 +342,25 @@ def evaluate(
 
     fig, ax = plt.subplots(figsize=(10, 6))
 
+    # Calculate Standard Error of Mean (so bands are 95% CI roughly)
+    import numpy as np
+
+    num_tasks = cfg.env.num_tasks
+    sqrt_n = np.sqrt(num_tasks)
+
     # Extract data for plotting
     steps = sorted(maml_results.keys())
     maml_means = [maml_results[s][0] for s in steps]
-    maml_stds = [maml_results[s][1] for s in steps]
+    maml_sems = [maml_results[s][1] / sqrt_n for s in steps]
     rand_means = [rand_results[s][0] for s in steps]
-    rand_stds = [rand_results[s][1] for s in steps]
+    rand_sems = [rand_results[s][1] / sqrt_n for s in steps]
 
     # Plot MAML
     ax.plot(steps, maml_means, "o-", label="MAML", linewidth=2, markersize=8)
     ax.fill_between(
         steps,
-        [m - s for m, s in zip(maml_means, maml_stds)],
-        [m + s for m, s in zip(maml_means, maml_stds)],
+        [m - s for m, s in zip(maml_means, maml_sems)],
+        [m + s for m, s in zip(maml_means, maml_sems)],
         alpha=0.2,
     )
 
@@ -362,32 +368,33 @@ def evaluate(
     ax.plot(steps, rand_means, "s--", label="Random Init", linewidth=2, markersize=8)
     ax.fill_between(
         steps,
-        [m - s for m, s in zip(rand_means, rand_stds)],
-        [m + s for m, s in zip(rand_means, rand_stds)],
+        [m - s for m, s in zip(rand_means, rand_sems)],
+        [m + s for m, s in zip(rand_means, rand_sems)],
         alpha=0.2,
     )
 
     # Plot Pretrained (if available)
     if pretrained_results:
         pt_means = [pretrained_results[s][0] for s in steps]
-        pt_stds = [pretrained_results[s][1] for s in steps]
+        pt_sems = [pretrained_results[s][1] / sqrt_n for s in steps]
         ax.plot(steps, pt_means, "^-.", label="Pretrained", linewidth=2, markersize=8)
         ax.fill_between(
             steps,
-            [m - s for m, s in zip(pt_means, pt_stds)],
-            [m + s for m, s in zip(pt_means, pt_stds)],
+            [m - s for m, s in zip(pt_means, pt_sems)],
+            [m + s for m, s in zip(pt_means, pt_sems)],
             alpha=0.2,
         )
 
     # Plot Oracle (horizontal line since it doesn't adapt)
     if oracle_results:
         o_mean, o_std = oracle_results[0]
+        o_sem = o_std / sqrt_n
         ax.axhline(y=o_mean, color="green", linestyle=":", linewidth=2, label="Oracle")
-        ax.fill_between(steps, o_mean - o_std, o_mean + o_std, color="green", alpha=0.1)
+        ax.fill_between(steps, o_mean - o_sem, o_mean + o_sem, color="green", alpha=0.1)
 
     ax.set_xlabel("Gradient Steps", fontsize=12)
     ax.set_ylabel("Mean Return", fontsize=12)
-    ax.set_title("MAML Evaluation: Adaptation Performance", fontsize=14)
+    ax.set_title(f"MAML Evaluation (Mean +/- SEM over {num_tasks} tasks)", fontsize=14)
     ax.legend(loc="best", fontsize=10)
     ax.grid(True, alpha=0.3)
     ax.set_xticks(steps)

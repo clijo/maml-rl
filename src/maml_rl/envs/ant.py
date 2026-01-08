@@ -104,14 +104,14 @@ class MetaAntGoalVelEnv(AntEnv):
             hidden_sizes = checkpoint["config"]["model"].get("hidden_sizes", (100, 100))
         else:
             hidden_sizes = checkpoint.get("hidden_sizes", (100, 100))
-        _, oracle_policy, _ = build_actor_critic(
+        oracle_actor, oracle_policy_model, _ = build_actor_critic(
             oracle_obs_dim,
             act_dim,
             hidden_sizes=hidden_sizes,
         )
-        oracle_policy.load_state_dict(checkpoint["policy_state_dict"])
-        oracle_policy.to(device)
-        return oracle_policy
+        oracle_policy_model.load_state_dict(checkpoint["policy_state_dict"])
+        oracle_actor.to(device)
+        return oracle_actor
 
 
 class MetaAntGoalVelOracleEnv(gym.Wrapper):
