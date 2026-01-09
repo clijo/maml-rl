@@ -203,34 +203,6 @@ def evaluate(
             )
 
             # 2. Adapt Value Function
-            # We assume initial_params for value is passed in or we track it
-            # But wait, run_adaptation receives `value_module` but we need its params/buffers
-            # Let's initialize them before the loop if not already done.
-            # However, `value_module` params are static unless we adapt them.
-            # We need to track `current_value_params` similar to `current_params` (policy).
-
-            # Let's look at how training.py does it. It adapts from the BASE value params every time?
-            # actually training.py lines 186-191 adapt from `value_params` (base) using `support_td`.
-            # But wait, if we do multi-step, we should adapt sequentially?
-            # in training.py: vmap(inner_update_value_single) where inner_update_value_single does K steps.
-            # So `value_params` input to vmap are the BASE parameters.
-            # Here in evaluation, we are stepping k=1..N.
-            # If we want to match training.py exactly:
-            # Training loop adapts Base -> Adapted (K steps) in one go for the query set.
-            # Evaluation loop steps k=1, evaluates, then k=2, etc.
-            # So at step k, we should arguably adapt from Step k-1?
-            # Or does training.py only support 1-step adaptation effectively?
-            # In training.py:
-            #   inner_update_single does `range(cfg.inner.num_steps)` loops.
-            #   Then `adapted_params` are used for query.
-            #
-            # In evaluation.py, we want to plot performance at step 1, 2, ...
-            # So we are doing the adaptation incrementally.
-
-            # So for Value function:
-            # If we want to use the adapted value function for calculating GAE for the NEXT step (k+1),
-            # we need to maintain `current_value_params`.
-
             adapted_value_batched = vmap(
                 inner_update_value_single, in_dims=(params_in_dim, None, 0)
             )(current_value_params, value_buffers, support_td)

@@ -200,8 +200,7 @@ def outer_step_trpo(
             return d
 
         # This returns a batch of distributions
-        # Note: TanhNormal might not be perfectly vmap-friendly for storage,
-        # so we store the loc/scale parameters instead if needed, but let's try direct use.
+
         # Actually, for KL, we need the parameters of the old distribution.
 
         def get_dist_params(p, t):
@@ -283,11 +282,14 @@ def outer_step_trpo(
     # FVP(v) = grad( (grad(KL) * v).sum() )
     # We can use autograd.grad on the KL function.
 
+    # Pre-compute KL gradient and graph to avoid re-running inner loop in CG
+    kl = get_kl(flat_params)
+    kl_grad = torch.autograd.grad(kl, flat_params, create_graph=True)[0]
+
     def fisher_vector_product(v):
-        kl = get_kl(flat_params)
-        kl_grad = torch.autograd.grad(kl, flat_params, create_graph=True)[0]
         kl_v = (kl_grad * v).sum()
-        fvp = torch.autograd.grad(kl_v, flat_params)[0]
+        # retain_graph=True is essential here because we reuse the graph for multiple CG steps
+        fvp = torch.autograd.grad(kl_v, flat_params, retain_graph=True)[0]
         return fvp + damping * v
 
     # 5. Conjugate Gradient
